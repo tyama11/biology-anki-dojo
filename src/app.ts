@@ -28,7 +28,7 @@ interface DojoState {
     combo: number;
     maxCombo: number;
     totalQuestions: number;
-    selectedAnswer: string | null;
+    activeBlankIndex: number;
     currentOniAnswer: string | null;
     solvedIds: Set<string>;
     revealedIds: Set<string>;
@@ -55,7 +55,7 @@ const state: DojoState = {
     combo: 0,
     maxCombo: 0,
     totalQuestions: 0,
-    selectedAnswer: null,
+    activeBlankIndex: 0,
     currentOniAnswer: null,
     solvedIds: new Set(),
     revealedIds: new Set(),

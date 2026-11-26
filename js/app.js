@@ -28,7 +28,7 @@ import { createProgressStore, safeLocalStorage } from './storage.js';
                   
                      
                            
-                                  
+                             
                                     
                            
                              
@@ -55,7 +55,7 @@ const state            = {
     combo: 0,
     maxCombo: 0,
     totalQuestions: 0,
-    selectedAnswer: null,
+    activeBlankIndex: 0,
     currentOniAnswer: null,
     solvedIds: new Set(),
     revealedIds: new Set(),

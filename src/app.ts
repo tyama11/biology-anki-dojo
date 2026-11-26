@@ -107,10 +107,6 @@ const els = {
     overlayHomeBtn: byId<HTMLButtonElement>('overlay-home-btn')
 };
 
-function storageCategoryKey(cat: Category): 'cycle' | 'sketch' {
-    return cat === 'sheet' ? 'cycle' : 'sketch';
-}
-
 function init(): void {
     els.categoryTabs.forEach((tab) => {
         tab.addEventListener('click', () => {
@@ -173,7 +169,7 @@ function updateTabScores(): void {
         { cat: 'pair', el: els.tabScorePair }
     ];
     entries.forEach(({ cat, el }) => {
-        const saved = progress.getOniBest(storageCategoryKey(cat));
+        const saved = progress.getOniBest(cat);
         if (saved !== null) {
             el.textContent = `👹 ${saved}問`;
             el.hidden = false;
@@ -185,7 +181,7 @@ function updateTabScores(): void {
 }
 
 function updateCurrentTitle(): void {
-    const saved = progress.getOniBest(storageCategoryKey(state.category));
+    const saved = progress.getOniBest(state.category);
     if (saved === null) {
         els.earnedTitleBanner.hidden = true;
         return;
@@ -197,7 +193,7 @@ function updateCurrentTitle(): void {
 }
 
 function updateDifficultyVisibility(animate = false): void {
-    const unlocked = progress.isOniUnlocked(storageCategoryKey(state.category));
+    const unlocked = progress.isOniUnlocked(state.category);
     els.ruleOniItem.hidden = !unlocked;
     els.btnOni.hidden = !unlocked;
     els.btnOni.classList.toggle('just-unlocked', unlocked && animate);
@@ -533,7 +529,7 @@ function showToast(msg: string): void {
 function handleGameClear(): void {
     state.isPlaying = false;
     let unlockedNow = false;
-    const key = storageCategoryKey(state.category);
+    const key = state.category;
     if (state.difficulty === 'normal' && !progress.isOniUnlocked(key)) {
         progress.unlockOni(key);
         state.justUnlockedOni = true;
@@ -552,7 +548,7 @@ function handleGameClear(): void {
 
 function handleOniTimeUp(): void {
     state.isPlaying = false;
-    const key = storageCategoryKey(state.category);
+    const key = state.category;
     const prev = progress.getOniBest(key) ?? -1;
     const best = Math.max(prev, state.score);
     if (state.score > prev) progress.setOniBest(key, best);

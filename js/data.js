@@ -43,8 +43,8 @@ export const PAIR_ITEMS                      = [
     { id: 'p6', printNo: '4', pairTitle: '植生の遷移', termA: '一次遷移', descA: '土壌のない裸地（溶岩流の跡など）から始まる', termB: '二次遷移', descB: '土壌や種子が残る跡地（山火事・伐採後）から始まる' },
     { id: 'p7', printNo: '4', pairTitle: '環境と生物の相互作用', termA: '作用', descA: '非生物的環境（光・水・温度）が生物に与える影響', termB: '環境形成作用', descB: '生物が非生物的環境（土壌・光など）を変化させる働き' },
     { id: 'p8', printNo: '4', pairTitle: '富栄養化', termA: 'アオコ', descA: '湖沼でプランクトンが大発生し水面が緑色になる', termB: '赤潮', descB: '内湾・内海でプランクトンが大発生し海面が赤褐色になる' },
-    { id: 'p9', printNo: '4', pairTitle: '地球環境問題', termA: '地球温暖化', descA: '温室効果ガスが地表からの赤外線（熱）を吸収する', termB: 'オゾン層の破壊', descA: 'フロンによる破壊で有害な紫外線が地表に届く' },
-    { id: 'p10', printNo: '4', pairTitle: '生態ピラミッドの逆転', termA: '個体数ピラミッドの逆転', descA: '1本の大きな樹木に大量の毛虫がつく例', termB: '生物量ピラミッドの逆転', descA: '海の植物プランクトンが増殖・被食され現存量が少ない例' }
+    { id: 'p9', printNo: '4', pairTitle: '地球環境問題', termA: '地球温暖化', descA: '温室効果ガスが地表からの赤外線（熱）を吸収する', termB: 'オゾン層の破壊', descB: 'フロンによる破壊で有害な紫外線が地表に届く' },
+    { id: 'p10', printNo: '4', pairTitle: '生態ピラミッドの逆転', termA: '個体数ピラミッドの逆転', descA: '1本の大きな樹木に大量の毛虫がつく例', termB: '生物量ピラミッドの逆転', descB: '海の植物プランクトンが増殖・被食され現存量が少ない例' }
 ];
 
 export const CATEGORY_CONFIG                                                                                        = {

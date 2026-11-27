@@ -42,13 +42,17 @@ export interface OddOneOutItem {
     readonly mates: readonly [string, string, string];
 }
 
+export interface DiagramSlotTarget {
+    readonly answer: string;
+    readonly distractors: readonly [string, string, string];
+    readonly renderSvg: () => string;
+}
+
 export interface DiagramQuestionItem {
     readonly id: string;
     readonly printNo: PrintScope;
     readonly title: string;
-    readonly svgHtml: string;
-    readonly answer: string;
-    readonly distractors: readonly [string, string, string];
+    readonly slots: readonly DiagramSlotTarget[];
 }
 
 export interface ErrorFixItem {

@@ -81,10 +81,12 @@ export function buildOniQuestion(
     const format = pickRandom(ONI_FORMATS, rng);
 
     if (format === 'diagram-slot') {
-        const candidates = DIAGRAM_ITEMS.filter((item) => item.answer !== prevAnswer);
+        const candidates = DIAGRAM_ITEMS.filter((item) => item.slots.some((s) => s.answer !== prevAnswer));
         const target = pickRandom(candidates.length > 0 ? candidates : DIAGRAM_ITEMS, rng);
+        const validSlots = target.slots.filter((s) => s.answer !== prevAnswer);
+        const slot = pickRandom(validSlots.length > 0 ? validSlots : target.slots, rng);
         const choices               = shuffled(
-            [target.answer, ...target.distractors].map((ans, idx) => ({
+            [slot.answer, ...slot.distractors].map((ans, idx) => ({
                 id: `c${idx}`,
                 answer: ans,
                 label: ans,
@@ -95,8 +97,8 @@ export function buildOniQuestion(
 
         return {
             format,
-            questionHtml: `<div class="dojo-q-badge">🖼️ 図解あてはめ：${target.title}</div><div class="dojo-oni-svg-wrap">${target.svgHtml}</div>`,
-            correctAnswer: target.answer,
+            questionHtml: `<div class="dojo-q-badge">🖼️ 図解あてはめ：${target.title}</div><div class="dojo-oni-svg-wrap">${slot.renderSvg()}</div>`,
+            correctAnswer: slot.answer,
             choices
         };
     }

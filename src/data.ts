@@ -83,302 +83,351 @@ export const ODD_ONE_OUT_ITEMS: readonly OddOneOutItem[] = [
     { id: 'ooo-9', printNo: '4', prompt: '非生物的環境でないのは？', oddOne: '植物プランクトン', mates: ['光・温度', '水・土壌', '大気・風'] }
 ];
 
+function svgBox(
+    x: number,
+    y: number,
+    w: number,
+    h: number,
+    label: string,
+    isBlank: boolean,
+    fill = '#E0F2FE',
+    stroke = '#0284C7',
+    textColor = '#0369A1',
+    sub = ''
+): string {
+    if (isBlank) {
+        return `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="14" class="oni-svg-blank"/>
+            <text x="${x + w / 2}" y="${y + h / 2 + (sub ? -2 : 7)}" text-anchor="middle" font-size="22" font-weight="900" fill="#B45309">？</text>
+            ${sub ? `<text x="${x + w / 2}" y="${y + h / 2 + 18}" text-anchor="middle" font-size="11" font-weight="700" fill="#92400E">${sub}</text>` : ''}`;
+    }
+    return `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="14" fill="${fill}" stroke="${stroke}" stroke-width="2.5"/>
+        <text x="${x + w / 2}" y="${y + h / 2 + (sub ? -2 : 6)}" text-anchor="middle" font-size="15" font-weight="800" fill="${textColor}">${label}</text>
+        ${sub ? `<text x="${x + w / 2}" y="${y + h / 2 + 18}" text-anchor="middle" font-size="11" font-weight="700" fill="${textColor}">${sub}</text>` : ''}`;
+}
+
 export const DIAGRAM_ITEMS: readonly DiagramQuestionItem[] = [
     {
         id: 'dg-1',
         printNo: '1',
         title: '細胞周期のサイクル',
-        answer: 'S期',
-        distractors: ['G1期', 'G2期', 'M期'],
-        svgHtml: `<svg viewBox="0 0 560 260" role="img" aria-label="細胞周期の図">
-            <rect x="20" y="95" width="105" height="62" rx="14" fill="#E0F2FE" stroke="#0284C7" stroke-width="2.5"/>
-            <text x="72" y="132" text-anchor="middle" font-size="18" font-weight="800" fill="#0369A1">G1期</text>
-            <path d="M132 126 L154 126" stroke="#64748B" stroke-width="3" marker-end="url(#arr)"/>
-            <rect x="160" y="95" width="105" height="62" rx="14" class="oni-svg-blank"/>
-            <text x="212" y="122" text-anchor="middle" font-size="22" font-weight="900" fill="#B45309">？</text>
-            <text x="212" y="145" text-anchor="middle" font-size="12" font-weight="700" fill="#92400E">DNA複製</text>
-            <path d="M272 126 L294 126" stroke="#64748B" stroke-width="3"/>
-            <rect x="300" y="95" width="105" height="62" rx="14" fill="#E0F2FE" stroke="#0284C7" stroke-width="2.5"/>
-            <text x="352" y="132" text-anchor="middle" font-size="18" font-weight="800" fill="#0369A1">G2期</text>
-            <path d="M412 126 L434 126" stroke="#64748B" stroke-width="3"/>
-            <rect x="440" y="95" width="100" height="62" rx="14" fill="#FCE7F3" stroke="#DB2777" stroke-width="2.5"/>
-            <text x="490" y="132" text-anchor="middle" font-size="18" font-weight="800" fill="#9D174D">M期</text>
-            <text x="280" y="46" text-anchor="middle" font-size="15" font-weight="800" fill="#475569">DNA量が2倍に増える時期は？</text>
-        </svg>`
+        slots: [
+            {
+                answer: 'S期',
+                distractors: ['G1期', 'G2期', 'M期'],
+                renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="細胞周期の図">
+                    ${svgBox(20, 95, 105, 62, 'G1期', false)}
+                    <path d="M132 126 L154 126" stroke="#64748B" stroke-width="3"/>
+                    ${svgBox(160, 95, 105, 62, 'S期', true, '#E0F2FE', '#0284C7', '#0369A1', 'DNA複製')}
+                    <path d="M272 126 L294 126" stroke="#64748B" stroke-width="3"/>
+                    ${svgBox(300, 95, 105, 62, 'G2期', false)}
+                    <path d="M412 126 L434 126" stroke="#64748B" stroke-width="3"/>
+                    ${svgBox(440, 95, 100, 62, 'M期', false, '#FCE7F3', '#DB2777', '#9D174D')}
+                    <text x="280" y="46" text-anchor="middle" font-size="15" font-weight="800" fill="#475569">DNA量が2倍に増える時期は？</text>
+                </svg>`
+            },
+            {
+                answer: 'M期',
+                distractors: ['S期', 'G1期', 'G2期'],
+                renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="細胞周期の図">
+                    ${svgBox(20, 95, 105, 62, 'G1期', false)}
+                    <path d="M132 126 L154 126" stroke="#64748B" stroke-width="3"/>
+                    ${svgBox(160, 95, 105, 62, 'S期', false, '#DCFCE7', '#16A34A', '#166534')}
+                    <path d="M272 126 L294 126" stroke="#64748B" stroke-width="3"/>
+                    ${svgBox(300, 95, 105, 62, 'G2期', false)}
+                    <path d="M412 126 L434 126" stroke="#64748B" stroke-width="3"/>
+                    ${svgBox(440, 95, 100, 62, 'M期', true, '#FCE7F3', '#DB2777', '#9D174D', '細胞分裂')}
+                    <text x="280" y="46" text-anchor="middle" font-size="15" font-weight="800" fill="#475569">染色体が分配され細胞分裂する時期は？</text>
+                </svg>`
+            },
+            {
+                answer: 'G1期',
+                distractors: ['S期', 'G2期', 'M期'],
+                renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="細胞周期の図">
+                    ${svgBox(20, 95, 105, 62, 'G1期', true, '#E0F2FE', '#0284C7', '#0369A1', '複製準備')}
+                    <path d="M132 126 L154 126" stroke="#64748B" stroke-width="3"/>
+                    ${svgBox(160, 95, 105, 62, 'S期', false, '#DCFCE7', '#16A34A', '#166534')}
+                    <path d="M272 126 L294 126" stroke="#64748B" stroke-width="3"/>
+                    ${svgBox(300, 95, 105, 62, 'G2期', false)}
+                    <path d="M412 126 L434 126" stroke="#64748B" stroke-width="3"/>
+                    ${svgBox(440, 95, 100, 62, 'M期', false, '#FCE7F3', '#DB2777', '#9D174D')}
+                    <text x="280" y="46" text-anchor="middle" font-size="15" font-weight="800" fill="#475569">DNA複製の準備をする時期は？</text>
+                </svg>`
+            }
+        ]
     },
     {
         id: 'dg-2',
         printNo: '1',
-        title: '酵素と基質の結合',
-        answer: '活性部位',
-        distractors: ['基質', '生成物', '補酵素'],
-        svgHtml: `<svg viewBox="0 0 560 260" role="img" aria-label="酵素の活性部位の図">
-            <path d="M70 80 L230 80 L230 115 L185 115 L185 155 L230 155 L230 190 L70 190 Z" fill="#CCFBF1" stroke="#0D9488" stroke-width="3"/>
-            <text x="125" y="140" text-anchor="middle" font-size="18" font-weight="800" fill="#115E59">酵素</text>
-            <rect x="195" y="112" width="80" height="44" rx="10" class="oni-svg-blank"/>
-            <text x="235" y="141" text-anchor="middle" font-size="20" font-weight="900" fill="#B45309">？</text>
-            <rect x="335" y="112" width="140" height="44" rx="12" fill="#E0E7FF" stroke="#4F46E5" stroke-width="2.5"/>
-            <text x="405" y="140" text-anchor="middle" font-size="17" font-weight="800" fill="#3730A3">基質（鍵）</text>
-            <text x="280" y="45" text-anchor="middle" font-size="15" font-weight="800" fill="#475569">基質が結合する酵素のくぼみの名称は？</text>
-        </svg>`
+        title: '酵素と基質の反応',
+        slots: [
+            {
+                answer: '活性部位',
+                distractors: ['基質', '生成物', '補酵素'],
+                renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="酵素の活性部位の図">
+                    <path d="M70 80 L230 80 L230 115 L185 115 L185 155 L230 155 L230 190 L70 190 Z" fill="#CCFBF1" stroke="#0D9488" stroke-width="3"/>
+                    <text x="125" y="140" text-anchor="middle" font-size="18" font-weight="800" fill="#115E59">酵素</text>
+                    ${svgBox(195, 112, 80, 44, '活性部位', true)}
+                    ${svgBox(335, 112, 140, 44, '基質（鍵）', false, '#E0E7FF', '#4F46E5', '#3730A3')}
+                    <text x="280" y="45" text-anchor="middle" font-size="15" font-weight="800" fill="#475569">基質が結合する酵素のくぼみの名称は？</text>
+                </svg>`
+            },
+            {
+                answer: '基質',
+                distractors: ['活性部位', '生成物', '補酵素'],
+                renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="酵素と基質の図">
+                    <path d="M70 80 L230 80 L230 115 L185 115 L185 155 L230 155 L230 190 L70 190 Z" fill="#CCFBF1" stroke="#0D9488" stroke-width="3"/>
+                    <text x="125" y="140" text-anchor="middle" font-size="18" font-weight="800" fill="#115E59">酵素</text>
+                    ${svgBox(335, 112, 140, 44, '基質', true, '#E0E7FF', '#4F46E5', '#3730A3', '鍵')}
+                    <text x="280" y="45" text-anchor="middle" font-size="15" font-weight="800" fill="#475569">酵素が働く相手の物質を何という？</text>
+                </svg>`
+            }
+        ]
     },
     {
         id: 'dg-3',
         printNo: '2',
         title: '血糖値を下げる経路',
-        answer: 'インスリン',
-        distractors: ['グルカゴン', 'アドレナリン', '糖質コルチコイド'],
-        svgHtml: `<svg viewBox="0 0 560 260" role="img" aria-label="血糖値低下の経路図">
-            <rect x="30" y="95" width="130" height="64" rx="14" fill="#FEE2E2" stroke="#DC2626" stroke-width="2.5"/>
-            <text x="95" y="124" text-anchor="middle" font-size="15" font-weight="800" fill="#991B1B">高血糖</text>
-            <text x="95" y="146" text-anchor="middle" font-size="13" font-weight="700" fill="#B91C1C">B細胞が感知</text>
-            <path d="M168 127 L202 127" stroke="#64748B" stroke-width="3"/>
-            <rect x="210" y="95" width="140" height="64" rx="14" class="oni-svg-blank"/>
-            <text x="280" y="134" text-anchor="middle" font-size="22" font-weight="900" fill="#B45309">？</text>
-            <path d="M358 127 L392 127" stroke="#64748B" stroke-width="3"/>
-            <rect x="400" y="95" width="130" height="64" rx="14" fill="#DCFCE7" stroke="#16A34A" stroke-width="2.5"/>
-            <text x="465" y="124" text-anchor="middle" font-size="15" font-weight="800" fill="#166534">血糖値低下</text>
-            <text x="465" y="146" text-anchor="middle" font-size="12" font-weight="700" fill="#15803D">グリコーゲン合成</text>
-        </svg>`
+        slots: [
+            {
+                answer: 'インスリン',
+                distractors: ['グルカゴン', 'アドレナリン', '糖質コルチコイド'],
+                renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="血糖値低下の経路図">
+                    ${svgBox(30, 95, 130, 64, '高血糖', false, '#FEE2E2', '#DC2626', '#991B1B', 'B細胞が感知')}
+                    <path d="M168 127 L202 127" stroke="#64748B" stroke-width="3"/>
+                    ${svgBox(210, 95, 140, 64, 'インスリン', true)}
+                    <path d="M358 127 L392 127" stroke="#64748B" stroke-width="3"/>
+                    ${svgBox(400, 95, 130, 64, '血糖値低下', false, '#DCFCE7', '#16A34A', '#166534', 'グリコーゲン合成')}
+                </svg>`
+            },
+            {
+                answer: 'グリコーゲン',
+                distractors: ['グルコース', 'デンプン', 'セルロース'],
+                renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="グリコーゲン合成の経路図">
+                    ${svgBox(30, 95, 130, 64, '高血糖', false, '#FEE2E2', '#DC2626', '#991B1B', 'B細胞が感知')}
+                    <path d="M168 127 L202 127" stroke="#64748B" stroke-width="3"/>
+                    ${svgBox(210, 95, 140, 64, 'インスリン', false, '#DCFCE7', '#16A34A', '#166534', '肝臓・筋肉へ')}
+                    <path d="M358 127 L392 127" stroke="#64748B" stroke-width="3"/>
+                    ${svgBox(400, 95, 130, 64, 'グリコーゲン', true, '#DCFCE7', '#16A34A', '#166534', '合成して貯蔵')}
+                </svg>`
+            }
+        ]
     },
     {
         id: 'dg-4',
         printNo: '2',
         title: '副腎皮質からの血糖上昇',
-        answer: '糖質コルチコイド',
-        distractors: ['鉱質コルチコイド', 'バソプレシン', 'アドレナリン'],
-        svgHtml: `<svg viewBox="0 0 560 260" role="img" aria-label="副腎皮質ホルモンの経路図">
-            <rect x="25" y="95" width="135" height="64" rx="14" fill="#FFEDD5" stroke="#EA580C" stroke-width="2.5"/>
-            <text x="92" y="124" text-anchor="middle" font-size="15" font-weight="800" fill="#9A3412">副腎皮質</text>
-            <text x="92" y="146" text-anchor="middle" font-size="12" font-weight="700" fill="#C2410C">低血糖時に分泌</text>
-            <path d="M168 127 L198 127" stroke="#64748B" stroke-width="3"/>
-            <rect x="205" y="95" width="155" height="64" rx="14" class="oni-svg-blank"/>
-            <text x="282" y="134" text-anchor="middle" font-size="22" font-weight="900" fill="#B45309">？</text>
-            <path d="M368 127 L398 127" stroke="#64748B" stroke-width="3"/>
-            <rect x="405" y="95" width="130" height="64" rx="14" fill="#FEF9C3" stroke="#CA8A04" stroke-width="2.5"/>
-            <text x="470" y="124" text-anchor="middle" font-size="15" font-weight="800" fill="#854D0E">糖新生</text>
-            <text x="470" y="146" text-anchor="middle" font-size="12" font-weight="700" fill="#A16207">血糖値上昇</text>
-        </svg>`
+        slots: [
+            {
+                answer: '糖質コルチコイド',
+                distractors: ['鉱質コルチコイド', 'バソプレシン', 'アドレナリン'],
+                renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="副腎皮質ホルモンの経路図">
+                    ${svgBox(25, 95, 135, 64, '副腎皮質', false, '#FFEDD5', '#EA580C', '#9A3412', '低血糖時に分泌')}
+                    <path d="M168 127 L198 127" stroke="#64748B" stroke-width="3"/>
+                    ${svgBox(205, 95, 155, 64, '糖質コルチコイド', true)}
+                    <path d="M368 127 L398 127" stroke="#64748B" stroke-width="3"/>
+                    ${svgBox(405, 95, 130, 64, '糖新生', false, '#FEF9C3', '#CA8A04', '#854D0E', '血糖値上昇')}
+                </svg>`
+            },
+            {
+                answer: '副腎皮質',
+                distractors: ['副腎髄質', 'すい臓A細胞', '脳下垂体後葉'],
+                renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="副腎皮質の図">
+                    ${svgBox(25, 95, 135, 64, '副腎皮質', true)}
+                    <path d="M168 127 L198 127" stroke="#64748B" stroke-width="3"/>
+                    ${svgBox(205, 95, 155, 64, '糖質コルチコイド', false, '#FFEDD5', '#EA580C', '#9A3412')}
+                    <path d="M368 127 L398 127" stroke="#64748B" stroke-width="3"/>
+                    ${svgBox(405, 95, 130, 64, '糖新生', false, '#FEF9C3', '#CA8A04', '#854D0E', '血糖値上昇')}
+                </svg>`
+            }
+        ]
     },
     {
         id: 'dg-5',
         printNo: '3',
         title: '体液性免疫の司令塔',
-        answer: 'ヘルパーT細胞',
-        distractors: ['キラーT細胞', '記憶細胞', 'マクロファージ'],
-        svgHtml: `<svg viewBox="0 0 560 260" role="img" aria-label="体液性免疫フロー図">
-            <rect x="25" y="95" width="125" height="64" rx="14" fill="#E0E7FF" stroke="#4F46E5" stroke-width="2.5"/>
-            <text x="87" y="124" text-anchor="middle" font-size="14" font-weight="800" fill="#3730A3">樹状細胞</text>
-            <text x="87" y="146" text-anchor="middle" font-size="12" font-weight="700" fill="#4338CA">抗原提示</text>
-            <path d="M158 127 L192 127" stroke="#64748B" stroke-width="3"/>
-            <rect x="200" y="95" width="155" height="64" rx="14" class="oni-svg-blank"/>
-            <text x="277" y="134" text-anchor="middle" font-size="22" font-weight="900" fill="#B45309">？</text>
-            <path d="M363 127 L397 127" stroke="#64748B" stroke-width="3"/>
-            <rect x="405" y="95" width="130" height="64" rx="14" fill="#DBEAFE" stroke="#2563EB" stroke-width="2.5"/>
-            <text x="470" y="124" text-anchor="middle" font-size="14" font-weight="800" fill="#1E40AF">B細胞活性化</text>
-            <text x="470" y="146" text-anchor="middle" font-size="12" font-weight="700" fill="#1D4ED8">抗体産生へ</text>
-        </svg>`
+        slots: [
+            {
+                answer: 'ヘルパーT細胞',
+                distractors: ['キラーT細胞', '記憶細胞', 'マクロファージ'],
+                renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="体液性免疫フロー図">
+                    ${svgBox(25, 95, 125, 64, '樹状細胞', false, '#E0E7FF', '#4F46E5', '#3730A3', '抗原提示')}
+                    <path d="M158 127 L192 127" stroke="#64748B" stroke-width="3"/>
+                    ${svgBox(200, 95, 155, 64, 'ヘルパーT細胞', true)}
+                    <path d="M363 127 L397 127" stroke="#64748B" stroke-width="3"/>
+                    ${svgBox(405, 95, 130, 64, 'B細胞活性化', false, '#DBEAFE', '#2563EB', '#1E40AF', '抗体産生へ')}
+                </svg>`
+            },
+            {
+                answer: '形質細胞',
+                distractors: ['キラーT細胞', '記憶細胞', '好中球'],
+                renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="抗体産生細胞の図">
+                    ${svgBox(25, 95, 125, 64, 'ヘルパーT細胞', false, '#E0E7FF', '#4F46E5', '#3730A3', 'B細胞を刺激')}
+                    <path d="M158 127 L192 127" stroke="#64748B" stroke-width="3"/>
+                    ${svgBox(200, 95, 155, 64, '形質細胞', true, '#DBEAFE', '#2563EB', '#1E40AF', 'B細胞が分化')}
+                    <path d="M363 127 L397 127" stroke="#64748B" stroke-width="3"/>
+                    ${svgBox(405, 95, 130, 64, '抗体産生', false, '#DCFCE7', '#16A34A', '#166534', '体液性免疫')}
+                </svg>`
+            }
+        ]
     },
     {
         id: 'dg-6',
         printNo: '4',
         title: '光合成速度と光の強さ',
-        answer: '光補償点',
-        distractors: ['光飽和点', '森林限界', '呼吸速度'],
-        svgHtml: `<svg viewBox="0 0 560 260" role="img" aria-label="光合成速度グラフ">
-            <line x1="80" y1="30" x2="80" y2="220" stroke="#334155" stroke-width="2.5"/>
-            <line x1="60" y1="160" x2="500" y2="160" stroke="#334155" stroke-width="2.5"/>
-            <path d="M80 200 Q170 90 300 65 L480 65" fill="none" stroke="#0D9488" stroke-width="4"/>
-            <circle cx="132" cy="160" r="8" fill="#F59E0B" stroke="#B45309" stroke-width="2.5"/>
-            <rect x="145" y="170" width="120" height="42" rx="10" class="oni-svg-blank"/>
-            <text x="205" y="198" text-anchor="middle" font-size="18" font-weight="900" fill="#B45309">？</text>
-            <text x="490" y="180" text-anchor="end" font-size="13" font-weight="700" fill="#475569">光の強さ →</text>
-            <text x="92" y="44" font-size="13" font-weight="700" fill="#475569">見かけの光合成速度 0 の点</text>
-        </svg>`
+        slots: [
+            {
+                answer: '光補償点',
+                distractors: ['光飽和点', '森林限界', '呼吸速度'],
+                renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="光合成速度グラフ">
+                    <line x1="80" y1="30" x2="80" y2="220" stroke="#334155" stroke-width="2.5"/>
+                    <line x1="60" y1="160" x2="500" y2="160" stroke="#334155" stroke-width="2.5"/>
+                    <path d="M80 200 Q170 90 300 65 L480 65" fill="none" stroke="#0D9488" stroke-width="4"/>
+                    <circle cx="132" cy="160" r="8" fill="#F59E0B" stroke="#B45309" stroke-width="2.5"/>
+                    ${svgBox(145, 170, 120, 42, '光補償点', true)}
+                    <text x="490" y="180" text-anchor="end" font-size="13" font-weight="700" fill="#475569">光の強さ →</text>
+                    <text x="92" y="44" font-size="13" font-weight="700" fill="#475569">見かけの光合成速度 0 の点</text>
+                </svg>`
+            },
+            {
+                answer: '光飽和点',
+                distractors: ['光補償点', '森林限界', '呼吸速度'],
+                renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="光飽和点グラフ">
+                    <line x1="80" y1="30" x2="80" y2="220" stroke="#334155" stroke-width="2.5"/>
+                    <line x1="60" y1="160" x2="500" y2="160" stroke="#334155" stroke-width="2.5"/>
+                    <path d="M80 200 Q170 90 300 65 L480 65" fill="none" stroke="#0D9488" stroke-width="4"/>
+                    <circle cx="300" cy="65" r="8" fill="#F59E0B" stroke="#B45309" stroke-width="2.5"/>
+                    ${svgBox(250, 82, 120, 42, '光飽和点', true)}
+                    <text x="490" y="180" text-anchor="end" font-size="13" font-weight="700" fill="#475569">光の強さ →</text>
+                    <text x="92" y="44" font-size="13" font-weight="700" fill="#475569">光合成速度が最大に達する点</text>
+                </svg>`
+            }
+        ]
     },
     {
         id: 'dg-7',
         printNo: '4',
         title: '乾性遷移の順序',
-        answer: '陽樹林',
-        distractors: ['陰樹林', '低木林', '草原'],
-        svgHtml: `<svg viewBox="0 0 560 260" role="img" aria-label="植生の遷移フロー図">
-            <rect x="20" y="98" width="95" height="58" rx="12" fill="#F1F5F9" stroke="#64748B" stroke-width="2"/>
-            <text x="67" y="133" text-anchor="middle" font-size="15" font-weight="800" fill="#334155">草原・低木</text>
-            <path d="M122 127 L148 127" stroke="#64748B" stroke-width="3"/>
-            <rect x="155" y="95" width="120" height="64" rx="14" class="oni-svg-blank"/>
-            <text x="215" y="134" text-anchor="middle" font-size="22" font-weight="900" fill="#B45309">？</text>
-            <path d="M283 127 L309 127" stroke="#64748B" stroke-width="3"/>
-            <rect x="316" y="98" width="100" height="58" rx="12" fill="#DCFCE7" stroke="#16A34A" stroke-width="2"/>
-            <text x="366" y="133" text-anchor="middle" font-size="15" font-weight="800" fill="#166534">混交林</text>
-            <path d="M423 127 L449 127" stroke="#64748B" stroke-width="3"/>
-            <rect x="456" y="98" width="85" height="58" rx="12" fill="#BBF7D0" stroke="#15803D" stroke-width="2"/>
-            <text x="498" y="133" text-anchor="middle" font-size="15" font-weight="800" fill="#14532D">陰樹林</text>
-        </svg>`
+        slots: [
+            {
+                answer: '陽樹林',
+                distractors: ['陰樹林', '低木林', '草原'],
+                renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="植生の遷移フロー図">
+                    ${svgBox(20, 98, 95, 58, '草原・低木', false, '#F1F5F9', '#64748B', '#334155')}
+                    <path d="M122 127 L148 127" stroke="#64748B" stroke-width="3"/>
+                    ${svgBox(155, 95, 120, 64, '陽樹林', true)}
+                    <path d="M283 127 L309 127" stroke="#64748B" stroke-width="3"/>
+                    ${svgBox(316, 98, 100, 58, '混交林', false, '#DCFCE7', '#16A34A', '#166534')}
+                    <path d="M423 127 L449 127" stroke="#64748B" stroke-width="3"/>
+                    ${svgBox(456, 98, 85, 58, '陰樹林', false, '#BBF7D0', '#15803D', '#14532D')}
+                </svg>`
+            },
+            {
+                answer: '陰樹林',
+                distractors: ['陽樹林', '混交林', '草原'],
+                renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="植生の遷移フロー図">
+                    ${svgBox(20, 98, 95, 58, '草原・低木', false, '#F1F5F9', '#64748B', '#334155')}
+                    <path d="M122 127 L148 127" stroke="#64748B" stroke-width="3"/>
+                    ${svgBox(155, 98, 100, 58, '陽樹林', false, '#FEF3C7', '#D97706', '#92400E')}
+                    <path d="M262 127 L288 127" stroke="#64748B" stroke-width="3"/>
+                    ${svgBox(295, 98, 100, 58, '混交林', false, '#DCFCE7', '#16A34A', '#166534')}
+                    <path d="M402 127 L428 127" stroke="#64748B" stroke-width="3"/>
+                    ${svgBox(435, 95, 105, 64, '陰樹林', true, '#BBF7D0', '#15803D', '#14532D', '極相')}
+                </svg>`
+            }
+        ]
     },
     {
         id: 'dg-8',
         printNo: '4',
         title: '生態系の物質循環',
-        answer: '分解者',
-        distractors: ['生産者', '一次消費者', '二次消費者'],
-        svgHtml: `<svg viewBox="0 0 560 260" role="img" aria-label="生態系の物質循環図">
-            <rect x="30" y="95" width="120" height="62" rx="14" fill="#DCFCE7" stroke="#16A34A" stroke-width="2.5"/>
-            <text x="90" y="132" text-anchor="middle" font-size="16" font-weight="800" fill="#166534">生産者</text>
-            <path d="M158 126 L192 126" stroke="#64748B" stroke-width="3"/>
-            <rect x="200" y="95" width="120" height="62" rx="14" fill="#FEF9C3" stroke="#CA8A04" stroke-width="2.5"/>
-            <text x="260" y="132" text-anchor="middle" font-size="16" font-weight="800" fill="#854D0E">消費者</text>
-            <path d="M328 126 L362 126" stroke="#64748B" stroke-width="3"/>
-            <rect x="370" y="95" width="150" height="62" rx="14" class="oni-svg-blank"/>
-            <text x="445" y="134" text-anchor="middle" font-size="22" font-weight="900" fill="#B45309">？</text>
-            <text x="280" y="45" text-anchor="middle" font-size="15" font-weight="800" fill="#475569">遺体・排出物を無機物に分解するのは？</text>
-        </svg>`
+        slots: [
+            {
+                answer: '分解者',
+                distractors: ['生産者', '一次消費者', '二次消費者'],
+                renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="生態系の物質循環図">
+                    ${svgBox(30, 95, 120, 62, '生産者', false, '#DCFCE7', '#16A34A', '#166534')}
+                    <path d="M158 126 L192 126" stroke="#64748B" stroke-width="3"/>
+                    ${svgBox(200, 95, 120, 62, '消費者', false, '#FEF9C3', '#CA8A04', '#854D0E')}
+                    <path d="M328 126 L362 126" stroke="#64748B" stroke-width="3"/>
+                    ${svgBox(370, 95, 150, 62, '分解者', true)}
+                    <text x="280" y="45" text-anchor="middle" font-size="15" font-weight="800" fill="#475569">遺体・排出物を無機物に分解するのは？</text>
+                </svg>`
+            },
+            {
+                answer: '生産者',
+                distractors: ['分解者', '一次消費者', '二次消費者'],
+                renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="生態系の物質循環図">
+                    ${svgBox(30, 95, 130, 62, '生産者', true)}
+                    <path d="M168 126 L202 126" stroke="#64748B" stroke-width="3"/>
+                    ${svgBox(210, 95, 120, 62, '消費者', false, '#FEF9C3', '#CA8A04', '#854D0E')}
+                    <path d="M338 126 L372 126" stroke="#64748B" stroke-width="3"/>
+                    ${svgBox(380, 95, 140, 62, '分解者', false, '#E0E7FF', '#4F46E5', '#3730A3')}
+                    <text x="280" y="45" text-anchor="middle" font-size="15" font-weight="800" fill="#475569">光合成で有機物を合成するのは？</text>
+                </svg>`
+            }
+        ]
     },
     {
         id: 'dg-9',
         printNo: '1',
-        title: '植物細胞と動物細胞の違い',
-        answer: '細胞壁',
-        distractors: ['細胞膜', '核', 'ミトコンドリア'],
-        svgHtml: `<svg viewBox="0 0 560 260" role="img" aria-label="植物細胞の構造図">
-            <rect x="130" y="55" width="300" height="175" rx="22" class="oni-svg-blank"/>
-            <rect x="148" y="73" width="264" height="139" rx="16" fill="#DCFCE7" stroke="#16A34A" stroke-width="2.5"/>
-            <circle cx="235" cy="142" r="34" fill="#FDE68A" stroke="#D97706" stroke-width="2.5"/>
-            <text x="235" y="148" text-anchor="middle" font-size="15" font-weight="800" fill="#92400E">核</text>
-            <ellipse cx="335" cy="142" rx="45" ry="28" fill="#BAE6FD" stroke="#0284C7" stroke-width="2.5"/>
-            <text x="335" y="148" text-anchor="middle" font-size="14" font-weight="800" fill="#0369A1">液胞</text>
-            <text x="280" y="34" text-anchor="middle" font-size="15" font-weight="800" fill="#475569">植物細胞の外側を囲む丈夫な構造（？）は？</text>
-            <text x="455" y="95" font-size="18" font-weight="900" fill="#B45309">← ？</text>
-        </svg>`
+        title: 'DNAの相補的塩基対',
+        slots: [
+            {
+                answer: 'チミン(T)',
+                distractors: ['ウラシル(U)', 'グアニン(G)', 'シトシン(C)'],
+                renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="DNA塩基対の図">
+                    ${svgBox(85, 75, 145, 62, 'アデニン (A)', false, '#DBEAFE', '#2563EB', '#1E40AF')}
+                    <line x1="236" y1="106" x2="314" y2="106" stroke="#64748B" stroke-width="4" stroke-dasharray="6 4"/>
+                    ${svgBox(320, 75, 155, 62, 'チミン(T)', true)}
+                    ${svgBox(85, 160, 145, 62, 'グアニン (G)', false, '#FCE7F3', '#DB2777', '#9D174D')}
+                    <line x1="236" y1="191" x2="314" y2="191" stroke="#64748B" stroke-width="4" stroke-dasharray="6 4"/>
+                    ${svgBox(320, 160, 155, 62, 'シトシン (C)', false, '#FCE7F3', '#DB2777', '#9D174D')}
+                    <text x="280" y="42" text-anchor="middle" font-size="15" font-weight="800" fill="#475569">DNAでアデニン(A)と対になる塩基は？</text>
+                </svg>`
+            },
+            {
+                answer: 'シトシン(C)',
+                distractors: ['チミン(T)', 'ウラシル(U)', 'アデニン(A)'],
+                renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="DNA塩基対の図">
+                    ${svgBox(85, 75, 145, 62, 'アデニン (A)', false, '#DBEAFE', '#2563EB', '#1E40AF')}
+                    <line x1="236" y1="106" x2="314" y2="106" stroke="#64748B" stroke-width="4" stroke-dasharray="6 4"/>
+                    ${svgBox(320, 75, 155, 62, 'チミン (T)', false, '#DBEAFE', '#2563EB', '#1E40AF')}
+                    ${svgBox(85, 160, 145, 62, 'グアニン (G)', false, '#FCE7F3', '#DB2777', '#9D174D')}
+                    <line x1="236" y1="191" x2="314" y2="191" stroke="#64748B" stroke-width="4" stroke-dasharray="6 4"/>
+                    ${svgBox(320, 160, 155, 62, 'シトシン(C)', true)}
+                    <text x="280" y="42" text-anchor="middle" font-size="15" font-weight="800" fill="#475569">DNAでグアニン(G)と対になる塩基は？</text>
+                </svg>`
+            }
+        ]
     },
     {
         id: 'dg-10',
-        printNo: '1',
-        title: 'DNAの相補的塩基対',
-        answer: 'チミン(T)',
-        distractors: ['ウラシル(U)', 'グアニン(G)', 'シトシン(C)'],
-        svgHtml: `<svg viewBox="0 0 560 260" role="img" aria-label="DNA塩基対の図">
-            <rect x="85" y="75" width="145" height="62" rx="14" fill="#DBEAFE" stroke="#2563EB" stroke-width="2.5"/>
-            <text x="157" y="112" text-anchor="middle" font-size="18" font-weight="800" fill="#1E40AF">アデニン (A)</text>
-            <line x1="236" y1="106" x2="314" y2="106" stroke="#64748B" stroke-width="4" stroke-dasharray="6 4"/>
-            <rect x="320" y="75" width="155" height="62" rx="14" class="oni-svg-blank"/>
-            <text x="397" y="113" text-anchor="middle" font-size="22" font-weight="900" fill="#B45309">？</text>
-            <rect x="85" y="160" width="145" height="62" rx="14" fill="#FCE7F3" stroke="#DB2777" stroke-width="2.5"/>
-            <text x="157" y="197" text-anchor="middle" font-size="18" font-weight="800" fill="#9D174D">グアニン (G)</text>
-            <line x1="236" y1="191" x2="314" y2="191" stroke="#64748B" stroke-width="4" stroke-dasharray="6 4"/>
-            <rect x="320" y="160" width="155" height="62" rx="14" fill="#FCE7F3" stroke="#DB2777" stroke-width="2.5"/>
-            <text x="397" y="197" text-anchor="middle" font-size="18" font-weight="800" fill="#9D174D">シトシン (C)</text>
-            <text x="280" y="42" text-anchor="middle" font-size="15" font-weight="800" fill="#475569">DNAでアデニン(A)と対になる塩基は？</text>
-        </svg>`
-    },
-    {
-        id: 'dg-11',
-        printNo: '1',
-        title: '酵素反応と温度のグラフ',
-        answer: '最適温度',
-        distractors: ['失活温度', '光補償点', '光飽和点'],
-        svgHtml: `<svg viewBox="0 0 560 260" role="img" aria-label="酵素と温度のグラフ">
-            <line x1="80" y1="35" x2="80" y2="215" stroke="#334155" stroke-width="2.5"/>
-            <line x1="70" y1="215" x2="490" y2="215" stroke="#334155" stroke-width="2.5"/>
-            <path d="M90 210 Q230 35 280 75 Q330 115 365 212" fill="none" stroke="#0D9488" stroke-width="4"/>
-            <line x1="255" y1="68" x2="255" y2="215" stroke="#F59E0B" stroke-width="2.5" stroke-dasharray="5 4"/>
-            <circle cx="255" cy="68" r="8" fill="#F59E0B" stroke="#B45309" stroke-width="2"/>
-            <rect x="195" y="162" width="120" height="42" rx="10" class="oni-svg-blank"/>
-            <text x="255" y="190" text-anchor="middle" font-size="18" font-weight="900" fill="#B45309">？</text>
-            <text x="485" y="236" text-anchor="end" font-size="13" font-weight="700" fill="#475569">温度 (℃) →</text>
-            <text x="92" y="46" font-size="13" font-weight="700" fill="#475569">反応速度が最大になる温度</text>
-        </svg>`
-    },
-    {
-        id: 'dg-12',
         printNo: '2',
         title: '腎臓での水の再吸収',
-        answer: 'バソプレシン',
-        distractors: ['インスリン', 'グルカゴン', '鉱質コルチコイド'],
-        svgHtml: `<svg viewBox="0 0 560 260" role="img" aria-label="体液浸透圧調節の図">
-            <rect x="25" y="95" width="135" height="64" rx="14" fill="#E0E7FF" stroke="#4F46E5" stroke-width="2.5"/>
-            <text x="92" y="124" text-anchor="middle" font-size="14" font-weight="800" fill="#3730A3">脳下垂体後葉</text>
-            <text x="92" y="146" text-anchor="middle" font-size="12" font-weight="700" fill="#4338CA">浸透圧上昇を感知</text>
-            <path d="M168 127 L198 127" stroke="#64748B" stroke-width="3"/>
-            <rect x="205" y="95" width="150" height="64" rx="14" class="oni-svg-blank"/>
-            <text x="280" y="134" text-anchor="middle" font-size="22" font-weight="900" fill="#B45309">？</text>
-            <path d="M363 127 L393 127" stroke="#64748B" stroke-width="3"/>
-            <rect x="400" y="95" width="135" height="64" rx="14" fill="#CCFBF1" stroke="#0D9488" stroke-width="2.5"/>
-            <text x="467" y="124" text-anchor="middle" font-size="14" font-weight="800" fill="#115E59">腎臓（集合管）</text>
-            <text x="467" y="146" text-anchor="middle" font-size="12" font-weight="700" fill="#0F766E">水の再吸収促進</text>
-        </svg>`
-    },
-    {
-        id: 'dg-13',
-        printNo: '2',
-        title: '自律神経と心臓の働き',
-        answer: '交感神経',
-        distractors: ['副交感神経', '運動神経', '感覚神経'],
-        svgHtml: `<svg viewBox="0 0 560 260" role="img" aria-label="自律神経の図">
-            <rect x="30" y="95" width="135" height="64" rx="14" fill="#FEE2E2" stroke="#DC2626" stroke-width="2.5"/>
-            <text x="97" y="124" text-anchor="middle" font-size="14" font-weight="800" fill="#991B1B">緊張・運動時</text>
-            <text x="97" y="146" text-anchor="middle" font-size="12" font-weight="700" fill="#B91C1C">闘争と逃走</text>
-            <path d="M173 127 L203 127" stroke="#64748B" stroke-width="3"/>
-            <rect x="210" y="95" width="140" height="64" rx="14" class="oni-svg-blank"/>
-            <text x="280" y="134" text-anchor="middle" font-size="22" font-weight="900" fill="#B45309">？</text>
-            <path d="M358 127 L388 127" stroke="#64748B" stroke-width="3"/>
-            <rect x="395" y="95" width="135" height="64" rx="14" fill="#FFEDD5" stroke="#EA580C" stroke-width="2.5"/>
-            <text x="462" y="124" text-anchor="middle" font-size="14" font-weight="800" fill="#9A3412">心拍数増加</text>
-            <text x="462" y="146" text-anchor="middle" font-size="12" font-weight="700" fill="#C2410C">瞳孔拡大</text>
-        </svg>`
-    },
-    {
-        id: 'dg-14',
-        printNo: '3',
-        title: '二次応答の抗体産生グラフ',
-        answer: '記憶細胞',
-        distractors: ['形質細胞', 'キラーT細胞', '好中球'],
-        svgHtml: `<svg viewBox="0 0 560 260" role="img" aria-label="二次応答のグラフ">
-            <line x1="75" y1="35" x2="75" y2="215" stroke="#334155" stroke-width="2.5"/>
-            <line x1="65" y1="215" x2="495" y2="215" stroke="#334155" stroke-width="2.5"/>
-            <path d="M85 212 Q140 165 185 205 Q275 212 315 62 Q355 55 445 145" fill="none" stroke="#4F46E5" stroke-width="4"/>
-            <text x="145" y="160" text-anchor="middle" font-size="13" font-weight="800" fill="#4338CA">一次応答</text>
-            <text x="330" y="48" text-anchor="middle" font-size="14" font-weight="800" fill="#312E81">二次応答（速く大量）</text>
-            <rect x="260" y="128" width="145" height="44" rx="12" class="oni-svg-blank"/>
-            <text x="332" y="157" text-anchor="middle" font-size="18" font-weight="900" fill="#B45309">？</text>
-            <text x="332" y="188" text-anchor="middle" font-size="12" font-weight="700" fill="#475569">2回目を速く強くする細胞</text>
-        </svg>`
-    },
-    {
-        id: 'dg-15',
-        printNo: '3',
-        title: '細胞性免疫の主役',
-        answer: 'キラーT細胞',
-        distractors: ['B細胞', '形質細胞', 'ヘルパーT細胞'],
-        svgHtml: `<svg viewBox="0 0 560 260" role="img" aria-label="細胞性免疫の図">
-            <rect x="25" y="95" width="135" height="64" rx="14" fill="#FEF3C7" stroke="#D97706" stroke-width="2.5"/>
-            <text x="92" y="124" text-anchor="middle" font-size="14" font-weight="800" fill="#92400E">ウイルス感染細胞</text>
-            <text x="92" y="146" text-anchor="middle" font-size="12" font-weight="700" fill="#B45309">細胞ごと排除</text>
-            <path d="M168 127 L198 127" stroke="#64748B" stroke-width="3"/>
-            <rect x="205" y="95" width="150" height="64" rx="14" class="oni-svg-blank"/>
-            <text x="280" y="134" text-anchor="middle" font-size="22" font-weight="900" fill="#B45309">？</text>
-            <path d="M363 127 L393 127" stroke="#64748B" stroke-width="3"/>
-            <rect x="400" y="95" width="135" height="64" rx="14" fill="#FEE2E2" stroke="#DC2626" stroke-width="2.5"/>
-            <text x="467" y="124" text-anchor="middle" font-size="14" font-weight="800" fill="#991B1B">直接攻撃</text>
-            <text x="467" y="146" text-anchor="middle" font-size="12" font-weight="700" fill="#B91C1C">感染細胞を破壊</text>
-        </svg>`
-    },
-    {
-        id: 'dg-16',
-        printNo: '4',
-        title: '陽樹と陰樹の光合成曲線',
-        answer: '陰樹',
-        distractors: ['陽樹', '陽生植物', '草原植物'],
-        svgHtml: `<svg viewBox="0 0 560 260" role="img" aria-label="陽樹と陰樹のグラフ">
-            <line x1="75" y1="35" x2="75" y2="215" stroke="#334155" stroke-width="2.5"/>
-            <line x1="65" y1="165" x2="495" y2="165" stroke="#334155" stroke-width="2.5"/>
-            <path d="M75 205 Q160 85 300 55 L480 55" fill="none" stroke="#EA580C" stroke-width="3.5"/>
-            <path d="M75 182 Q130 120 210 112 L480 112" fill="none" stroke="#16A34A" stroke-width="3.5"/>
-            <text x="455" y="48" text-anchor="end" font-size="13" font-weight="800" fill="#C2410C">陽樹（光補償点が高い）</text>
-            <rect x="330" y="122" width="140" height="38" rx="10" class="oni-svg-blank"/>
-            <text x="400" y="147" text-anchor="middle" font-size="17" font-weight="900" fill="#B45309">？</text>
-            <text x="330" y="188" font-size="12" font-weight="700" fill="#15803D">弱い光でも育つのは？</text>
-        </svg>`
+        slots: [
+            {
+                answer: 'バソプレシン',
+                distractors: ['インスリン', 'グルカゴン', '鉱質コルチコイド'],
+                renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="体液浸透圧調節の図">
+                    ${svgBox(25, 95, 135, 64, '脳下垂体後葉', false, '#E0E7FF', '#4F46E5', '#3730A3', '浸透圧上昇を感知')}
+                    <path d="M168 127 L198 127" stroke="#64748B" stroke-width="3"/>
+                    ${svgBox(205, 95, 150, 64, 'バソプレシン', true)}
+                    <path d="M363 127 L393 127" stroke="#64748B" stroke-width="3"/>
+                    ${svgBox(400, 95, 135, 64, '腎臓（集合管）', false, '#CCFBF1', '#0D9488', '#115E59', '水の再吸収促進')}
+                </svg>`
+            },
+            {
+                answer: '脳下垂体後葉',
+                distractors: ['脳下垂体前葉', '副腎皮質', '副腎髄質'],
+                renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="バソプレシン分泌器官の図">
+                    ${svgBox(25, 95, 135, 64, '脳下垂体後葉', true)}
+                    <path d="M168 127 L198 127" stroke="#64748B" stroke-width="3"/>
+                    ${svgBox(205, 95, 150, 64, 'バソプレシン', false, '#E0E7FF', '#4F46E5', '#3730A3')}
+                    <path d="M363 127 L393 127" stroke="#64748B" stroke-width="3"/>
+                    ${svgBox(400, 95, 135, 64, '腎臓（集合管）', false, '#CCFBF1', '#0D9488', '#115E59', '水の再吸収促進')}
+                </svg>`
+            }
+        ]
     }
 ];
 

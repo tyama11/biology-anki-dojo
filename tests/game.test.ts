@@ -8,6 +8,7 @@ import { PRINT_SCOPES, getOniRankInfo } from '../src/data.ts';
 import {
     ONI_PENALTY_SECONDS,
     buildOniQuestion,
+    buildStandardChoices,
     filterPairItems,
     filterSheetItems,
     isBonusCombo,
@@ -83,6 +84,22 @@ describe('biology-anki-dojo data & logic', () => {
         assert.equal(progress.getOniBest(), null);
         progress.setOniBest(12);
         assert.equal(progress.getOniBest(), 12);
+    });
+
+    it('buildStandardChoices includes decoy panels without duplicate labels', () => {
+        for (const no of PRINT_SCOPES) {
+            const sheetNormal = buildStandardChoices('sheet', no, 'normal');
+            assert.equal(sheetNormal.length, filterSheetItems(no).length + 2);
+            assert.equal(new Set(sheetNormal.map((c) => c.label)).size, sheetNormal.length);
+
+            const pairEasy = buildStandardChoices('pair', no, 'easy');
+            assert.equal(pairEasy.length, filterPairItems(no).length * 2 + 2);
+            assert.equal(new Set(pairEasy.map((c) => c.label)).size, pairEasy.length);
+
+            const pairNormal = buildStandardChoices('pair', no, 'normal');
+            assert.equal(pairNormal.length, filterPairItems(no).length * 2 + 3);
+            assert.equal(new Set(pairNormal.map((c) => c.label)).size, pairNormal.length);
+        }
     });
 
     it('rank thresholds (14/10/6/0), ONI_PENALTY_SECONDS === 3, and bonus combo', () => {

@@ -11,12 +11,12 @@ import {
     ONI_PENALTY_SECONDS,
     ONI_TIME_LIMIT,
     buildOniQuestion,
+    buildStandardChoices,
     computeRemainingSeconds,
     filterPairItems,
     filterSheetItems,
     isBonusCombo
 } from './game-logic.js';
-import { shuffled } from './random.js';
 import { createSoundFx } from './sound.js';
 import { createProgressStore, safeLocalStorage } from './storage.js';
                                                                                       
@@ -359,7 +359,9 @@ function startGame(difficulty            )       {
         startOniTimer();
     } else {
         els.trayTitleText.textContent = CATEGORY_CONFIG[state.category].trayTitle;
-        els.trayHint.textContent = difficulty === 'easy' ? '👆赤シートをめくって確認' : '👆カードを選んで空欄をクリック';
+        els.trayHint.textContent = difficulty === 'easy' && state.category === 'sheet'
+            ? '👆赤シートをめくって確認'
+            : '👆ダミーに注意！カードを選んで空欄へ';
         setupStandardBoard();
         updateStandardProgress();
     }
@@ -369,26 +371,16 @@ function startGame(difficulty            )       {
 }
 
 function setupStandardBoard()       {
+    const stdDiff = state.difficulty === 'easy' ? 'easy' : 'normal';
+    state.choices = buildStandardChoices(state.category, state.scope, stdDiff);
     if (state.category === 'sheet') {
         const items = filterSheetItems(state.scope);
         state.totalQuestions = items.length;
-        state.choices = shuffled(items).map((s) => ({
-            id: s.id,
-            answer: s.answer,
-            label: s.answer,
-            hint: state.difficulty === 'easy' ? s.hint : ''
-        }));
         renderSheetBoard(items);
         renderTray();
     } else {
         const pairs = filterPairItems(state.scope);
         state.totalQuestions = pairs.length * 2;
-        state.choices = shuffled(
-            pairs.flatMap((p) => [
-                { id: `${p.id}-a`, answer: p.termA, label: p.termA, hint: state.difficulty === 'easy' ? p.descA : '' },
-                { id: `${p.id}-b`, answer: p.termB, label: p.termB, hint: state.difficulty === 'easy' ? p.descB : '' }
-            ])
-        );
         renderPairBoard(pairs);
         renderTray();
     }

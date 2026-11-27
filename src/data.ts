@@ -108,3 +108,48 @@ export function getOniRankInfo(score: number): RankInfo {
     if (score >= 6) return { rank: 'B', icon: '🧪', title: '一人前ラボ員', className: 'rank-b' };
     return { rank: 'C', icon: '🌱', title: '見習い観察者', className: 'rank-c' };
 }
+
+export interface DecoyCard {
+    readonly label: string;
+    readonly hint: string;
+}
+
+export const DECOY_CARDS_BY_SCOPE: Readonly<Record<PrintScope, readonly DecoyCard[]>> = {
+    '1': [
+        { label: '0.01mm', hint: '肉眼では見分けられない小ささ' },
+        { label: 'リソソーム', hint: '細胞内の不要物を分解する小器官' },
+        { label: 'G1期', hint: 'DNA複製の準備をする時期' },
+        { label: 'M期', hint: '細胞分裂を行う時期' }
+    ],
+    '2': [
+        { label: 'グリコーゲン', hint: '肝臓などに蓄えられる多糖類' },
+        { label: 'アドレナリン', hint: '副腎髄質から分泌され血糖値を上げる' },
+        { label: '鉱質コルチコイド', hint: '腎臓でNa⁺の再吸収を促進' },
+        { label: 'チロキシン', hint: '甲状腺から分泌され代謝を促進' }
+    ],
+    '3': [
+        { label: 'リソソーム', hint: '細胞内の不要物を分解する小器官' },
+        { label: 'B細胞', hint: '形質細胞に分化し抗体を産生する' },
+        { label: '好中球', hint: '食作用をもつ白血球の一種' },
+        { label: 'マクロファージ', hint: '食作用と抗原提示を行う細胞' }
+    ],
+    '4': [
+        { label: '光飽和点', hint: 'それ以上光を強くしても光合成速度が増えない点' },
+        { label: '青潮', hint: '貧酸素水塊で海面が乳青色になる現象' },
+        { label: '酸性雨', hint: '硫黄酸化物などが溶けて酸性になった雨' },
+        { label: '極相', hint: '遷移が進んで安定した状態の植生' }
+    ]
+};
+
+export const TRICKY_DECOYS: Readonly<Record<string, readonly string[]>> = {
+    '0.1mm': ['0.01mm', '0.1μm', '1mm'],
+    '0.1μm': ['0.1mm', '0.1nm', '0.01μm'],
+    '0.1nm': ['0.1μm', '0.01nm', '0.1mm'],
+    'リゾチーム': ['リソソーム', 'ディフェンシン'],
+    'グルカゴン': ['グリコーゲン', 'アドレナリン', 'インスリン'],
+    '糖質コルチコイド': ['鉱質コルチコイド', 'アドレナリン'],
+    'ヘルパーT細胞': ['キラーT細胞', 'B細胞', '記憶細胞'],
+    '光補償点': ['光飽和点', '森林限界'],
+    'アオコ': ['赤潮', '青潮'],
+    'S期': ['G1期', 'M期']
+};

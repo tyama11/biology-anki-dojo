@@ -1,6 +1,6 @@
-import { ODD_ONE_OUT_ITEMS, PAIR_ITEMS, SHEET_ITEMS, TRUE_FALSE_ITEMS } from './data.ts';
+import { DECOY_CARDS_BY_SCOPE, ODD_ONE_OUT_ITEMS, PAIR_ITEMS, SHEET_ITEMS, TRICKY_DECOYS, TRUE_FALSE_ITEMS } from './data.ts';
 import { pickRandom, shuffled, type Rng } from './random.ts';
-import type { DojoChoice, OniQuestionFormat, PairItem, PrintScope, SheetItem } from './types.ts';
+import type { Category, DojoChoice, OniQuestionFormat, PairItem, PrintScope, SheetItem, StageDifficulty } from './types.ts';
 
 export const ONI_TIME_LIMIT = 60;
 export const ONI_PENALTY_SECONDS = 3;
@@ -14,6 +14,45 @@ export function filterSheetItems(scope: PrintScope): readonly SheetItem[] {
 
 export function filterPairItems(scope: PrintScope): readonly PairItem[] {
     return PAIR_ITEMS.filter((item) => item.printNo === scope);
+}
+
+export function buildStandardChoices(
+    category: Category,
+    scope: PrintScope,
+    difficulty: StageDifficulty,
+    rng: Rng = Math.random
+): DojoChoice[] {
+    const baseChoices: DojoChoice[] = category === 'sheet'
+        ? filterSheetItems(scope).map((s) => ({
+            id: s.id,
+            answer: s.answer,
+            label: s.answer,
+            hint: difficulty === 'easy' ? s.hint : ''
+        }))
+        : filterPairItems(scope).flatMap((p) => [
+            { id: `${p.id}-a`, answer: p.termA, label: p.termA, hint: difficulty === 'easy' ? p.descA : '' },
+            { id: `${p.id}-b`, answer: p.termB, label: p.termB, hint: difficulty === 'easy' ? p.descB : '' }
+        ]);
+
+    if (category === 'sheet' && difficulty === 'easy') {
+        return shuffled(baseChoices, rng);
+    }
+
+    const decoyCount = category === 'pair' && difficulty === 'normal' ? 3 : 2;
+    const existingLabels = new Set(baseChoices.map((c) => c.label));
+    const decoyPool = shuffled(
+        DECOY_CARDS_BY_SCOPE[scope].filter((d) => !existingLabels.has(d.label)),
+        rng
+    ).slice(0, decoyCount);
+
+    const decoyChoices: DojoChoice[] = decoyPool.map((d, idx) => ({
+        id: `decoy-${scope}-${idx}`,
+        answer: d.label,
+        label: d.label,
+        hint: difficulty === 'easy' ? d.hint : ''
+    }));
+
+    return shuffled([...baseChoices, ...decoyChoices], rng);
 }
 
 export interface OniQuestion {
@@ -45,11 +84,18 @@ export function buildOniQuestion(
         const otherTerm = askA ? targetPair.termB : targetPair.termA;
         const promptDesc = askA ? targetPair.shortDescA : targetPair.shortDescB;
 
+        const trickyPool = [
+            ...(TRICKY_DECOYS[correctTerm] ?? []),
+            ...DECOY_CARDS_BY_SCOPE[targetPair.printNo].map((d) => d.label)
+        ].filter((t) => t !== correctTerm && t !== otherTerm);
+
         const extraTerms = shuffled(
             PAIR_ITEMS.filter((p) => p.id !== targetPair.id).flatMap((p) => [p.termA, p.termB]),
             rng
         );
-        const thirdTerm = extraTerms.find((t) => t !== correctTerm && t !== otherTerm) ?? '恒常性';
+        const thirdTerm = (trickyPool.length > 0 ? pickRandom(trickyPool, rng) : undefined)
+            ?? extraTerms.find((t) => t !== correctTerm && t !== otherTerm)
+            ?? '恒常性';
 
         const choices: DojoChoice[] = shuffled(
             [correctTerm, otherTerm, thirdTerm].map((term, idx) => ({
@@ -146,10 +192,19 @@ export function buildOniQuestion(
     const candidates = SHEET_ITEMS.filter((s) => s.answer !== prevAnswer);
     const target = pickRandom(candidates.length > 0 ? candidates : SHEET_ITEMS, rng);
 
-    const distractors = shuffled(
-        SHEET_ITEMS.filter((s) => s.answer !== target.answer).map((s) => s.answer),
-        rng
-    ).slice(0, ONI_TRAY_SIZE - 1);
+    const tricky = TRICKY_DECOYS[target.answer] ?? [];
+    const scopeDecoys = DECOY_CARDS_BY_SCOPE[target.printNo].map((d) => d.label);
+    const sameScopeAnswers = filterSheetItems(target.printNo).map((s) => s.answer);
+    const allAnswers = SHEET_ITEMS.map((s) => s.answer);
+
+    const distractorPool: string[] = [];
+    for (const candidate of [...tricky, ...shuffled(scopeDecoys, rng), ...shuffled(sameScopeAnswers, rng), ...shuffled(allAnswers, rng)]) {
+        if (candidate !== target.answer && !distractorPool.includes(candidate)) {
+            distractorPool.push(candidate);
+            if (distractorPool.length >= ONI_TRAY_SIZE - 1) break;
+        }
+    }
+    const distractors = distractorPool.slice(0, ONI_TRAY_SIZE - 1);
 
     const choices: DojoChoice[] = shuffled(
         [target.answer, ...distractors].map((ans, idx) => ({

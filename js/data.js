@@ -972,13 +972,13 @@ export const CATEGORY_CONFIG                                                    
 export const DIFFICULTY_LABELS                                       = {
     easy: '🔰 かんたん',
     normal: '🧪 ふつう',
-    oni: '👹 おに (60秒TA)'
+    oni: '👹 おに (120秒TA)'
 };
 
 export function getOniRankInfo(score        )           {
-    if (score >= 17) return { rank: 'S', icon: '👑', title: '生物基礎マスター', className: 'rank-s' };
-    if (score >= 13) return { rank: 'A', icon: '🔬', title: '熟練研究者', className: 'rank-a' };
-    if (score >= 8) return { rank: 'B', icon: '🧪', title: '一人前ラボ員', className: 'rank-b' };
+    if (score >= 34) return { rank: 'S', icon: '👑', title: '生物基礎マスター', className: 'rank-s' };
+    if (score >= 26) return { rank: 'A', icon: '🔬', title: '熟練研究者', className: 'rank-a' };
+    if (score >= 16) return { rank: 'B', icon: '🧪', title: '一人前ラボ員', className: 'rank-b' };
     return { rank: 'C', icon: '🌱', title: '見習い観察者', className: 'rank-c' };
 }
 

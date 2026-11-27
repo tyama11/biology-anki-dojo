@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>生物基礎 暗記プリント完全道場</title>
-    <link rel="stylesheet" href="css/style.css?v=20261127-19">
+    <link rel="stylesheet" href="css/style.css?v=20261127-20">
 </head>
 <body>
 
@@ -59,7 +59,7 @@
             <ul class="rules" id="home-rules">
                 <li class="rule-item" id="rule-easy-item"><span class="rule-icon">🔰</span><div><b>かんたん</b>：赤シートめくり／ヒントつき</div></li>
                 <li class="rule-item" id="rule-normal-item"><span class="rule-icon">🧪</span><div><b>ふつう</b>：空欄に用語カードを当てはめてテスト</div></li>
-                <li class="rule-item" id="rule-oni-item" hidden><span class="rule-icon">👹</span><div><b>鬼モード（60秒TA）</b>：全分野ミックス・6形式ランダム出題（図解あてはめ／穴埋め／ペア判別／誤文訂正／用語→意味／仲間はずれ）。ミス-5秒・5連続正解で+3秒！</div></li>
+                <li class="rule-item" id="rule-oni-item" hidden><span class="rule-icon">👹</span><div><b>鬼モード（120秒TA）</b>：全分野ミックス・6形式ランダム出題（図解あてはめ／穴埋め／ペア判別／誤文訂正／用語→意味／仲間はずれ）。ミス-5秒・5連続正解で+3秒！</div></li>
             </ul>
         </section>
 
@@ -73,7 +73,7 @@
                     <span>🧪 ふつうでスタート</span>
                     <span class="mode-clear-badge" id="badge-normal" hidden>✅ クリア済</span>
                 </button>
-                <button type="button" class="mode-btn btn-oni" id="btn-oni" data-difficulty="oni" hidden>👹 鬼モードでスタート（60秒TA）</button>
+                <button type="button" class="mode-btn btn-oni" id="btn-oni" data-difficulty="oni" hidden>👹 鬼モードでスタート（120秒TA）</button>
             </div>
             <div class="oni-progress-note" id="oni-progress-note" hidden></div>
             <p class="kbd-help">
@@ -88,7 +88,7 @@
     <header class="header">
         <button type="button" class="reset-btn" id="home-btn"><span class="reset-icon">🏠</span> ホーム</button>
         <div class="progress-container" id="progress-container">
-            <div class="timer-badge" id="timer-badge" hidden>⏱️ <span id="timer-text">60</span>秒</div>
+            <div class="timer-badge" id="timer-badge" hidden>⏱️ <span id="timer-text">120</span>秒</div>
             <div class="combo-badge" id="combo-badge" hidden>🔥 2 COMBO</div>
             <div class="progress-bar-bg"><div class="progress-bar-fill" id="progress-fill"></div></div>
             <div class="score-text" id="score-text">0問</div>
@@ -125,6 +125,6 @@
     </div>
 </div>
 
-<script type="module" src="js/app.js?v=20261127-19"></script>
+<script type="module" src="js/app.js?v=20261127-20"></script>
 </body>
 </html>

@@ -15,6 +15,7 @@ import {
     computeRemainingSeconds,
     filterPairItems,
     filterSheetItems,
+    getWeakestPrintAdvice,
     isAnswerMatch,
     isBonusCombo
 } from './game-logic.ts';
@@ -33,6 +34,8 @@ interface DojoState {
     totalQuestions: number;
     selectedAnswer: string | null;
     currentOniAnswer: string | null;
+    currentOniPrintNo: PrintScope;
+    oniMistakes: Record<PrintScope, number>;
     solvedIds: Set<string>;
     revealedIds: Set<string>;
     choices: DojoChoice[];
@@ -61,6 +64,8 @@ const state: DojoState = {
     totalQuestions: 0,
     selectedAnswer: null,
     currentOniAnswer: null,
+    currentOniPrintNo: '1',
+    oniMistakes: { '1': 0, '2': 0, '3': 0, '4': 0 },
     solvedIds: new Set(),
     revealedIds: new Set(),
     choices: [],
@@ -352,6 +357,8 @@ function startGame(difficulty: Difficulty): void {
     state.maxCombo = 0;
     state.selectedAnswer = null;
     state.currentOniAnswer = null;
+    state.currentOniPrintNo = '1';
+    state.oniMistakes = { '1': 0, '2': 0, '3': 0, '4': 0 };
     state.solvedIds.clear();
     state.revealedIds.clear();
     state.timeLeft = ONI_TIME_LIMIT;
@@ -544,6 +551,7 @@ function renderTray(): void {
 function setupNextOniQuestion(): void {
     const q = buildOniQuestion(state.currentOniAnswer);
     state.currentOniAnswer = q.correctAnswer;
+    state.currentOniPrintNo = q.printNo;
     state.choices = q.choices;
     els.boardArea.innerHTML = `<div class="dojo-oni-card">${q.questionHtml}</div>`;
     renderTray();
@@ -569,6 +577,7 @@ function submitOniAnswer(answer: string): void {
         setupNextOniQuestion();
     } else {
         state.combo = 0;
+        state.oniMistakes[state.currentOniPrintNo] += 1;
         updateComboBadge();
         SOUND_FX.playWrong();
         triggerErrorShake();
@@ -685,10 +694,10 @@ function handleGameClear(): void {
 }
 
 function getNextRankHint(score: number): string {
-    if (score >= 17) return '👑 最高ランク達成！';
-    if (score >= 13) return `あと ${17 - score}問でランクS！`;
-    if (score >= 8) return `あと ${13 - score}問でランクA！`;
-    return `あと ${8 - score}問でランクB！`;
+    if (score >= 34) return '👑 最高ランク達成！';
+    if (score >= 26) return `あと ${34 - score}問でランクS！`;
+    if (score >= 16) return `あと ${26 - score}問でランクA！`;
+    return `あと ${16 - score}問でランクB！`;
 }
 
 function handleOniTimeUp(): void {
@@ -698,6 +707,7 @@ function handleOniTimeUp(): void {
     if (state.score > prev) progress.setOniBest(best);
     updateTabScores();
     const rankInfo = getOniRankInfo(state.score);
+    const advice = getWeakestPrintAdvice(state.oniMistakes);
     SOUND_FX.playTimeUp(rankInfo.rank === 'S' || rankInfo.rank === 'A');
     els.clearTitle.innerHTML = '⏱️ タイムアップ！';
     els.clearSubtitle.innerHTML = `
@@ -705,6 +715,7 @@ function handleOniTimeUp(): void {
         <div style="font-size: 42px; font-weight: 900; color: var(--primary);">${state.score}問正解！</div>
         <div>ベスト記録：<b>${best} 問</b></div>
         <div class="next-rank-hint">${getNextRankHint(state.score)}</div>
+        <div class="review-advice">${advice}</div>
     `;
     els.clearActions.hidden = false;
     els.autoReturnText.hidden = true;

@@ -7,10 +7,12 @@ import { fileURLToPath } from 'node:url';
 import { PRINT_SCOPES, getOniRankInfo } from '../src/data.ts';
 import {
     ONI_PENALTY_SECONDS,
+    ONI_TIME_LIMIT,
     buildOniQuestion,
     buildStandardChoices,
     filterPairItems,
     filterSheetItems,
+    getWeakestPrintAdvice,
     isAnswerMatch,
     isBonusCombo,
 } from '../src/game-logic.ts';
@@ -116,20 +118,23 @@ describe('biology-anki-dojo data & logic', () => {
         }
     });
 
-    it('rank thresholds (17/13/8/0), ONI_PENALTY_SECONDS === 5, and bonus combo', () => {
+    it('rank thresholds (34/26/16/0), ONI_TIME_LIMIT === 120, ONI_PENALTY_SECONDS === 5, and weakest print advice', () => {
+        assert.equal(ONI_TIME_LIMIT, 120);
         assert.equal(ONI_PENALTY_SECONDS, 5);
-        assert.equal(getOniRankInfo(17).rank, 'S');
-        assert.equal(getOniRankInfo(16).rank, 'A');
-        assert.equal(getOniRankInfo(13).rank, 'A');
-        assert.equal(getOniRankInfo(12).rank, 'B');
-        assert.equal(getOniRankInfo(8).rank, 'B');
-        assert.equal(getOniRankInfo(7).rank, 'C');
+        assert.equal(getOniRankInfo(34).rank, 'S');
+        assert.equal(getOniRankInfo(33).rank, 'A');
+        assert.equal(getOniRankInfo(26).rank, 'A');
+        assert.equal(getOniRankInfo(25).rank, 'B');
+        assert.equal(getOniRankInfo(16).rank, 'B');
+        assert.equal(getOniRankInfo(15).rank, 'C');
         assert.equal(getOniRankInfo(0).rank, 'C');
         assert.equal(isBonusCombo(5), true);
         assert.equal(isBonusCombo(4), false);
         assert.equal(isAnswerMatch('青湖', 'アオコ'), true);
         assert.equal(isAnswerMatch('アオコ', '青湖'), true);
         assert.equal(isAnswerMatch('赤潮', 'アオコ'), false);
+        assert.ok(getWeakestPrintAdvice({ '1': 0, '2': 0, '3': 0, '4': 0 }).includes('ミスなし'));
+        assert.ok(getWeakestPrintAdvice({ '1': 1, '2': 3, '3': 0, '4': 1 }).includes('No.2'));
     });
 });
 

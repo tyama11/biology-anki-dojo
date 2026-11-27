@@ -1701,3 +1701,15 @@ button:focus-visible,
     border-radius: 6px;
     font-weight: 900;
 }
+
+.review-advice {
+    margin-top: 12px;
+    padding: 10px 14px;
+    border-radius: 14px;
+    background: #EFF6FF;
+    border: 1.5px solid #BFDBFE;
+    color: #1E3A8A;
+    font-size: 14px;
+    font-weight: 800;
+    line-height: 1.5;
+}

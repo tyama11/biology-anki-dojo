@@ -1,8 +1,8 @@
-import { DECOY_CARDS_BY_SCOPE, DIAGRAM_ITEMS, ERROR_FIX_ITEMS, ODD_ONE_OUT_ITEMS, PAIR_ITEMS, SHEET_ITEMS, TRICKY_DECOYS } from './data.ts';
+import { DECOY_CARDS_BY_SCOPE, DIAGRAM_ITEMS, ERROR_FIX_ITEMS, ODD_ONE_OUT_ITEMS, PAIR_ITEMS, PRINT_LABELS, PRINT_SCOPES, SHEET_ITEMS, TRICKY_DECOYS } from './data.ts';
 import { pickRandom, shuffled, type Rng } from './random.ts';
 import type { Category, DojoChoice, OniQuestionFormat, PairItem, PrintScope, SheetItem, StageDifficulty } from './types.ts';
 
-export const ONI_TIME_LIMIT = 60;
+export const ONI_TIME_LIMIT = 120;
 export const ONI_PENALTY_SECONDS = 5;
 export const ONI_COMBO_STEP = 5;
 export const ONI_BONUS_SECONDS = 3;
@@ -57,6 +57,7 @@ export function buildStandardChoices(
 
 export interface OniQuestion {
     readonly format: OniQuestionFormat;
+    readonly printNo: PrintScope;
     readonly questionHtml: string;
     readonly correctAnswer: string;
     readonly choices: DojoChoice[];
@@ -97,6 +98,7 @@ export function buildOniQuestion(
 
         return {
             format,
+            printNo: target.printNo,
             questionHtml: `<div class="dojo-q-badge">🖼️ 図解あてはめ：${target.title}</div><div class="dojo-oni-svg-wrap">${slot.renderSvg()}</div>`,
             correctAnswer: slot.answer,
             choices
@@ -139,6 +141,7 @@ export function buildOniQuestion(
 
         return {
             format,
+            printNo: targetPair.printNo,
             questionHtml: `<div class="dojo-q-badge">⚖️ ペア判別</div><div class="dojo-q-text">${promptDesc}</div>`,
             correctAnswer: correctTerm,
             choices
@@ -158,6 +161,7 @@ export function buildOniQuestion(
 
         return {
             format,
+            printNo: target.printNo,
             questionHtml: `<div class="dojo-q-badge">❌ 誤文訂正 / 正文判定</div><div class="dojo-q-text">${target.before}<span class="error-highlight">${shownTerm}</span>${target.after}</div>`,
             correctAnswer,
             choices: shuffled(rawChoices, rng).map((label, idx) => ({
@@ -195,6 +199,7 @@ export function buildOniQuestion(
 
         return {
             format,
+            printNo: targetPair.printNo,
             questionHtml: `<div class="dojo-q-badge">🔄 用語→意味</div><div class="dojo-q-text">「${promptTerm}」の説明は？</div>`,
             correctAnswer: correctDesc,
             choices
@@ -217,6 +222,7 @@ export function buildOniQuestion(
 
         return {
             format,
+            printNo: target.printNo,
             questionHtml: `<div class="dojo-q-badge">🚫 仲間はずれ</div><div class="dojo-q-text">${target.prompt}</div>`,
             correctAnswer: target.oddOne,
             choices
@@ -253,10 +259,25 @@ export function buildOniQuestion(
 
     return {
         format: 'blank',
+        printNo: target.printNo,
         questionHtml: `<div class="dojo-q-badge">📝 穴埋め</div><div class="dojo-q-text">${target.before}<span class="oni-blank-pill">？</span>${target.after}</div>`,
         correctAnswer: target.answer,
         choices
     };
+}
+
+export function getWeakestPrintAdvice(mistakes: Readonly<Record<PrintScope, number>>): string {
+    let maxMistakes = 0;
+    for (const scope of PRINT_SCOPES) {
+        const count = mistakes[scope];
+        if (count > maxMistakes) maxMistakes = count;
+    }
+    if (maxMistakes === 0) {
+        return '🌟 ミスなし！全プリント完璧な仕上がりです！素晴らしい！';
+    }
+    const worstScopes = PRINT_SCOPES.filter((scope) => mistakes[scope] === maxMistakes);
+    const labelText = worstScopes.map((s) => PRINT_LABELS[s]).join('・');
+    return `💡 復習アドバイス：${labelText} を復習しておくと良いよ！（${maxMistakes}回ミス）`;
 }
 
 export function computeRemainingSeconds(endTimeMs: number, nowMs: number): number {

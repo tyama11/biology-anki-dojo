@@ -204,23 +204,23 @@ export const DIAGRAM_ITEMS: readonly DiagramQuestionItem[] = [
             {
                 answer: 'インスリン',
                 distractors: ['グルカゴン', 'アドレナリン', '糖質コルチコイド'],
-                renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="血糖値低下の経路図">
-                    ${svgBox(30, 95, 130, 64, '高血糖', false, '#FEE2E2', '#DC2626', '#991B1B', 'B細胞が感知')}
-                    ${svgArrow(168, 127, 202, 127)}
-                    ${svgBox(210, 95, 140, 64, 'インスリン', true)}
-                    ${svgArrow(358, 127, 392, 127)}
-                    ${svgBox(400, 95, 130, 64, '血糖値低下', false, '#DCFCE7', '#16A34A', '#166534', 'グリコーゲン合成')}
+                renderSvg: () => `<svg viewBox="0 0 560 276" role="img" aria-label="血糖値低下の経路図">
+                    ${svgBox(175, 16, 210, 58, '高血糖（B細胞が感知）', false, '#FEE2E2', '#DC2626', '#991B1B')}
+                    ${svgArrow(280, 78, 280, 104)}
+                    ${svgBox(175, 108, 210, 58, 'インスリン', true)}
+                    ${svgArrow(280, 170, 280, 196)}
+                    ${svgBox(175, 200, 210, 58, '血糖値低下（グリコーゲン合成）', false, '#DCFCE7', '#16A34A', '#166534')}
                 </svg>`
             },
             {
                 answer: 'グリコーゲン',
                 distractors: ['グルコース', 'デンプン', 'セルロース'],
-                renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="グリコーゲン合成の経路図">
-                    ${svgBox(30, 95, 130, 64, '高血糖', false, '#FEE2E2', '#DC2626', '#991B1B', 'B細胞が感知')}
-                    ${svgArrow(168, 127, 202, 127)}
-                    ${svgBox(210, 95, 140, 64, 'インスリン', false, '#DCFCE7', '#16A34A', '#166534', '肝臓・筋肉へ')}
-                    ${svgArrow(358, 127, 392, 127)}
-                    ${svgBox(400, 95, 130, 64, 'グリコーゲン', true, '#DCFCE7', '#16A34A', '#166534', '合成して貯蔵')}
+                renderSvg: () => `<svg viewBox="0 0 560 276" role="img" aria-label="グリコーゲン合成の経路図">
+                    ${svgBox(175, 16, 210, 58, '高血糖（B細胞が感知）', false, '#FEE2E2', '#DC2626', '#991B1B')}
+                    ${svgArrow(280, 78, 280, 104)}
+                    ${svgBox(175, 108, 210, 58, 'インスリン（肝臓・筋肉へ）', false, '#DCFCE7', '#16A34A', '#166534')}
+                    ${svgArrow(280, 170, 280, 196)}
+                    ${svgBox(175, 200, 210, 58, 'グリコーゲン', true, '#DCFCE7', '#16A34A', '#166534', '合成して貯蔵')}
                 </svg>`
             }
         ]
@@ -233,23 +233,23 @@ export const DIAGRAM_ITEMS: readonly DiagramQuestionItem[] = [
             {
                 answer: '糖質コルチコイド',
                 distractors: ['鉱質コルチコイド', 'バソプレシン', 'アドレナリン'],
-                renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="副腎皮質ホルモンの経路図">
-                    ${svgBox(25, 95, 135, 64, '副腎皮質', false, '#FFEDD5', '#EA580C', '#9A3412', '低血糖時に分泌')}
-                    ${svgArrow(168, 127, 198, 127)}
-                    ${svgBox(205, 95, 155, 64, '糖質コルチコイド', true)}
-                    ${svgArrow(368, 127, 398, 127)}
-                    ${svgBox(405, 95, 130, 64, '糖新生', false, '#FEF9C3', '#CA8A04', '#854D0E', '血糖値上昇')}
+                renderSvg: () => `<svg viewBox="0 0 560 276" role="img" aria-label="副腎皮質ホルモンの経路図">
+                    ${svgBox(175, 16, 210, 58, '副腎皮質（低血糖時に分泌）', false, '#FFEDD5', '#EA580C', '#9A3412')}
+                    ${svgArrow(280, 78, 280, 104)}
+                    ${svgBox(175, 108, 210, 58, '糖質コルチコイド', true)}
+                    ${svgArrow(280, 170, 280, 196)}
+                    ${svgBox(175, 200, 210, 58, '糖新生（血糖値上昇）', false, '#FEF9C3', '#CA8A04', '#854D0E')}
                 </svg>`
             },
             {
                 answer: '副腎皮質',
                 distractors: ['副腎髄質', 'すい臓A細胞', '脳下垂体後葉'],
-                renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="副腎皮質の図">
-                    ${svgBox(25, 95, 135, 64, '副腎皮質', true)}
-                    ${svgArrow(168, 127, 198, 127)}
-                    ${svgBox(205, 95, 155, 64, '糖質コルチコイド', false, '#FFEDD5', '#EA580C', '#9A3412')}
-                    ${svgArrow(368, 127, 398, 127)}
-                    ${svgBox(405, 95, 130, 64, '糖新生', false, '#FEF9C3', '#CA8A04', '#854D0E', '血糖値上昇')}
+                renderSvg: () => `<svg viewBox="0 0 560 276" role="img" aria-label="副腎皮質の図">
+                    ${svgBox(175, 16, 210, 58, '副腎皮質', true)}
+                    ${svgArrow(280, 78, 280, 104)}
+                    ${svgBox(175, 108, 210, 58, '糖質コルチコイド', false, '#FFEDD5', '#EA580C', '#9A3412')}
+                    ${svgArrow(280, 170, 280, 196)}
+                    ${svgBox(175, 200, 210, 58, '糖新生（血糖値上昇）', false, '#FEF9C3', '#CA8A04', '#854D0E')}
                 </svg>`
             }
         ]
@@ -421,23 +421,23 @@ export const DIAGRAM_ITEMS: readonly DiagramQuestionItem[] = [
             {
                 answer: 'バソプレシン',
                 distractors: ['インスリン', 'グルカゴン', '鉱質コルチコイド'],
-                renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="体液浸透圧調節の図">
-                    ${svgBox(25, 95, 135, 64, '脳下垂体後葉', false, '#E0E7FF', '#4F46E5', '#3730A3', '浸透圧上昇を感知')}
-                    ${svgArrow(168, 127, 198, 127)}
-                    ${svgBox(205, 95, 150, 64, 'バソプレシン', true)}
-                    ${svgArrow(363, 127, 393, 127)}
-                    ${svgBox(400, 95, 135, 64, '腎臓（集合管）', false, '#CCFBF1', '#0D9488', '#115E59', '水の再吸収促進')}
+                renderSvg: () => `<svg viewBox="0 0 560 276" role="img" aria-label="体液浸透圧調節の図">
+                    ${svgBox(175, 16, 210, 58, '脳下垂体後葉（浸透圧上昇）', false, '#E0E7FF', '#4F46E5', '#3730A3')}
+                    ${svgArrow(280, 78, 280, 104)}
+                    ${svgBox(175, 108, 210, 58, 'バソプレシン', true)}
+                    ${svgArrow(280, 170, 280, 196)}
+                    ${svgBox(175, 200, 210, 58, '腎臓：水の再吸収促進', false, '#CCFBF1', '#0D9488', '#115E59')}
                 </svg>`
             },
             {
                 answer: '脳下垂体後葉',
                 distractors: ['脳下垂体前葉', '副腎皮質', '副腎髄質'],
-                renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="バソプレシン分泌器官の図">
-                    ${svgBox(25, 95, 135, 64, '脳下垂体後葉', true)}
-                    ${svgArrow(168, 127, 198, 127)}
-                    ${svgBox(205, 95, 150, 64, 'バソプレシン', false, '#E0E7FF', '#4F46E5', '#3730A3')}
-                    ${svgArrow(363, 127, 393, 127)}
-                    ${svgBox(400, 95, 135, 64, '腎臓（集合管）', false, '#CCFBF1', '#0D9488', '#115E59', '水の再吸収促進')}
+                renderSvg: () => `<svg viewBox="0 0 560 276" role="img" aria-label="バソプレシン分泌器官の図">
+                    ${svgBox(175, 16, 210, 58, '脳下垂体後葉', true)}
+                    ${svgArrow(280, 78, 280, 104)}
+                    ${svgBox(175, 108, 210, 58, 'バソプレシン', false, '#E0E7FF', '#4F46E5', '#3730A3')}
+                    ${svgArrow(280, 170, 280, 196)}
+                    ${svgBox(175, 200, 210, 58, '腎臓：水の再吸収促進', false, '#CCFBF1', '#0D9488', '#115E59')}
                 </svg>`
             }
         ]

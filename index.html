@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>生物基礎 暗記プリント完全道場</title>
-    <link rel="stylesheet" href="css/style.css?v=20261127-2">
+    <link rel="stylesheet" href="css/style.css?v=20261127-3">
 </head>
 <body>
 
@@ -19,7 +19,7 @@
                 <span>⚖️ 対（ペア）で覚える！</span>
                 <span class="tab-score" id="tab-score-pair" hidden></span>
             </button>
-            <button type="button" id="tab-oni" class="category-tab" role="tab" aria-selected="false" data-tab="oni">
+            <button type="button" id="tab-oni" class="category-tab" role="tab" aria-selected="false" data-tab="oni" hidden>
                 <span>👹 鬼モード（総合TA）</span>
                 <span class="tab-score" id="tab-score-oni" hidden></span>
             </button>
@@ -78,7 +78,7 @@
             <div class="oni-progress-note" id="oni-progress-note" hidden></div>
             <p class="kbd-help">
                 <span class="kbd-line">⌨️ <kbd>Tab</kbd> 移動　<kbd>Enter</kbd> 決定　<kbd>Esc</kbd> 選択解除</span>
-                <span class="kbd-line">👹 鬼モードは <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> キーでそのまま回答</span>
+                <span class="kbd-line" id="kbd-oni-line" hidden>👹 鬼モードは <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> キーでそのまま回答</span>
             </p>
         </section>
     </main>
@@ -125,6 +125,6 @@
     </div>
 </div>
 
-<script type="module" src="js/app.js?v=20261127-2"></script>
+<script type="module" src="js/app.js?v=20261127-3"></script>
 </body>
 </html>

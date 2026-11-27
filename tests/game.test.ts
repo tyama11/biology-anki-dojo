@@ -104,8 +104,9 @@ describe('DOM & index.html integrity', () => {
     const html = readFileSync(join(rootDir, 'index.html'), 'utf8');
     const appTs = readFileSync(join(rootDir, 'src/app.ts'), 'utf8');
 
-    it('3-tab DOM integrity, no "all" scope, every byId exists, and cache-busters match', () => {
+    it('3-tab DOM integrity, no "all" scope, #tab-oni hidden initially, every byId exists, and cache-busters match', () => {
         assert.equal(html.includes('value="all"'), false);
+        assert.match(html, /id="tab-oni"[^>]*hidden/);
         for (const tab of ['sheet', 'pair', 'oni']) {
             assert.ok(html.includes(`data-tab="${tab}"`), `Missing tab data-tab="${tab}"`);
         }

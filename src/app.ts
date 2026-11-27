@@ -102,6 +102,9 @@ const els = {
     tabScoreSheet: byId('tab-score-sheet'),
     tabScorePair: byId('tab-score-pair'),
     tabScoreOni: byId('tab-score-oni'),
+    tabOni: byId<HTMLButtonElement>('tab-oni'),
+    categorySwitcher: bySelector('.category-switcher'),
+    kbdOniLine: byId('kbd-oni-line'),
     categoryTabs: document.querySelectorAll<HTMLButtonElement>('.category-tab'),
     modeButtons: document.querySelectorAll<HTMLButtonElement>('.mode-btn'),
     homeBtn: byId<HTMLButtonElement>('home-btn'),
@@ -197,11 +200,16 @@ function updateTabScores(): void {
     els.tabScorePair.hidden = false;
 
     const unlocked = progress.isOniUnlocked();
+    els.tabOni.hidden = !unlocked;
+    els.categorySwitcher.classList.toggle('oni-unlocked', unlocked);
+    els.kbdOniLine.hidden = !unlocked;
+
     if (!unlocked) {
-        const total = progress.getTotalClearedCount();
-        els.tabScoreOni.textContent = `🔒 ${total}/16`;
         els.tabScoreOni.classList.remove('rank-s');
-        els.tabScoreOni.hidden = false;
+        els.tabScoreOni.hidden = true;
+        if (state.tab === 'oni') {
+            setTab('sheet');
+        }
     } else {
         const best = progress.getOniBest();
         if (best !== null) {
@@ -713,6 +721,7 @@ function resetToHome(): void {
     els.clearOverlay.classList.remove('active');
     els.gameScreen.classList.remove('active');
     els.homeScreen.classList.add('active');
+    els.tabOni.classList.toggle('just-unlocked', state.justUnlockedOni);
     updateScopeBadges();
     updateModeClearBadges();
     updateTabContentVisibility(state.justUnlockedOni);

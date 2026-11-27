@@ -3,7 +3,7 @@ export type TabId = 'sheet' | 'pair' | 'oni';
 export type Difficulty = 'easy' | 'normal' | 'oni';
 export type StageDifficulty = 'easy' | 'normal';
 export type PrintScope = '1' | '2' | '3' | '4';
-export type OniQuestionFormat = 'blank' | 'pair-term' | 'true-false' | 'reverse-desc' | 'odd-one-out';
+export type OniQuestionFormat = 'diagram-slot' | 'blank' | 'pair-term' | 'error-fix' | 'reverse-desc' | 'odd-one-out';
 
 export interface SheetItem {
     readonly id: string;
@@ -39,7 +39,24 @@ export interface OddOneOutItem {
     readonly printNo: PrintScope;
     readonly prompt: string;
     readonly oddOne: string;
-    readonly mates: readonly [string, string];
+    readonly mates: readonly [string, string, string];
+}
+
+export interface DiagramQuestionItem {
+    readonly id: string;
+    readonly printNo: PrintScope;
+    readonly title: string;
+    readonly svgHtml: string;
+    readonly answer: string;
+    readonly distractors: readonly [string, string, string];
+}
+
+export interface ErrorFixItem {
+    readonly id: string;
+    readonly printNo: PrintScope;
+    readonly statementHtml: string;
+    readonly correctAnswer: string;
+    readonly choices: readonly [string, string, string];
 }
 
 export interface DojoChoice {

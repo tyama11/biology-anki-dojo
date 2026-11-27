@@ -1,4 +1,4 @@
-                                                                                                                                
+                                                                                                                                                                   
 
 export const PRINT_SCOPES                        = ['1', '2', '3', '4'];
 
@@ -72,15 +72,183 @@ export const TRUE_FALSE_ITEMS                           = [
 ];
 
 export const ODD_ONE_OUT_ITEMS                           = [
-    { id: 'ooo-1', printNo: '1', prompt: '原核生物でないものは？', oddOne: '酵母菌', mates: ['大腸菌', '乳酸菌'] },
-    { id: 'ooo-2', printNo: '1', prompt: 'DNAに含まれない塩基は？', oddOne: 'ウラシル(U)', mates: ['アデニン(A)', 'チミン(T)'] },
-    { id: 'ooo-3', printNo: '2', prompt: '血糖値を上げないものは？', oddOne: 'インスリン', mates: ['グルカゴン', 'アドレナリン'] },
-    { id: 'ooo-4', printNo: '2', prompt: '交感神経の働きでないのは？', oddOne: '消化促進', mates: ['心拍数増加', '瞳孔拡大'] },
-    { id: 'ooo-5', printNo: '3', prompt: '自然免疫に含まれないのは？', oddOne: '抗体産生', mates: ['好中球の食作用', 'リゾチーム'] },
-    { id: 'ooo-6', printNo: '3', prompt: '体液性免疫の主役でないのは？', oddOne: 'キラーT細胞', mates: ['B細胞', '形質細胞'] },
-    { id: 'ooo-7', printNo: '4', prompt: '一次遷移の場でないのは？', oddOne: '山火事の跡地', mates: ['溶岩流の跡', '乾性遷移の裸地'] },
-    { id: 'ooo-8', printNo: '4', prompt: '温室効果ガスでないのは？', oddOne: '窒素(N₂)', mates: ['二酸化炭素', 'メタン'] },
-    { id: 'ooo-9', printNo: '4', prompt: '非生物的環境でないのは？', oddOne: '植物プランクトン', mates: ['光・温度', '水・土壌'] }
+    { id: 'ooo-1', printNo: '1', prompt: '原核生物でないものは？', oddOne: '酵母菌', mates: ['大腸菌', '乳酸菌', 'シアノバクテリア'] },
+    { id: 'ooo-2', printNo: '1', prompt: 'DNAに含まれない塩基は？', oddOne: 'ウラシル(U)', mates: ['アデニン(A)', 'チミン(T)', 'グアニン(G)'] },
+    { id: 'ooo-3', printNo: '2', prompt: '血糖値を上げないものは？', oddOne: 'インスリン', mates: ['グルカゴン', 'アドレナリン', '糖質コルチコイド'] },
+    { id: 'ooo-4', printNo: '2', prompt: '交感神経の働きでないのは？', oddOne: '消化促進', mates: ['心拍数増加', '瞳孔拡大', '気管支拡張'] },
+    { id: 'ooo-5', printNo: '3', prompt: '自然免疫に含まれないのは？', oddOne: '抗体産生', mates: ['好中球の食作用', 'リゾチーム', 'ディフェンシン'] },
+    { id: 'ooo-6', printNo: '3', prompt: '体液性免疫の主役でないのは？', oddOne: 'キラーT細胞', mates: ['B細胞', '形質細胞', '抗体'] },
+    { id: 'ooo-7', printNo: '4', prompt: '一次遷移の場でないのは？', oddOne: '山火事の跡地', mates: ['溶岩流の跡', '砂丘', '氷河の跡'] },
+    { id: 'ooo-8', printNo: '4', prompt: '温室効果ガスでないのは？', oddOne: '窒素(N₂)', mates: ['二酸化炭素', 'メタン', '水蒸気'] },
+    { id: 'ooo-9', printNo: '4', prompt: '非生物的環境でないのは？', oddOne: '植物プランクトン', mates: ['光・温度', '水・土壌', '大気・風'] }
+];
+
+export const DIAGRAM_ITEMS                                 = [
+    {
+        id: 'dg-1',
+        printNo: '1',
+        title: '細胞周期のサイクル',
+        answer: 'S期',
+        distractors: ['G1期', 'G2期', 'M期'],
+        svgHtml: `<svg viewBox="0 0 560 260" role="img" aria-label="細胞周期の図">
+            <rect x="20" y="95" width="105" height="62" rx="14" fill="#E0F2FE" stroke="#0284C7" stroke-width="2.5"/>
+            <text x="72" y="132" text-anchor="middle" font-size="18" font-weight="800" fill="#0369A1">G1期</text>
+            <path d="M132 126 L154 126" stroke="#64748B" stroke-width="3" marker-end="url(#arr)"/>
+            <rect x="160" y="95" width="105" height="62" rx="14" class="oni-svg-blank"/>
+            <text x="212" y="122" text-anchor="middle" font-size="22" font-weight="900" fill="#B45309">？</text>
+            <text x="212" y="145" text-anchor="middle" font-size="12" font-weight="700" fill="#92400E">DNA複製</text>
+            <path d="M272 126 L294 126" stroke="#64748B" stroke-width="3"/>
+            <rect x="300" y="95" width="105" height="62" rx="14" fill="#E0F2FE" stroke="#0284C7" stroke-width="2.5"/>
+            <text x="352" y="132" text-anchor="middle" font-size="18" font-weight="800" fill="#0369A1">G2期</text>
+            <path d="M412 126 L434 126" stroke="#64748B" stroke-width="3"/>
+            <rect x="440" y="95" width="100" height="62" rx="14" fill="#FCE7F3" stroke="#DB2777" stroke-width="2.5"/>
+            <text x="490" y="132" text-anchor="middle" font-size="18" font-weight="800" fill="#9D174D">M期</text>
+            <text x="280" y="46" text-anchor="middle" font-size="15" font-weight="800" fill="#475569">DNA量が2倍に増える時期は？</text>
+        </svg>`
+    },
+    {
+        id: 'dg-2',
+        printNo: '1',
+        title: '酵素と基質の結合',
+        answer: '活性部位',
+        distractors: ['基質', '生成物', '補酵素'],
+        svgHtml: `<svg viewBox="0 0 560 260" role="img" aria-label="酵素の活性部位の図">
+            <path d="M70 80 L230 80 L230 115 L185 115 L185 155 L230 155 L230 190 L70 190 Z" fill="#CCFBF1" stroke="#0D9488" stroke-width="3"/>
+            <text x="125" y="140" text-anchor="middle" font-size="18" font-weight="800" fill="#115E59">酵素</text>
+            <rect x="195" y="112" width="80" height="44" rx="10" class="oni-svg-blank"/>
+            <text x="235" y="141" text-anchor="middle" font-size="20" font-weight="900" fill="#B45309">？</text>
+            <rect x="335" y="112" width="140" height="44" rx="12" fill="#E0E7FF" stroke="#4F46E5" stroke-width="2.5"/>
+            <text x="405" y="140" text-anchor="middle" font-size="17" font-weight="800" fill="#3730A3">基質（鍵）</text>
+            <text x="280" y="45" text-anchor="middle" font-size="15" font-weight="800" fill="#475569">基質が結合する酵素のくぼみの名称は？</text>
+        </svg>`
+    },
+    {
+        id: 'dg-3',
+        printNo: '2',
+        title: '血糖値を下げる経路',
+        answer: 'インスリン',
+        distractors: ['グルカゴン', 'アドレナリン', '糖質コルチコイド'],
+        svgHtml: `<svg viewBox="0 0 560 260" role="img" aria-label="血糖値低下の経路図">
+            <rect x="30" y="95" width="130" height="64" rx="14" fill="#FEE2E2" stroke="#DC2626" stroke-width="2.5"/>
+            <text x="95" y="124" text-anchor="middle" font-size="15" font-weight="800" fill="#991B1B">高血糖</text>
+            <text x="95" y="146" text-anchor="middle" font-size="13" font-weight="700" fill="#B91C1C">B細胞が感知</text>
+            <path d="M168 127 L202 127" stroke="#64748B" stroke-width="3"/>
+            <rect x="210" y="95" width="140" height="64" rx="14" class="oni-svg-blank"/>
+            <text x="280" y="134" text-anchor="middle" font-size="22" font-weight="900" fill="#B45309">？</text>
+            <path d="M358 127 L392 127" stroke="#64748B" stroke-width="3"/>
+            <rect x="400" y="95" width="130" height="64" rx="14" fill="#DCFCE7" stroke="#16A34A" stroke-width="2.5"/>
+            <text x="465" y="124" text-anchor="middle" font-size="15" font-weight="800" fill="#166534">血糖値低下</text>
+            <text x="465" y="146" text-anchor="middle" font-size="12" font-weight="700" fill="#15803D">グリコーゲン合成</text>
+        </svg>`
+    },
+    {
+        id: 'dg-4',
+        printNo: '2',
+        title: '副腎皮質からの血糖上昇',
+        answer: '糖質コルチコイド',
+        distractors: ['鉱質コルチコイド', 'バソプレシン', 'アドレナリン'],
+        svgHtml: `<svg viewBox="0 0 560 260" role="img" aria-label="副腎皮質ホルモンの経路図">
+            <rect x="25" y="95" width="135" height="64" rx="14" fill="#FFEDD5" stroke="#EA580C" stroke-width="2.5"/>
+            <text x="92" y="124" text-anchor="middle" font-size="15" font-weight="800" fill="#9A3412">副腎皮質</text>
+            <text x="92" y="146" text-anchor="middle" font-size="12" font-weight="700" fill="#C2410C">低血糖時に分泌</text>
+            <path d="M168 127 L198 127" stroke="#64748B" stroke-width="3"/>
+            <rect x="205" y="95" width="155" height="64" rx="14" class="oni-svg-blank"/>
+            <text x="282" y="134" text-anchor="middle" font-size="22" font-weight="900" fill="#B45309">？</text>
+            <path d="M368 127 L398 127" stroke="#64748B" stroke-width="3"/>
+            <rect x="405" y="95" width="130" height="64" rx="14" fill="#FEF9C3" stroke="#CA8A04" stroke-width="2.5"/>
+            <text x="470" y="124" text-anchor="middle" font-size="15" font-weight="800" fill="#854D0E">糖新生</text>
+            <text x="470" y="146" text-anchor="middle" font-size="12" font-weight="700" fill="#A16207">血糖値上昇</text>
+        </svg>`
+    },
+    {
+        id: 'dg-5',
+        printNo: '3',
+        title: '体液性免疫の司令塔',
+        answer: 'ヘルパーT細胞',
+        distractors: ['キラーT細胞', '記憶細胞', 'マクロファージ'],
+        svgHtml: `<svg viewBox="0 0 560 260" role="img" aria-label="体液性免疫フロー図">
+            <rect x="25" y="95" width="125" height="64" rx="14" fill="#E0E7FF" stroke="#4F46E5" stroke-width="2.5"/>
+            <text x="87" y="124" text-anchor="middle" font-size="14" font-weight="800" fill="#3730A3">樹状細胞</text>
+            <text x="87" y="146" text-anchor="middle" font-size="12" font-weight="700" fill="#4338CA">抗原提示</text>
+            <path d="M158 127 L192 127" stroke="#64748B" stroke-width="3"/>
+            <rect x="200" y="95" width="155" height="64" rx="14" class="oni-svg-blank"/>
+            <text x="277" y="134" text-anchor="middle" font-size="22" font-weight="900" fill="#B45309">？</text>
+            <path d="M363 127 L397 127" stroke="#64748B" stroke-width="3"/>
+            <rect x="405" y="95" width="130" height="64" rx="14" fill="#DBEAFE" stroke="#2563EB" stroke-width="2.5"/>
+            <text x="470" y="124" text-anchor="middle" font-size="14" font-weight="800" fill="#1E40AF">B細胞活性化</text>
+            <text x="470" y="146" text-anchor="middle" font-size="12" font-weight="700" fill="#1D4ED8">抗体産生へ</text>
+        </svg>`
+    },
+    {
+        id: 'dg-6',
+        printNo: '4',
+        title: '光合成速度と光の強さ',
+        answer: '光補償点',
+        distractors: ['光飽和点', '森林限界', '呼吸速度'],
+        svgHtml: `<svg viewBox="0 0 560 260" role="img" aria-label="光合成速度グラフ">
+            <line x1="80" y1="30" x2="80" y2="220" stroke="#334155" stroke-width="2.5"/>
+            <line x1="60" y1="160" x2="500" y2="160" stroke="#334155" stroke-width="2.5"/>
+            <path d="M80 200 Q170 90 300 65 L480 65" fill="none" stroke="#0D9488" stroke-width="4"/>
+            <circle cx="132" cy="160" r="8" fill="#F59E0B" stroke="#B45309" stroke-width="2.5"/>
+            <rect x="145" y="170" width="120" height="42" rx="10" class="oni-svg-blank"/>
+            <text x="205" y="198" text-anchor="middle" font-size="18" font-weight="900" fill="#B45309">？</text>
+            <text x="490" y="180" text-anchor="end" font-size="13" font-weight="700" fill="#475569">光の強さ →</text>
+            <text x="92" y="44" font-size="13" font-weight="700" fill="#475569">見かけの光合成速度 0 の点</text>
+        </svg>`
+    },
+    {
+        id: 'dg-7',
+        printNo: '4',
+        title: '乾性遷移の順序',
+        answer: '陽樹林',
+        distractors: ['陰樹林', '低木林', '草原'],
+        svgHtml: `<svg viewBox="0 0 560 260" role="img" aria-label="植生の遷移フロー図">
+            <rect x="20" y="98" width="95" height="58" rx="12" fill="#F1F5F9" stroke="#64748B" stroke-width="2"/>
+            <text x="67" y="133" text-anchor="middle" font-size="15" font-weight="800" fill="#334155">草原・低木</text>
+            <path d="M122 127 L148 127" stroke="#64748B" stroke-width="3"/>
+            <rect x="155" y="95" width="120" height="64" rx="14" class="oni-svg-blank"/>
+            <text x="215" y="134" text-anchor="middle" font-size="22" font-weight="900" fill="#B45309">？</text>
+            <path d="M283 127 L309 127" stroke="#64748B" stroke-width="3"/>
+            <rect x="316" y="98" width="100" height="58" rx="12" fill="#DCFCE7" stroke="#16A34A" stroke-width="2"/>
+            <text x="366" y="133" text-anchor="middle" font-size="15" font-weight="800" fill="#166534">混交林</text>
+            <path d="M423 127 L449 127" stroke="#64748B" stroke-width="3"/>
+            <rect x="456" y="98" width="85" height="58" rx="12" fill="#BBF7D0" stroke="#15803D" stroke-width="2"/>
+            <text x="498" y="133" text-anchor="middle" font-size="15" font-weight="800" fill="#14532D">陰樹林</text>
+        </svg>`
+    },
+    {
+        id: 'dg-8',
+        printNo: '4',
+        title: '生態系の物質循環',
+        answer: '分解者',
+        distractors: ['生産者', '一次消費者', '二次消費者'],
+        svgHtml: `<svg viewBox="0 0 560 260" role="img" aria-label="生態系の物質循環図">
+            <rect x="30" y="95" width="120" height="62" rx="14" fill="#DCFCE7" stroke="#16A34A" stroke-width="2.5"/>
+            <text x="90" y="132" text-anchor="middle" font-size="16" font-weight="800" fill="#166534">生産者</text>
+            <path d="M158 126 L192 126" stroke="#64748B" stroke-width="3"/>
+            <rect x="200" y="95" width="120" height="62" rx="14" fill="#FEF9C3" stroke="#CA8A04" stroke-width="2.5"/>
+            <text x="260" y="132" text-anchor="middle" font-size="16" font-weight="800" fill="#854D0E">消費者</text>
+            <path d="M328 126 L362 126" stroke="#64748B" stroke-width="3"/>
+            <rect x="370" y="95" width="150" height="62" rx="14" class="oni-svg-blank"/>
+            <text x="445" y="134" text-anchor="middle" font-size="22" font-weight="900" fill="#B45309">？</text>
+            <text x="280" y="45" text-anchor="middle" font-size="15" font-weight="800" fill="#475569">遺体・排出物を無機物に分解するのは？</text>
+        </svg>`
+    }
+];
+
+export const ERROR_FIX_ITEMS                          = [
+    { id: 'ef-1', printNo: '1', statementHtml: '光学顕微鏡の限界は <span class="error-highlight">0.1μm</span> である。', correctAnswer: '⭕ このまま正しい', choices: ['⭕ このまま正しい', '0.1mm', '0.1nm'] },
+    { id: 'ef-2', printNo: '1', statementHtml: '酵母菌やカビは <span class="error-highlight">原核生物</span> に分類される。', correctAnswer: '真核生物', choices: ['⭕ このまま正しい', '真核生物', '細菌類'] },
+    { id: 'ef-3', printNo: '1', statementHtml: 'DNA量が2倍に増える時期は <span class="error-highlight">G1期</span> である。', correctAnswer: 'S期', choices: ['⭕ このまま正しい', 'S期', 'M期'] },
+    { id: 'ef-4', printNo: '2', statementHtml: '血糖値を下げる唯一のホルモンは <span class="error-highlight">インスリン</span> である。', correctAnswer: '⭕ このまま正しい', choices: ['⭕ このまま正しい', 'グルカゴン', 'アドレナリン'] },
+    { id: 'ef-5', printNo: '2', statementHtml: 'すい臓のA細胞から分泌されるのは <span class="error-highlight">インスリン</span> である。', correctAnswer: 'グルカゴン', choices: ['⭕ このまま正しい', 'グルカゴン', 'バソプレシン'] },
+    { id: 'ef-6', printNo: '2', statementHtml: '腎臓での水の再吸収を促進するのは <span class="error-highlight">バソプレシン</span> である。', correctAnswer: '⭕ このまま正しい', choices: ['⭕ このまま正しい', '糖質コルチコイド', 'インスリン'] },
+    { id: 'ef-7', printNo: '3', statementHtml: '涙に含まれ細菌の細胞壁を壊す酵素は <span class="error-highlight">ディフェンシン</span> である。', correctAnswer: 'リゾチーム', choices: ['⭕ このまま正しい', 'リゾチーム', 'リソソーム'] },
+    { id: 'ef-8', printNo: '3', statementHtml: 'HIVが破壊する免疫の司令塔は <span class="error-highlight">ヘルパーT細胞</span> である。', correctAnswer: '⭕ このまま正しい', choices: ['⭕ このまま正しい', 'キラーT細胞', 'B細胞'] },
+    { id: 'ef-9', printNo: '3', statementHtml: '動物に作らせた抗体を直接注射するのは <span class="error-highlight">予防接種</span> である。', correctAnswer: '血清療法', choices: ['⭕ このまま正しい', '血清療法', '二次応答'] },
+    { id: 'ef-10', printNo: '4', statementHtml: '見かけの光合成速度が0になるのは <span class="error-highlight">光飽和点</span> である。', correctAnswer: '光補償点', choices: ['⭕ このまま正しい', '光補償点', '森林限界'] },
+    { id: 'ef-11', printNo: '4', statementHtml: '山火事の跡地から始まる遷移は <span class="error-highlight">二次遷移</span> である。', correctAnswer: '⭕ このまま正しい', choices: ['⭕ このまま正しい', '一次遷移', '極相'] },
+    { id: 'ef-12', printNo: '4', statementHtml: '湖沼で水面が緑色になる現象は <span class="error-highlight">赤潮</span> である。', correctAnswer: 'アオコ', choices: ['⭕ このまま正しい', 'アオコ', '青潮'] }
 ];
 
 export const CATEGORY_CONFIG                                                                                        = {
@@ -103,9 +271,9 @@ export const DIFFICULTY_LABELS                                       = {
 };
 
 export function getOniRankInfo(score        )           {
-    if (score >= 14) return { rank: 'S', icon: '👑', title: '生物基礎マスター', className: 'rank-s' };
-    if (score >= 10) return { rank: 'A', icon: '🔬', title: '熟練研究者', className: 'rank-a' };
-    if (score >= 6) return { rank: 'B', icon: '🧪', title: '一人前ラボ員', className: 'rank-b' };
+    if (score >= 17) return { rank: 'S', icon: '👑', title: '生物基礎マスター', className: 'rank-s' };
+    if (score >= 13) return { rank: 'A', icon: '🔬', title: '熟練研究者', className: 'rank-a' };
+    if (score >= 8) return { rank: 'B', icon: '🧪', title: '一人前ラボ員', className: 'rank-b' };
     return { rank: 'C', icon: '🌱', title: '見習い観察者', className: 'rank-c' };
 }
 

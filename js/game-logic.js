@@ -1,12 +1,12 @@
-import { DECOY_CARDS_BY_SCOPE, ODD_ONE_OUT_ITEMS, PAIR_ITEMS, SHEET_ITEMS, TRICKY_DECOYS, TRUE_FALSE_ITEMS } from './data.js';
+import { DECOY_CARDS_BY_SCOPE, DIAGRAM_ITEMS, ERROR_FIX_ITEMS, ODD_ONE_OUT_ITEMS, PAIR_ITEMS, SHEET_ITEMS, TRICKY_DECOYS } from './data.js';
 import { pickRandom, shuffled,          } from './random.js';
                                                                                                                             
 
 export const ONI_TIME_LIMIT = 60;
-export const ONI_PENALTY_SECONDS = 3;
+export const ONI_PENALTY_SECONDS = 5;
 export const ONI_COMBO_STEP = 5;
 export const ONI_BONUS_SECONDS = 3;
-export const ONI_TRAY_SIZE = 3;
+export const ONI_TRAY_SIZE = 4;
 
 export function filterSheetItems(scope            )                       {
     return SHEET_ITEMS.filter((item) => item.printNo === scope);
@@ -63,9 +63,11 @@ export function buildStandardChoices(
  
 
 const ONI_FORMATS                               = [
+    'diagram-slot',
+    'diagram-slot',
     'blank',
     'pair-term',
-    'true-false',
+    'error-fix',
     'reverse-desc',
     'odd-one-out'
 ];
@@ -76,6 +78,27 @@ export function buildOniQuestion(
 )              {
     const format = pickRandom(ONI_FORMATS, rng);
 
+    if (format === 'diagram-slot') {
+        const candidates = DIAGRAM_ITEMS.filter((item) => item.answer !== prevAnswer);
+        const target = pickRandom(candidates.length > 0 ? candidates : DIAGRAM_ITEMS, rng);
+        const choices               = shuffled(
+            [target.answer, ...target.distractors].map((ans, idx) => ({
+                id: `c${idx}`,
+                answer: ans,
+                label: ans,
+                hint: ''
+            })),
+            rng
+        );
+
+        return {
+            format,
+            questionHtml: `<div class="dojo-q-badge">🖼️ 図解あてはめ：${target.title}</div><div class="dojo-oni-svg-wrap">${target.svgHtml}</div>`,
+            correctAnswer: target.answer,
+            choices
+        };
+    }
+
     if (format === 'pair-term') {
         const candidates = PAIR_ITEMS.filter((p) => p.termA !== prevAnswer && p.termB !== prevAnswer);
         const targetPair = pickRandom(candidates.length > 0 ? candidates : PAIR_ITEMS, rng);
@@ -84,21 +107,24 @@ export function buildOniQuestion(
         const otherTerm = askA ? targetPair.termB : targetPair.termA;
         const promptDesc = askA ? targetPair.shortDescA : targetPair.shortDescB;
 
-        const trickyPool = [
-            ...(TRICKY_DECOYS[correctTerm] ?? []),
-            ...DECOY_CARDS_BY_SCOPE[targetPair.printNo].map((d) => d.label)
-        ].filter((t) => t !== correctTerm && t !== otherTerm);
-
-        const extraTerms = shuffled(
-            PAIR_ITEMS.filter((p) => p.id !== targetPair.id).flatMap((p) => [p.termA, p.termB]),
+        const trickyPool = shuffled(
+            [
+                ...(TRICKY_DECOYS[correctTerm] ?? []),
+                ...DECOY_CARDS_BY_SCOPE[targetPair.printNo].map((d) => d.label),
+                ...PAIR_ITEMS.filter((p) => p.id !== targetPair.id).flatMap((p) => [p.termA, p.termB])
+            ],
             rng
         );
-        const thirdTerm = (trickyPool.length > 0 ? pickRandom(trickyPool, rng) : undefined)
-            ?? extraTerms.find((t) => t !== correctTerm && t !== otherTerm)
-            ?? '恒常性';
+        const extras           = [];
+        for (const t of trickyPool) {
+            if (t !== correctTerm && t !== otherTerm && !extras.includes(t)) {
+                extras.push(t);
+                if (extras.length >= ONI_TRAY_SIZE - 2) break;
+            }
+        }
 
         const choices               = shuffled(
-            [correctTerm, otherTerm, thirdTerm].map((term, idx) => ({
+            [correctTerm, otherTerm, ...extras].map((term, idx) => ({
                 id: `c${idx}`,
                 answer: term,
                 label: term,
@@ -115,22 +141,20 @@ export function buildOniQuestion(
         };
     }
 
-    if (format === 'true-false') {
-        const candidates = TRUE_FALSE_ITEMS.filter((item) => {
-            const ans = item.isTrue ? '⭕ 正しい' : '❌ 誤り';
-            return ans !== prevAnswer;
-        });
-        const target = pickRandom(candidates.length > 0 ? candidates : TRUE_FALSE_ITEMS, rng);
-        const correctAnswer = target.isTrue ? '⭕ 正しい' : '❌ 誤り';
+    if (format === 'error-fix') {
+        const candidates = ERROR_FIX_ITEMS.filter((item) => item.correctAnswer !== prevAnswer);
+        const target = pickRandom(candidates.length > 0 ? candidates : ERROR_FIX_ITEMS, rng);
 
         return {
             format,
-            questionHtml: `<div class="dojo-q-badge">⭕❌ 正誤クイズ</div><div class="dojo-q-text">${target.statement}</div>`,
-            correctAnswer,
-            choices: [
-                { id: 'c0', answer: '⭕ 正しい', label: '⭕ 正しい', hint: '' },
-                { id: 'c1', answer: '❌ 誤り', label: '❌ 誤り', hint: '' }
-            ]
+            questionHtml: `<div class="dojo-q-badge">❌ 誤文訂正 / 正文判定</div><div class="dojo-q-text">${target.statementHtml}</div>`,
+            correctAnswer: target.correctAnswer,
+            choices: target.choices.map((label, idx) => ({
+                id: `c${idx}`,
+                answer: label,
+                label,
+                hint: ''
+            }))
         };
     }
 

@@ -24,7 +24,7 @@ describe('biology-anki-dojo data & logic', () => {
         }
     });
 
-    it('buildOniQuestion covers all 5 formats, 2-3 choices, no repeat of prevAnswer, and concise text', () => {
+    it('buildOniQuestion covers all 6 formats, 3-4 choices, no repeat of prevAnswer, and concise text', () => {
         const seenFormats = new Set<OniQuestionFormat>();
         let prev: string | null = null;
         let seed = 12345;
@@ -33,12 +33,18 @@ describe('biology-anki-dojo data & logic', () => {
             return seed / 0x100000000;
         };
 
-        for (let i = 0; i < 80; i++) {
+        for (let i = 0; i < 100; i++) {
             const q = buildOniQuestion(prev, rng);
             seenFormats.add(q.format);
 
-            const expectedChoices = q.format === 'true-false' ? 2 : 3;
+            const expectedChoices = q.format === 'error-fix' || q.format === 'reverse-desc' ? 3 : 4;
             assert.equal(q.choices.length, expectedChoices, `format ${q.format} should have ${expectedChoices} choices`);
+            if (q.format === 'diagram-slot') {
+                assert.ok(q.questionHtml.includes('<svg'), 'diagram-slot should include <svg>');
+            }
+            if (q.format === 'error-fix') {
+                assert.ok(q.choices.some((c) => c.label === '⭕ このまま正しい'), 'error-fix should include keep-correct choice');
+            }
             assert.ok(q.choices.some((c) => c.answer === q.correctAnswer));
             if (prev !== null) {
                 assert.notEqual(q.correctAnswer, prev);
@@ -50,9 +56,10 @@ describe('biology-anki-dojo data & logic', () => {
         }
 
         const expectedFormats: OniQuestionFormat[] = [
+            'diagram-slot',
             'blank',
             'pair-term',
-            'true-false',
+            'error-fix',
             'reverse-desc',
             'odd-one-out',
         ];
@@ -108,14 +115,14 @@ describe('biology-anki-dojo data & logic', () => {
         }
     });
 
-    it('rank thresholds (14/10/6/0), ONI_PENALTY_SECONDS === 3, and bonus combo', () => {
-        assert.equal(ONI_PENALTY_SECONDS, 3);
-        assert.equal(getOniRankInfo(14).rank, 'S');
+    it('rank thresholds (17/13/8/0), ONI_PENALTY_SECONDS === 5, and bonus combo', () => {
+        assert.equal(ONI_PENALTY_SECONDS, 5);
+        assert.equal(getOniRankInfo(17).rank, 'S');
+        assert.equal(getOniRankInfo(16).rank, 'A');
         assert.equal(getOniRankInfo(13).rank, 'A');
-        assert.equal(getOniRankInfo(10).rank, 'A');
-        assert.equal(getOniRankInfo(9).rank, 'B');
-        assert.equal(getOniRankInfo(6).rank, 'B');
-        assert.equal(getOniRankInfo(5).rank, 'C');
+        assert.equal(getOniRankInfo(12).rank, 'B');
+        assert.equal(getOniRankInfo(8).rank, 'B');
+        assert.equal(getOniRankInfo(7).rank, 'C');
         assert.equal(getOniRankInfo(0).rank, 'C');
         assert.equal(isBonusCombo(5), true);
         assert.equal(isBonusCombo(4), false);

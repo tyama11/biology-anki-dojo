@@ -370,7 +370,7 @@ function startGame(difficulty            )       {
 
     if (isOni) {
         els.trayTitleText.textContent = '❓ ？に入るのはどれ？';
-        els.trayHint.textContent = '👆クリック または 1・2・3キーで回答';
+        els.trayHint.textContent = '👆クリック または 1〜4キーで回答';
         setupNextOniQuestion();
         updateOniHud();
         startOniTimer();
@@ -684,10 +684,10 @@ function handleGameClear()       {
 }
 
 function getNextRankHint(score        )         {
-    if (score >= 14) return '👑 最高ランク達成！';
-    if (score >= 10) return `あと ${14 - score}問でランクS！`;
-    if (score >= 6) return `あと ${10 - score}問でランクA！`;
-    return `あと ${6 - score}問でランクB！`;
+    if (score >= 17) return '👑 最高ランク達成！';
+    if (score >= 13) return `あと ${17 - score}問でランクS！`;
+    if (score >= 8) return `あと ${13 - score}問でランクA！`;
+    return `あと ${8 - score}問でランクB！`;
 }
 
 function handleOniTimeUp()       {

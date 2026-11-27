@@ -655,26 +655,19 @@ function showToast(msg        )       {
 function handleGameClear()       {
     state.isPlaying = false;
     let unlockedNow = false;
-    let remainingStages = 0;
     if (state.difficulty === 'easy' || state.difficulty === 'normal') {
         const wasUnlocked = progress.isOniUnlocked();
         progress.markStageCleared(state.category, state.scope, state.difficulty);
         unlockedNow = !wasUnlocked && progress.isOniUnlocked();
         if (unlockedNow) {
             state.justUnlockedOni = true;
-        } else if (!progress.isOniUnlocked()) {
-            remainingStages = 16 - progress.getTotalClearedCount();
         }
     }
     SOUND_FX.playClear(unlockedNow);
     els.clearTitle.innerHTML = '🎊 素晴らしい！ 🎊';
-    if (unlockedNow) {
-        els.clearSubtitle.innerHTML = 'すべてマスターしました！<div class="unlock-message">どこかでとびらがひらいたようだ…！（👹 鬼モードタブが解放されました！）</div>';
-    } else if (remainingStages > 0) {
-        els.clearSubtitle.innerHTML = `すべてマスターしました！<div class="record-badge">あと ${remainingStages} ステージクリアで 👹 鬼モード解放！</div>`;
-    } else {
-        els.clearSubtitle.innerHTML = 'すべてマスターしました！';
-    }
+    els.clearSubtitle.innerHTML = unlockedNow
+        ? 'すべてマスターしました！<div class="unlock-message">どこかでとびらがひらいたようだ…！</div>'
+        : 'すべてマスターしました！';
     els.clearActions.hidden = true;
     els.autoReturnText.hidden = false;
     els.clearOverlay.classList.add('active');

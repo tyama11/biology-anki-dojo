@@ -265,3 +265,12 @@ export function computeRemainingSeconds(endTimeMs: number, nowMs: number): numbe
 export function isBonusCombo(combo: number): boolean {
     return combo > 0 && combo % ONI_COMBO_STEP === 0;
 }
+
+const ANSWER_SYNONYM_GROUPS: ReadonlyArray<readonly string[]> = [
+    ['アオコ', '青湖']
+];
+
+export function isAnswerMatch(given: string, expected: string): boolean {
+    if (given === expected) return true;
+    return ANSWER_SYNONYM_GROUPS.some((group) => group.includes(given) && group.includes(expected));
+}

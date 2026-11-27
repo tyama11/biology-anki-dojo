@@ -11,6 +11,7 @@ import {
     buildStandardChoices,
     filterPairItems,
     filterSheetItems,
+    isAnswerMatch,
     isBonusCombo,
 } from '../src/game-logic.ts';
 import { createMemoryStore, createProgressStore } from '../src/storage.ts';
@@ -126,6 +127,9 @@ describe('biology-anki-dojo data & logic', () => {
         assert.equal(getOniRankInfo(0).rank, 'C');
         assert.equal(isBonusCombo(5), true);
         assert.equal(isBonusCombo(4), false);
+        assert.equal(isAnswerMatch('青湖', 'アオコ'), true);
+        assert.equal(isAnswerMatch('アオコ', '青湖'), true);
+        assert.equal(isAnswerMatch('赤潮', 'アオコ'), false);
     });
 });
 

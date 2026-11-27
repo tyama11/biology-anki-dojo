@@ -266,5 +266,14 @@ export function isBonusCombo(combo        )          {
     return combo > 0 && combo % ONI_COMBO_STEP === 0;
 }
 
+const ANSWER_SYNONYM_GROUPS                                   = [
+    ['アオコ', '青湖']
+];
+
+export function isAnswerMatch(given        , expected        )          {
+    if (given === expected) return true;
+    return ANSWER_SYNONYM_GROUPS.some((group) => group.includes(given) && group.includes(expected));
+}
+
 
 //# sourceURL=game-logic.ts

@@ -15,6 +15,7 @@ import {
     computeRemainingSeconds,
     filterPairItems,
     filterSheetItems,
+    isAnswerMatch,
     isBonusCombo
 } from './game-logic.js';
 import { createSoundFx } from './sound.js';
@@ -471,7 +472,7 @@ function handleStandardSlotClick(slotId        , expectedAnswer        )       {
         showToast('👆 先に右のカードを選んでね');
         return;
     }
-    if (state.selectedAnswer === expectedAnswer) {
+    if (isAnswerMatch(state.selectedAnswer, expectedAnswer)) {
         state.solvedIds.add(slotId);
         state.score++;
         SOUND_FX.playCorrect(1);
@@ -550,7 +551,7 @@ function setupNextOniQuestion()       {
 
 function submitOniAnswer(answer        )       {
     if (!state.isPlaying) return;
-    if (answer === state.currentOniAnswer) {
+    if (state.currentOniAnswer !== null && isAnswerMatch(answer, state.currentOniAnswer)) {
         state.score++;
         state.combo++;
         state.maxCombo = Math.max(state.maxCombo, state.combo);

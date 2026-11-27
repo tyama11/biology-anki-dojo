@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>生物基礎 暗記プリント完全道場</title>
-    <link rel="stylesheet" href="css/style.css?v=20261126-4">
+    <link rel="stylesheet" href="css/style.css?v=20261127-1">
 </head>
 <body>
 
@@ -29,21 +29,32 @@
             <div class="earned-title-banner" id="earned-title-banner" hidden></div>
             <p class="desc" id="home-desc">プリントの重要文を赤シートで隠して確認！</p>
 
-            <div style="margin-bottom: 14px;">
-                <label for="scope-select" style="font-weight:bold; margin-right:8px;">プリント範囲：</label>
-                <select id="scope-select" class="scope-select">
-                    <option value="all">📚 全範囲ミックス（No.1〜4）</option>
-                    <option value="1">🧬 No.1 細胞・酵素・DNA</option>
-                    <option value="2">🧠 No.2 神経とホルモン</option>
-                    <option value="3">🛡️ No.3 免疫</option>
-                    <option value="4">🌿 No.4 植生と生態系</option>
-                </select>
+            <div class="scope-picker">
+                <div class="scope-picker-label">プリント分野を選択（通常モード）：</div>
+                <div class="scope-grid" id="scope-grid" role="radiogroup" aria-label="分野選択">
+                    <button type="button" class="scope-btn active" role="radio" aria-checked="true" data-scope="1">
+                        <span>🧬 No.1 細胞・酵素・DNA</span>
+                        <span class="scope-btn-badge" id="scope-badge-1" hidden></span>
+                    </button>
+                    <button type="button" class="scope-btn" role="radio" aria-checked="false" data-scope="2">
+                        <span>🧠 No.2 神経とホルモン</span>
+                        <span class="scope-btn-badge" id="scope-badge-2" hidden></span>
+                    </button>
+                    <button type="button" class="scope-btn" role="radio" aria-checked="false" data-scope="3">
+                        <span>🛡️ No.3 免疫</span>
+                        <span class="scope-btn-badge" id="scope-badge-3" hidden></span>
+                    </button>
+                    <button type="button" class="scope-btn" role="radio" aria-checked="false" data-scope="4">
+                        <span>🌿 No.4 植生と生態系</span>
+                        <span class="scope-btn-badge" id="scope-badge-4" hidden></span>
+                    </button>
+                </div>
             </div>
 
             <ul class="rules" id="home-rules">
                 <li class="rule-item"><span class="rule-icon">🔰</span><div><b>かんたん</b>：赤シートめくり／ヒントつき</div></li>
-                <li class="rule-item"><span class="rule-icon">🧪</span><div><b>ふつう</b>：空欄に用語カードを当てはめてテスト</div></li>
-                <li class="rule-item" id="rule-oni-item" hidden><span class="rule-icon">👹</span><div><b>おに</b>：60秒TA（ミス-5秒／5連続正解で+3秒）</div></li>
+                <li class="rule-item"><span class="rule-icon">🧪</span><div><b>ふつう</b>：空欄に用語カードを当てはめてテスト（全4分野クリアで👹おに解放！）</div></li>
+                <li class="rule-item" id="rule-oni-item" hidden><span class="rule-icon">👹</span><div><b>おに</b>：全分野ミックス・60秒TA・3択（ミス-5秒／5連続正解で+3秒）</div></li>
             </ul>
         </section>
 
@@ -51,8 +62,9 @@
             <div class="mode-buttons">
                 <button type="button" class="mode-btn btn-easy" data-difficulty="easy">🔰 かんたんでスタート</button>
                 <button type="button" class="mode-btn btn-normal" data-difficulty="normal">🧪 ふつうでスタート</button>
-                <button type="button" class="mode-btn btn-oni" id="btn-oni" data-difficulty="oni" hidden>👹 おにでスタート</button>
+                <button type="button" class="mode-btn btn-oni" id="btn-oni" data-difficulty="oni" hidden>👹 全分野おにでスタート（60秒TA）</button>
             </div>
+            <div class="oni-progress-note" id="oni-progress-note"></div>
             <p class="kbd-help">
                 <span class="kbd-line">⌨️ <kbd>Tab</kbd> 移動　<kbd>Enter</kbd> 決定　<kbd>Esc</kbd> 選択解除</span>
                 <span class="kbd-line">👹 おには <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> キーでそのまま回答</span>
@@ -71,7 +83,7 @@
             <div class="score-text" id="score-text">0問</div>
         </div>
         <div class="header-right">
-            <div class="mode-display" id="mode-display">📚 全範囲 / 🔰 かんたん</div>
+            <div class="mode-display" id="mode-display">🧬 No.1 細胞・酵素・DNA / 🔰 かんたん</div>
             <button type="button" class="mute-btn" id="game-mute-btn" aria-label="効果音のオン・オフ">🔊</button>
         </div>
     </header>
@@ -102,6 +114,6 @@
     </div>
 </div>
 
-<script type="module" src="js/app.js?v=20261126-4"></script>
+<script type="module" src="js/app.js?v=20261127-1"></script>
 </body>
 </html>

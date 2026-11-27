@@ -4,27 +4,48 @@ import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { PAIR_ITEMS, SHEET_ITEMS, getOniRankInfo } from '../src/data.ts';
+import { PRINT_SCOPES, getOniRankInfo } from '../src/data.ts';
 import { buildOniQuestion, filterPairItems, filterSheetItems, isBonusCombo } from '../src/game-logic.ts';
+import { createMemoryStore, createProgressStore } from '../src/storage.ts';
 
 describe('biology-anki-dojo data & logic', () => {
-    it('SHEET_ITEMS and PAIR_ITEMS cover prints 1 to 4', () => {
-        for (const no of ['1', '2', '3', '4'] as const) {
-            assert.ok(filterSheetItems(no).length > 0);
-            assert.ok(filterPairItems(no).length > 0);
+    it('SHEET_ITEMS (>=4) and PAIR_ITEMS (>=3) cover prints 1 to 4', () => {
+        for (const no of PRINT_SCOPES) {
+            assert.ok(filterSheetItems(no).length >= 4, `sheet print ${no} should have >=4 items`);
+            assert.ok(filterPairItems(no).length >= 3, `pair print ${no} should have >=3 items`);
         }
-        assert.equal(filterSheetItems('all').length, SHEET_ITEMS.length);
-        assert.equal(filterPairItems('all').length, PAIR_ITEMS.length);
     });
 
-    it('buildOniQuestion produces 3 choices including the correct answer', () => {
-        const qSheet = buildOniQuestion('sheet', 'all', null);
-        assert.equal(qSheet.choices.length, 3);
-        assert.ok(qSheet.choices.some((c) => c.answer === qSheet.correctAnswer));
+    it('buildOniQuestion produces 3 choices across all scopes without repeating prevAnswer', () => {
+        for (const cat of ['sheet', 'pair'] as const) {
+            let prev: string | null = null;
+            for (let i = 0; i < 6; i++) {
+                const q = buildOniQuestion(cat, prev);
+                assert.equal(q.choices.length, 3);
+                assert.ok(q.choices.some((c) => c.answer === q.correctAnswer));
+                if (prev !== null) {
+                    assert.notEqual(q.correctAnswer, prev);
+                }
+                prev = q.correctAnswer;
+            }
+        }
+    });
 
-        const qPair = buildOniQuestion('pair', 'all', null);
-        assert.equal(qPair.choices.length, 3);
-        assert.ok(qPair.choices.some((c) => c.answer === qPair.correctAnswer));
+    it('progress store unlocks oni only after all 4 scopes are cleared per category', () => {
+        const progress = createProgressStore(createMemoryStore());
+        assert.equal(progress.isOniUnlocked('sheet'), false);
+        assert.equal(progress.getClearedScopeCount('sheet'), 0);
+
+        progress.markScopeCleared('sheet', '1');
+        progress.markScopeCleared('sheet', '2');
+        progress.markScopeCleared('sheet', '3');
+        assert.equal(progress.getClearedScopeCount('sheet'), 3);
+        assert.equal(progress.isOniUnlocked('sheet'), false);
+
+        progress.markScopeCleared('sheet', '4');
+        assert.equal(progress.getClearedScopeCount('sheet'), 4);
+        assert.equal(progress.isOniUnlocked('sheet'), true);
+        assert.equal(progress.isOniUnlocked('pair'), false);
     });
 
     it('rank thresholds & bonus combo', () => {
@@ -42,7 +63,8 @@ describe('DOM & index.html integrity', () => {
     const html = readFileSync(join(rootDir, 'index.html'), 'utf8');
     const appTs = readFileSync(join(rootDir, 'src/app.ts'), 'utf8');
 
-    it('every byId(...) in src/app.ts exists in index.html and cache-busters match', () => {
+    it('every byId(...) in src/app.ts exists in index.html, no "all" scope, and cache-busters match', () => {
+        assert.equal(html.includes('value="all"'), false);
         for (const m of appTs.matchAll(/byId(?:<[^>]+>)?\('([^']+)'\)/g)) {
             assert.ok(html.includes(`id="${m[1]}"`), `Missing id="${m[1]}"`);
         }

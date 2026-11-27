@@ -1,4 +1,5 @@
-                                           
+import { PRINT_SCOPES } from './data.js';
+                                                       
 
 /** localStorage と同じ最小インターフェース（テストではメモリ実装を使う） */
                                 
@@ -6,14 +7,14 @@
                                               
  
 
-export const MUTE_STORAGE_KEY = 'mitosis-master-muted';
+export const MUTE_STORAGE_KEY = 'biology-anki-dojo-muted';
 
 export function oniBestKey(category          )         {
-    return `mitosis-master-oni-best-${category}`;
+    return `biology-anki-dojo-oni-best-${category}`;
 }
 
-export function oniUnlockKey(category          )         {
-    return `mitosis-master-oni-unlocked-${category}`;
+export function scopeClearedKey(category          , scope            )         {
+    return `biology-anki-dojo-cleared-${category}-${scope}`;
 }
 
 export function createMemoryStore(initial                         = {})                {
@@ -41,8 +42,10 @@ export function safeLocalStorage()                {
                                 
                                                   
                                                         
+                                                                   
+                                                                  
+                                                     
                                                
-                                        
  
 
 export function createProgressStore(store               )                {
@@ -56,11 +59,17 @@ export function createProgressStore(store               )                {
         setOniBest(category, score) {
             store.setItem(oniBestKey(category), String(score));
         },
-        isOniUnlocked(category) {
-            return store.getItem(oniUnlockKey(category)) === 'true';
+        isScopeCleared(category, scope) {
+            return store.getItem(scopeClearedKey(category, scope)) === 'true';
         },
-        unlockOni(category) {
-            store.setItem(oniUnlockKey(category), 'true');
+        markScopeCleared(category, scope) {
+            store.setItem(scopeClearedKey(category, scope), 'true');
+        },
+        getClearedScopeCount(category) {
+            return PRINT_SCOPES.filter((scope) => store.getItem(scopeClearedKey(category, scope)) === 'true').length;
+        },
+        isOniUnlocked(category) {
+            return PRINT_SCOPES.every((scope) => store.getItem(scopeClearedKey(category, scope)) === 'true');
         }
     };
 }

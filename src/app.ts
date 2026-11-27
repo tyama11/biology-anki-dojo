@@ -2,6 +2,7 @@ import {
     CATEGORY_CONFIG,
     DIFFICULTY_LABELS,
     PRINT_LABELS,
+    PRINT_SCOPES,
     getOniRankInfo
 } from './data.ts';
 import { byId, bySelector } from './dom.ts';
@@ -28,7 +29,7 @@ interface DojoState {
     combo: number;
     maxCombo: number;
     totalQuestions: number;
-    activeBlankIndex: number;
+    selectedAnswer: string | null;
     currentOniAnswer: string | null;
     solvedIds: Set<string>;
     revealedIds: Set<string>;
@@ -50,12 +51,12 @@ const SOUND_FX = createSoundFx(storage);
 const state: DojoState = {
     category: 'sheet',
     difficulty: 'easy',
-    scope: 'all',
+    scope: '1',
     score: 0,
     combo: 0,
     maxCombo: 0,
     totalQuestions: 0,
-    activeBlankIndex: 0,
+    selectedAnswer: null,
     currentOniAnswer: null,
     solvedIds: new Set(),
     revealedIds: new Set(),
@@ -80,7 +81,14 @@ const els = {
     btnOni: byId<HTMLButtonElement>('btn-oni'),
     homeMuteBtn: byId<HTMLButtonElement>('home-mute-btn'),
     gameMuteBtn: byId<HTMLButtonElement>('game-mute-btn'),
-    scopeSelect: byId<HTMLSelectElement>('scope-select'),
+    oniProgressNote: byId('oni-progress-note'),
+    scopeButtons: document.querySelectorAll<HTMLButtonElement>('.scope-btn'),
+    scopeBadges: {
+        '1': byId('scope-badge-1'),
+        '2': byId('scope-badge-2'),
+        '3': byId('scope-badge-3'),
+        '4': byId('scope-badge-4')
+    } as Record<PrintScope, HTMLElement>,
     tabScoreSheet: byId('tab-score-sheet'),
     tabScorePair: byId('tab-score-pair'),
     categoryTabs: document.querySelectorAll<HTMLButtonElement>('.category-tab'),
@@ -116,9 +124,14 @@ function init(): void {
         });
     });
 
-    els.scopeSelect.addEventListener('change', () => {
-        SOUND_FX.playTap();
-        state.scope = els.scopeSelect.value as PrintScope;
+    els.scopeButtons.forEach((btn) => {
+        btn.addEventListener('click', () => {
+            SOUND_FX.playTap();
+            const scope = btn.dataset['scope'];
+            if (scope === '1' || scope === '2' || scope === '3' || scope === '4') {
+                setScope(scope);
+            }
+        });
     });
 
     els.modeButtons.forEach((btn) => {
@@ -197,6 +210,31 @@ function updateDifficultyVisibility(animate = false): void {
     els.ruleOniItem.hidden = !unlocked;
     els.btnOni.hidden = !unlocked;
     els.btnOni.classList.toggle('just-unlocked', unlocked && animate);
+    if (unlocked) {
+        els.oniProgressNote.hidden = true;
+    } else {
+        const cleared = progress.getClearedScopeCount(state.category);
+        els.oniProgressNote.textContent = `🔒 全4分野の「ふつう」クリアで全分野おに解放（${cleared} / ${PRINT_SCOPES.length} 分野クリア）`;
+        els.oniProgressNote.hidden = false;
+    }
+}
+
+function updateScopeBadges(): void {
+    PRINT_SCOPES.forEach((scope) => {
+        const badge = els.scopeBadges[scope];
+        const cleared = progress.isScopeCleared(state.category, scope);
+        badge.textContent = '✅ クリア';
+        badge.hidden = !cleared;
+    });
+}
+
+function setScope(scope: PrintScope): void {
+    state.scope = scope;
+    els.scopeButtons.forEach((btn) => {
+        const active = btn.dataset['scope'] === scope;
+        btn.classList.toggle('active', active);
+        btn.setAttribute('aria-checked', String(active));
+    });
 }
 
 function setCategory(cat: Category): void {
@@ -207,6 +245,7 @@ function setCategory(cat: Category): void {
         tab.setAttribute('aria-selected', String(active));
     });
     els.homeDesc.textContent = CATEGORY_CONFIG[cat].description;
+    updateScopeBadges();
     updateDifficultyVisibility();
     updateCurrentTitle();
 }
@@ -232,7 +271,9 @@ function startGame(difficulty: Difficulty): void {
     els.scoreText.hidden = !isOni;
     els.progressFill.classList.toggle('timer-fill', isOni);
     els.progressFill.classList.remove('urgent');
-    els.modeDisplay.textContent = `${PRINT_LABELS[state.scope]} / ${DIFFICULTY_LABELS[difficulty]}`;
+    els.modeDisplay.textContent = isOni
+        ? `📚 全分野 / ${DIFFICULTY_LABELS.oni}`
+        : `${PRINT_LABELS[state.scope]} / ${DIFFICULTY_LABELS[difficulty]}`;
 
     if (isOni) {
         els.trayTitleText.textContent = '❓ ？に入るのはどれ？';
@@ -415,7 +456,7 @@ function renderTray(): void {
 }
 
 function setupNextOniQuestion(): void {
-    const q = buildOniQuestion(state.category, state.scope, state.currentOniAnswer);
+    const q = buildOniQuestion(state.category, state.currentOniAnswer);
     state.currentOniAnswer = q.correctAnswer;
     state.choices = q.choices;
     els.boardArea.innerHTML = `<div class="dojo-oni-card">${q.questionHtml}</div>`;
@@ -432,6 +473,7 @@ function submitOniAnswer(answer: string): void {
         if (isBonusCombo(state.combo)) {
             state.oniEndTime += ONI_BONUS_SECONDS * 1000;
             SOUND_FX.playBonus();
+            flashTimerBadge('bonus-flash');
             showToast(`🔥 ${state.combo}連続！ +${ONI_BONUS_SECONDS}秒！`);
         } else {
             SOUND_FX.playCorrect(state.combo);
@@ -444,6 +486,7 @@ function submitOniAnswer(answer: string): void {
         updateComboBadge();
         SOUND_FX.playWrong();
         triggerErrorShake();
+        flashTimerBadge('penalty-flash');
         state.oniEndTime -= ONI_PENALTY_SECONDS * 1000;
         showToast(`❌ ミス！ -${ONI_PENALTY_SECONDS}秒`);
         const rem = Math.max(0, state.oniEndTime - Date.now());
@@ -479,6 +522,13 @@ function updateComboBadge(): void {
     } else {
         els.comboBadge.hidden = true;
     }
+}
+
+function flashTimerBadge(className: 'bonus-flash' | 'penalty-flash'): void {
+    els.timerBadge.classList.remove('bonus-flash', 'penalty-flash');
+    void els.timerBadge.offsetWidth;
+    els.timerBadge.classList.add(className);
+    setTimeout(() => els.timerBadge.classList.remove(className), 350);
 }
 
 function triggerErrorShake(): void {
@@ -529,17 +579,26 @@ function showToast(msg: string): void {
 function handleGameClear(): void {
     state.isPlaying = false;
     let unlockedNow = false;
-    const key = state.category;
-    if (state.difficulty === 'normal' && !progress.isOniUnlocked(key)) {
-        progress.unlockOni(key);
-        state.justUnlockedOni = true;
-        unlockedNow = true;
+    let remainingScopes = 0;
+    if (state.difficulty === 'normal') {
+        const wasUnlocked = progress.isOniUnlocked(state.category);
+        progress.markScopeCleared(state.category, state.scope);
+        unlockedNow = !wasUnlocked && progress.isOniUnlocked(state.category);
+        if (unlockedNow) {
+            state.justUnlockedOni = true;
+        } else if (!progress.isOniUnlocked(state.category)) {
+            remainingScopes = PRINT_SCOPES.length - progress.getClearedScopeCount(state.category);
+        }
     }
     SOUND_FX.playClear(unlockedNow);
     els.clearTitle.innerHTML = '🎊 素晴らしい！ 🎊';
-    els.clearSubtitle.innerHTML = unlockedNow
-        ? 'すべてマスターしました！<div class="unlock-message">どこかでとびらがひらいたようだ…！</div>'
-        : 'すべてマスターしました！';
+    if (unlockedNow) {
+        els.clearSubtitle.innerHTML = 'すべてマスターしました！<div class="unlock-message">どこかでとびらがひらいたようだ…！（全分野おに解放！）</div>';
+    } else if (remainingScopes > 0) {
+        els.clearSubtitle.innerHTML = `すべてマスターしました！<div class="record-badge">あと ${remainingScopes} 分野の「ふつう」クリアで 👹 全分野おに解放！</div>`;
+    } else {
+        els.clearSubtitle.innerHTML = 'すべてマスターしました！';
+    }
     els.clearActions.hidden = true;
     els.autoReturnText.hidden = false;
     els.clearOverlay.classList.add('active');
@@ -579,6 +638,7 @@ function resetToHome(): void {
     els.clearOverlay.classList.remove('active');
     els.gameScreen.classList.remove('active');
     els.homeScreen.classList.add('active');
+    updateScopeBadges();
     updateDifficultyVisibility(state.justUnlockedOni);
     updateTabScores();
     state.justUnlockedOni = false;

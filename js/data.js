@@ -1,7 +1,8 @@
                                                                                                   
 
+export const PRINT_SCOPES                        = ['1', '2', '3', '4'];
+
 export const PRINT_LABELS                                       = {
-    all: '📚 全範囲ミックス',
     '1': '🧬 No.1 細胞・酵素・DNA',
     '2': '🧠 No.2 神経とホルモン',
     '3': '🛡️ No.3 免疫',
@@ -36,10 +37,16 @@ export const SHEET_ITEMS                       = [
 
 export const PAIR_ITEMS                      = [
     { id: 'p1', printNo: '1', pairTitle: '原核 vs 真核', termA: '細菌類（〜菌）', descA: '核をもたない原核生物（大腸菌・乳酸菌など）', termB: '菌類（酵母菌・カビ）', descB: '核をもつ真核生物' },
+    { id: 'p1b', printNo: '1', pairTitle: '代謝の区分', termA: '同化', descA: '簡単な物質から複雑な物質を合成する反応（光合成など）', termB: '異化', descB: '複雑な物質を簡単な物質に分解しエネルギーを取り出す反応（呼吸など）' },
+    { id: 'p1c', printNo: '1', pairTitle: 'エネルギー変換小器官', termA: 'ミトコンドリア', descA: '呼吸の場としてATPを合成する（動物・植物ともに存在）', termB: '葉緑体', descB: '光合成の場として有機物を合成する（植物・藻類に存在）' },
+    { id: 'p1d', printNo: '1', pairTitle: '核酸の種類', termA: 'DNA', descA: '二本鎖らせん構造で遺伝情報の本体（糖はデオキシリボース）', termB: 'RNA', descB: '一本鎖でタンパク質合成に働く（糖はリボース）' },
     { id: 'p2', printNo: '2', pairTitle: '血糖調節ホルモン', termA: 'グルカゴン（A細胞）', descA: 'グリコーゲンを分解し血糖値を上げる', termB: 'インスリン（B細胞）', descB: 'グルコースをグリコーゲンに変え血糖値を下げる' },
-    { id: 'p3', printNo: '2', pairTitle: '自律神経', termA: '交感神経', descA: '闘争と逃走（心拍数増加・瞳孔拡大）', termB: '副交感神経', descB: 'リラックス（消化管の働き促進・心拍数減少）' },
-    { id: 'p4', printNo: '3', pairTitle: '化学的防御', termA: 'リゾチーム', descA: '涙やだ液に含まれ細菌の細胞壁を分解', termB: 'ディフェンシン', descB: '皮膚や粘膜に含まれ細菌の細胞膜を破壊' },
-    { id: 'p5', printNo: '3', pairTitle: '医療への応用', termA: '予防接種（ワクチン）', descA: '無毒化・弱毒化した病原体で記憶細胞をつくる', termB: '血清療法', descB: '動物に作らせた抗体を直接注射する' },
+    { id: 'p2b', printNo: '2', pairTitle: '自律神経', termA: '交感神経', descA: '闘争と逃走（心拍数増加・瞳孔拡大）', termB: '副交感神経', descB: 'リラックス（消化管の働き促進・心拍数減少）' },
+    { id: 'p2c', printNo: '2', pairTitle: '分泌腺の種類', termA: '内分泌腺', descA: '排出管をもたずホルモンを血液中に直接分泌する', termB: '外分泌腺', descB: '排出管を通じて消化液や汗などを体外・管腔へ分泌する' },
+    { id: 'p3', printNo: '3', pairTitle: '化学的防御', termA: 'リゾチーム', descA: '涙やだ液に含まれ細菌の細胞壁を分解', termB: 'ディフェンシン', descB: '皮膚や粘膜に含まれ細菌の細胞膜を破壊' },
+    { id: 'p3b', printNo: '3', pairTitle: '医療への応用', termA: '予防接種（ワクチン）', descA: '無毒化・弱毒化した病原体で記憶細胞をつくる', termB: '血清療法', descB: '動物に作らせた抗体を直接注射する' },
+    { id: 'p3c', printNo: '3', pairTitle: '獲得免疫の2系統', termA: '体液性免疫', descA: 'B細胞が形質細胞に分化して抗体を産生し排除する', termB: '細胞性免疫', descB: 'キラーT細胞が感染細胞などを直接攻撃して破壊する' },
+    { id: 'p3d', printNo: '3', pairTitle: '免疫の分類', termA: '自然免疫', descA: '生まれつき備わり非特異的にすばやく病原体を排除する', termB: '獲得免疫', descB: '抗原を記憶し特異的かつ強力に病原体を排除する' },
     { id: 'p6', printNo: '4', pairTitle: '植生の遷移', termA: '一次遷移', descA: '土壌のない裸地（溶岩流の跡など）から始まる', termB: '二次遷移', descB: '土壌や種子が残る跡地（山火事・伐採後）から始まる' },
     { id: 'p7', printNo: '4', pairTitle: '環境と生物の相互作用', termA: '作用', descA: '非生物的環境（光・水・温度）が生物に与える影響', termB: '環境形成作用', descB: '生物が非生物的環境（土壌・光など）を変化させる働き' },
     { id: 'p8', printNo: '4', pairTitle: '富栄養化', termA: 'アオコ', descA: '湖沼でプランクトンが大発生し水面が緑色になる', termB: '赤潮', descB: '内湾・内海でプランクトンが大発生し海面が赤褐色になる' },

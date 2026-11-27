@@ -9,13 +9,11 @@ export const ONI_BONUS_SECONDS = 3;
 export const ONI_TRAY_SIZE = 3;
 
 export function filterSheetItems(scope            )                       {
-    return scope === 'all' ? SHEET_ITEMS : SHEET_ITEMS.filter((item) => item.printNo === scope);
+    return SHEET_ITEMS.filter((item) => item.printNo === scope);
 }
 
 export function filterPairItems(scope            )                      {
-    if (scope === 'all') return PAIR_ITEMS;
-    const filtered = PAIR_ITEMS.filter((item) => item.printNo === scope);
-    return filtered.length > 0 ? filtered : PAIR_ITEMS;
+    return PAIR_ITEMS.filter((item) => item.printNo === scope);
 }
 
                               
@@ -26,12 +24,11 @@ export function filterPairItems(scope            )                      {
 
 export function buildOniQuestion(
     category          ,
-    scope            ,
     prevAnswer               ,
     rng      = Math.random
 )              {
     if (category === 'pair') {
-        const pool = filterPairItems(scope);
+        const pool = PAIR_ITEMS;
         const candidates = pool.filter((p) => p.termA !== prevAnswer && p.termB !== prevAnswer);
         const targetPair = pickRandom(candidates.length > 0 ? candidates : pool, rng);
         const askA = rng() < 0.5;
@@ -61,7 +58,7 @@ export function buildOniQuestion(
         };
     }
 
-    const pool = filterSheetItems(scope);
+    const pool = SHEET_ITEMS;
     const candidates = pool.filter((s) => s.answer !== prevAnswer);
     const target = pickRandom(candidates.length > 0 ? candidates : pool, rng);
 

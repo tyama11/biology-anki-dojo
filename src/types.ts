@@ -1,6 +1,6 @@
 export type Category = 'sheet' | 'pair';
 export type Difficulty = 'easy' | 'normal' | 'oni';
-export type PrintScope = '1' | '2' | '3' | '4' | 'all';
+export type PrintScope = '1' | '2' | '3' | '4';
 
 export interface SheetItem {
     readonly id: string;

@@ -19,6 +19,8 @@ export const SHEET_ITEMS                       = [
     { id: 's1-6', printNo: '1', section: 'DNAとゲノム', before: 'DNA量がSすごく増えるのは（', answer: 'S期', after: '）である。', hint: 'DNAの複製（合成）が行われる時期' },
     { id: 's1-7', printNo: '1', section: 'DNAとゲノム', before: 'ゲノムは遺伝子と不要部分の（', answer: 'ジャンク', after: '）からなる。', hint: '遺伝情報全体＝遺伝子＋〇〇' },
     { id: 's1-8', printNo: '1', section: 'DNAとゲノム', before: '遺伝情報（ゲノム）を記録する遺伝物質の本体は（', answer: 'DNA', after: '）である。', hint: '物質そのものを指す名称' },
+    { id: 's1-9', printNo: '1', section: '覚えておくべき酵素', before: '過酸化水素を分解し、酸化マンガンと対比される酵素は（', answer: 'カタラーゼ', after: '）。', hint: '肝臓などに多く含まれる酵素' },
+    { id: 's1-10', printNo: '1', section: '覚えておくべき酵素', before: 'ATPを使ってホタルが発光する反応に関わる酵素は（', answer: 'ルシフェラーゼ', after: '）。', hint: '生物発光の酵素' },
     // No.2
     { id: 's2-1', printNo: '2', section: '恒常性', before: '神経系は電気信号と（', answer: '神経伝達物質', after: '）で情報を伝える。', hint: 'ニューロンを通る速い伝達' },
     { id: 's2-2', printNo: '2', section: '血糖調節', before: 'すい臓ランゲルハンス島A細胞から分泌されるのは（', answer: 'グルカゴン', after: '）。', hint: 'グリコーゲンを分解して血糖値を上げる' },
@@ -26,6 +28,7 @@ export const SHEET_ITEMS                       = [
     { id: 's2-4', printNo: '2', section: '血糖調節', before: '副腎皮質から分泌され糖新生を促すのは（', answer: '糖質コルチコイド', after: '）。', hint: 'タンパク質からグルコースを作る' },
     { id: 's2-5', printNo: '2', section: '体液調節', before: '腎臓での水の再吸収を促進するのは（', answer: 'バソプレシン', after: '）。', hint: '脳下垂体後葉から分泌' },
     { id: 's2-6', printNo: '2', section: 'ホルモン', before: '標的細胞の（', answer: '受容体', after: '）にホルモンが鍵と鍵穴のように結合する。', hint: 'ホルモンを受け取るタンパク質' },
+    { id: 's2-7', printNo: '2', section: 'ホルモン', before: '甲状腺から分泌され、全身の代謝を活発にするのは（', answer: 'チロキシン', after: '）。', hint: '脳下垂体前葉の刺激ホルモンで分泌' },
     // No.3
     { id: 's3-1', printNo: '3', section: '化学的防御', before: '涙やだ液に含まれ細菌の細胞壁を分解する酵素は（', answer: 'リゾチーム', after: '）。', hint: '細菌の細胞壁を壊す' },
     { id: 's3-2', printNo: '3', section: '化学的防御', before: '皮膚や粘膜上皮に含まれ細菌の細胞膜を破壊するのは（', answer: 'ディフェンシン', after: '）。', hint: 'タンパク質の一種' },
@@ -34,13 +37,15 @@ export const SHEET_ITEMS                       = [
     { id: 's3-5', printNo: '3', section: '免疫異常', before: '免疫寛容の異常で自分の体を攻撃する疾患を（', answer: '自己免疫疾患', after: '）という。', hint: '関節リウマチや1型糖尿病など' },
     { id: 's3-6', printNo: '3', section: '免疫細胞', before: '食作用で取り込んだ病原体の情報をT細胞に伝える働きを主に担うのは（', answer: '樹状細胞', after: '）。', hint: '抗原提示のスペシャリスト' },
     { id: 's3-7', printNo: '3', section: '免疫細胞', before: '白血球の中で最も数が多く、すばやく食作用を行うのは（', answer: '好中球', after: '）。', hint: '自然免疫で最初に駆けつける食細胞' },
+    { id: 's3-8', printNo: '3', section: '医療への応用', before: '人工的に作った抗体で炎症やがんを治療する薬を（', answer: '抗体医薬', after: '）という。', hint: '関節リウマチなどの治療に用いられる' },
     // No.4
     { id: 's4-1', printNo: '4', section: '光合成', before: '見かけの光合成速度が0になる光の強さを（', answer: '光補償点', after: '）という。', hint: '光合成量＝呼吸量（光合成速度が0ではない！）' },
     { id: 's4-2', printNo: '4', section: '遷移', before: '森林が成立しなくなる上限を（', answer: '森林限界', after: '）という。', hint: '亜高山帯と高山帯の境' },
     { id: 's4-3', printNo: '4', section: '水界の汚れ', before: '湖沼でプランクトンが大発生し水面が緑色になる現象を（', answer: 'アオコ', after: '）という。', hint: '青い湖で覚える' },
     { id: 's4-4', printNo: '4', section: '地球環境', before: 'フロンが成層圏のオゾン層を破壊すると（', answer: '紫外線', after: '）が地表に多く届く。', hint: '皮膚がんや白内障が増える' },
     { id: 's4-5', printNo: '4', section: '遷移', before: '台風などの倒木で林床まで光が届く場所を（', answer: 'ギャップ', after: '）という。', hint: 'ここで陽樹も生育できる（ギャップ更新）' },
-    { id: 's4-6', printNo: '4', section: '生態系', before: '食物網の上位で生態系に大きな影響を与える種を（', answer: 'キーストーン種', after: '）という。', hint: 'ヒトデやラッコなど' }
+    { id: 's4-6', printNo: '4', section: '生態系', before: '食物網の上位で生態系に大きな影響を与える種を（', answer: 'キーストーン種', after: '）という。', hint: 'ヒトデやラッコなど' },
+    { id: 's4-7', printNo: '4', section: '人間の活動', before: 'オオクチバスやアライグマなど生態系への影響が大きい外来種を（', answer: '特定外来生物', after: '）という。', hint: '在来生物を捕食・すみかを奪う' }
 ];
 
 export const PAIR_ITEMS                      = [
@@ -49,6 +54,7 @@ export const PAIR_ITEMS                      = [
     { id: 'p1c', printNo: '1', pairTitle: 'エネルギー変換小器官', termA: 'ミトコンドリア', descA: '呼吸の場としてATPを合成する（動物・植物ともに存在）', shortDescA: '呼吸の場・動植物に存在', termB: '葉緑体', descB: '光合成の場として有機物を合成する（植物・藻類に存在）', shortDescB: '光合成の場・植物などに存在' },
     { id: 'p1d', printNo: '1', pairTitle: '核酸の種類', termA: 'DNA', descA: '二本鎖らせん構造で遺伝情報の本体（糖はデオキシリボース）', shortDescA: '二本鎖で糖はデオキシリボース', termB: 'RNA', descB: '一本鎖でタンパク質合成に働く（糖はリボース）', shortDescB: '一本鎖で糖はリボース' },
     { id: 'p1e', printNo: '1', pairTitle: 'ゲノム vs 遺伝子', termA: 'ゲノム', descA: '遺伝子とジャンク（不要部分）を合わせた遺伝情報1セット全体', shortDescA: '遺伝子＋ジャンクの遺伝情報全体', termB: '遺伝子', descB: 'DNAのうちタンパク質設計図など必要なはたらきをもつ部分', shortDescB: 'DNAのうち設計図など必要な部分' },
+    { id: 'p1f', printNo: '1', pairTitle: '酵素 vs 無機触媒', termA: 'カタラーゼ', descA: '生体触媒（タンパク質）で高温になると失活する', shortDescA: '生体触媒・高温で失活する', termB: '酸化マンガン(IV)', descB: '無機触媒で高温にしても失活しない', shortDescB: '無機触媒・高温でも失活しない' },
     { id: 'p2', printNo: '2', pairTitle: '血糖調節ホルモン', termA: 'グルカゴン（A細胞）', descA: 'グリコーゲンを分解し血糖値を上げる', shortDescA: 'グリコーゲン分解で血糖上昇', termB: 'インスリン（B細胞）', descB: 'グルコースをグリコーゲンに変え血糖値を下げる', shortDescB: '血糖値を下げる唯一のホルモン' },
     { id: 'p2b', printNo: '2', pairTitle: '自律神経', termA: '交感神経', descA: '闘争と逃走（心拍数増加・瞳孔拡大）', shortDescA: '心拍数増加・瞳孔拡大', termB: '副交感神経', descB: 'リラックス（消化管の働き促進・心拍数減少）', shortDescB: '消化促進・心拍数減少' },
     { id: 'p2c', printNo: '2', pairTitle: '分泌腺の種類', termA: '内分泌腺', descA: '排出管をもたずホルモンを血液中に直接分泌する', shortDescA: '排出管なく血液中へ直接分泌', termB: '外分泌腺', descB: '排出管を通じて消化液や汗などを体外・管腔へ分泌する', shortDescB: '排出管から体外・管腔へ分泌' },
@@ -674,6 +680,264 @@ export const DIAGRAM_ITEMS                                 = [
                 </svg>`
             }
         ]
+    },
+    {
+        id: 'dg-16',
+        printNo: '1',
+        title: 'DNAの塩基比率表（計算）',
+        slots: [
+            {
+                answer: '30%',
+                distractors: ['20%', '15%', '40%'],
+                renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="DNA塩基比率表">
+                    <text x="280" y="34" text-anchor="middle" font-size="15" font-weight="800" fill="#475569">2本鎖DNAで C が 20% のとき、A は何％？</text>
+                    ${svgBox(40, 82, 110, 68, 'A：？', true, '#DBEAFE', '#2563EB', '#1E40AF')}
+                    ${svgBox(165, 82, 110, 68, 'T：30%', false, '#DBEAFE', '#2563EB', '#1E40AF')}
+                    ${svgBox(290, 82, 110, 68, 'C：20%', false, '#FCE7F3', '#DB2777', '#9D174D')}
+                    ${svgBox(415, 82, 110, 68, 'G：20%', false, '#FCE7F3', '#DB2777', '#9D174D')}
+                    <text x="280" y="192" text-anchor="middle" font-size="13" font-weight="700" fill="#64748B">A＝T、G＝C、合計100%（シャルガフの規則）</text>
+                </svg>`
+            },
+            {
+                answer: '20%',
+                distractors: ['30%', '40%', '10%'],
+                renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="DNA塩基比率表">
+                    <text x="280" y="34" text-anchor="middle" font-size="15" font-weight="800" fill="#475569">2本鎖DNAで A が 30% のとき、G は何％？</text>
+                    ${svgBox(40, 82, 110, 68, 'A：30%', false, '#DBEAFE', '#2563EB', '#1E40AF')}
+                    ${svgBox(165, 82, 110, 68, 'T：30%', false, '#DBEAFE', '#2563EB', '#1E40AF')}
+                    ${svgBox(290, 82, 110, 68, 'C：20%', false, '#FCE7F3', '#DB2777', '#9D174D')}
+                    ${svgBox(415, 82, 110, 68, 'G：？', true, '#FCE7F3', '#DB2777', '#9D174D')}
+                    <text x="280" y="192" text-anchor="middle" font-size="13" font-weight="700" fill="#64748B">A＝T、G＝C、合計100%（シャルガフの規則）</text>
+                </svg>`
+            }
+        ]
+    },
+    {
+        id: 'dg-17',
+        printNo: '1',
+        title: '体細胞 vs 生殖細胞（ヒト）',
+        slots: [
+            {
+                answer: '46本',
+                distractors: ['23本', '92本', '44本'],
+                renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="ヒトの体細胞と生殖細胞の比較表">
+                    <text x="280" y="34" text-anchor="middle" font-size="15" font-weight="800" fill="#475569">ヒトの体細胞の染色体数は？</text>
+                    ${svgBox(55, 76, 210, 64, '体細胞（ゲノム2セット）', false, '#DBEAFE', '#2563EB', '#1E40AF')}
+                    ${svgBox(295, 76, 210, 64, '生殖細胞（ゲノム1セット）', false, '#DCFCE7', '#16A34A', '#166534')}
+                    ${svgBox(55, 158, 210, 64, '46本', true)}
+                    ${svgBox(295, 158, 210, 64, '染色体：23本', false, '#DCFCE7', '#16A34A', '#166534')}
+                </svg>`
+            },
+            {
+                answer: '23本',
+                distractors: ['46本', '22本', '12本'],
+                renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="ヒトの生殖細胞の染色体数">
+                    <text x="280" y="34" text-anchor="middle" font-size="15" font-weight="800" fill="#475569">ヒトの生殖細胞（精子・卵）の染色体数は？</text>
+                    ${svgBox(55, 76, 210, 64, '体細胞（ゲノム2セット）', false, '#DBEAFE', '#2563EB', '#1E40AF')}
+                    ${svgBox(295, 76, 210, 64, '生殖細胞（ゲノム1セット）', false, '#DCFCE7', '#16A34A', '#166534')}
+                    ${svgBox(55, 158, 210, 64, '染色体：46本', false, '#DBEAFE', '#2563EB', '#1E40AF')}
+                    ${svgBox(295, 158, 210, 64, '23本', true)}
+                </svg>`
+            }
+        ]
+    },
+    {
+        id: 'dg-18',
+        printNo: '2',
+        title: '神経系 vs 内分泌系（比較表）',
+        slots: [
+            {
+                answer: '血液',
+                distractors: ['ニューロン', 'リンパ管', '排出管'],
+                renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="神経系と内分泌系の比較">
+                    <text x="280" y="34" text-anchor="middle" font-size="15" font-weight="800" fill="#475569">内分泌系（ホルモン）の情報伝達経路は？</text>
+                    ${svgBox(55, 76, 210, 64, '神経系：ニューロン', false, '#DBEAFE', '#2563EB', '#1E40AF', '速く一時的')}
+                    ${svgBox(295, 76, 210, 64, '内分泌系（ホルモン）', false, '#FFEDD5', '#EA580C', '#9A3412', '遅く持続的')}
+                    ${svgBox(55, 158, 210, 64, '電気信号＋伝達物質', false, '#DBEAFE', '#2563EB', '#1E40AF')}
+                    ${svgBox(295, 158, 210, 64, '血液', true, '#FFEDD5', '#EA580C', '#9A3412', '伝達の経路')}
+                </svg>`
+            },
+            {
+                answer: 'ニューロン',
+                distractors: ['血液', '排出管', '毛細血管'],
+                renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="神経系の伝達経路">
+                    <text x="280" y="34" text-anchor="middle" font-size="15" font-weight="800" fill="#475569">神経系の情報伝達経路は？</text>
+                    ${svgBox(55, 76, 210, 64, '神経系（自律神経）', false, '#DBEAFE', '#2563EB', '#1E40AF', '速く一時的')}
+                    ${svgBox(295, 76, 210, 64, '内分泌系：血液', false, '#FFEDD5', '#EA580C', '#9A3412', '遅く持続的')}
+                    ${svgBox(55, 158, 210, 64, 'ニューロン', true, '#DBEAFE', '#2563EB', '#1E40AF', '伝達の経路')}
+                    ${svgBox(295, 158, 210, 64, 'ホルモン', false, '#FFEDD5', '#EA580C', '#9A3412')}
+                </svg>`
+            }
+        ]
+    },
+    {
+        id: 'dg-19',
+        printNo: '2',
+        title: '負のフィードバック調節',
+        slots: [
+            {
+                answer: 'チロキシン',
+                distractors: ['インスリン', 'バソプレシン', 'アドレナリン'],
+                renderSvg: () => `<svg viewBox="0 0 560 276" role="img" aria-label="チロキシンのフィードバック図">
+                    ${svgBox(145, 14, 230, 50, '視床下部（放出ホルモン）', false, '#E0E7FF', '#4F46E5', '#3730A3')}
+                    ${svgArrow(260, 68, 260, 88)}
+                    ${svgBox(145, 92, 230, 50, '脳下垂体前葉（刺激ホルモン）', false, '#DBEAFE', '#2563EB', '#1E40AF')}
+                    ${svgArrow(260, 146, 260, 166)}
+                    ${svgBox(145, 170, 230, 56, 'チロキシン', true, '#FEF3C7', '#D97706', '#92400E', '甲状腺から分泌')}
+                    <path d="M380 198 L445 198 L445 38 L382 38" fill="none" stroke="#DC2626" stroke-width="3" stroke-dasharray="6 4"/>
+                    <text x="455" y="122" font-size="13" font-weight="800" fill="#DC2626">抑制（負のFB）</text>
+                </svg>`
+            },
+            {
+                answer: '負のフィードバック',
+                distractors: ['正のフィードバック', '糖新生', '抗原提示'],
+                renderSvg: () => `<svg viewBox="0 0 560 276" role="img" aria-label="負のフィードバックの図">
+                    ${svgBox(120, 14, 220, 50, '視床下部 → 脳下垂体前葉', false, '#E0E7FF', '#4F46E5', '#3730A3')}
+                    ${svgArrow(230, 68, 230, 96)}
+                    ${svgBox(120, 100, 220, 52, '甲状腺 → チロキシン増加', false, '#DCFCE7', '#16A34A', '#166534')}
+                    <path d="M345 126 L440 126 L440 38 L346 38" fill="none" stroke="#DC2626" stroke-width="3" stroke-dasharray="6 4"/>
+                    ${svgBox(345, 168, 195, 58, '負のフィードバック', true, '#FEE2E2', '#DC2626', '#991B1B', '上流の分泌を抑制')}
+                </svg>`
+            }
+        ]
+    },
+    {
+        id: 'dg-20',
+        printNo: '3',
+        title: '免疫関連疾患の3分類',
+        slots: [
+            {
+                answer: 'アレルギー',
+                distractors: ['免疫不全', '自己免疫疾患', '拒絶反応'],
+                renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="免疫関連疾患の3分類図">
+                    <text x="280" y="34" text-anchor="middle" font-size="15" font-weight="800" fill="#475569">免疫が「強すぎる（過剰反応）」疾患は？</text>
+                    ${svgBox(20, 82, 165, 86, 'アレルギー', true, '#FEE2E2', '#DC2626', '#991B1B', '強すぎる（花粉など）')}
+                    ${svgBox(198, 82, 165, 86, '免疫不全(エイズ)', false, '#E0E7FF', '#4F46E5', '#3730A3', '弱すぎる')}
+                    ${svgBox(376, 82, 165, 86, '自己免疫疾患', false, '#FEF3C7', '#D97706', '#92400E', '自分を攻撃')}
+                </svg>`
+            },
+            {
+                answer: '自己免疫疾患',
+                distractors: ['アレルギー', '免疫不全', '日和見感染症'],
+                renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="免疫関連疾患の3分類図">
+                    <text x="280" y="34" text-anchor="middle" font-size="15" font-weight="800" fill="#475569">自分の体を誤って攻撃する疾患（リウマチ等）は？</text>
+                    ${svgBox(20, 82, 165, 86, 'アレルギー', false, '#FEE2E2', '#DC2626', '#991B1B', '強すぎる')}
+                    ${svgBox(198, 82, 165, 86, '免疫不全(エイズ)', false, '#E0E7FF', '#4F46E5', '#3730A3', '弱すぎる')}
+                    ${svgBox(376, 82, 165, 86, '自己免疫疾患', true, '#FEF3C7', '#D97706', '#92400E', '自分を攻撃')}
+                </svg>`
+            }
+        ]
+    },
+    {
+        id: 'dg-21',
+        printNo: '3',
+        title: 'ABO式血液型と凝集反応',
+        slots: [
+            {
+                answer: '凝集素β',
+                distractors: ['凝集素α', '凝集原A', '凝集素なし'],
+                renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="ABO式血液型の表">
+                    <text x="280" y="34" text-anchor="middle" font-size="15" font-weight="800" fill="#475569">A型の血しょう中に含まれる凝集素は？</text>
+                    ${svgBox(55, 82, 210, 68, 'A型の赤血球：凝集原A', false, '#FEE2E2', '#DC2626', '#991B1B')}
+                    ${svgArrow(270, 116, 294, 116)}
+                    ${svgBox(298, 82, 210, 68, '凝集素β', true, '#DBEAFE', '#2563EB', '#1E40AF', '血しょう中')}
+                </svg>`
+            },
+            {
+                answer: '両方と凝集しない',
+                distractors: ['抗Aのみ凝集', '抗Bのみ凝集', '両方と凝集する'],
+                renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="O型の凝集反応">
+                    <text x="280" y="34" text-anchor="middle" font-size="15" font-weight="800" fill="#475569">O型の赤血球（凝集原なし）に抗A・抗B抗体を混ぜると？</text>
+                    ${svgBox(55, 82, 200, 68, 'O型（凝集原なし）', false, '#DCFCE7', '#16A34A', '#166534')}
+                    ${svgArrow(260, 116, 286, 116)}
+                    ${svgBox(292, 82, 215, 68, '両方と凝集しない', true)}
+                </svg>`
+            }
+        ]
+    },
+    {
+        id: 'dg-22',
+        printNo: '4',
+        title: '日本の垂直分布（標高と帯）',
+        slots: [
+            {
+                answer: '亜高山帯',
+                distractors: ['高山帯', '山地帯', '丘陵帯'],
+                renderSvg: () => `<svg viewBox="0 0 560 276" role="img" aria-label="日本の垂直分布図">
+                    ${svgBox(160, 10, 240, 48, '高山帯（ハイマツ・お花畑）', false, '#E0E7FF', '#4F46E5', '#3730A3')}
+                    ${svgBox(160, 70, 240, 52, '亜高山帯', true, '#CCFBF1', '#0D9488', '#115E59', '針葉樹林')}
+                    ${svgBox(160, 134, 240, 52, '山地帯（夏緑樹林・ブナ）', false, '#DCFCE7', '#16A34A', '#166534')}
+                    ${svgBox(160, 198, 240, 52, '丘陵帯（照葉樹林・シイ）', false, '#FEF3C7', '#D97706', '#92400E')}
+                </svg>`
+            },
+            {
+                answer: '夏緑樹林',
+                distractors: ['照葉樹林', '針葉樹林', '雨緑樹林'],
+                renderSvg: () => `<svg viewBox="0 0 560 276" role="img" aria-label="山地帯のバイオーム">
+                    ${svgBox(160, 10, 240, 48, '高山帯（ハイマツ）', false, '#E0E7FF', '#4F46E5', '#3730A3')}
+                    ${svgBox(160, 70, 240, 52, '亜高山帯（針葉樹林）', false, '#CCFBF1', '#0D9488', '#115E59')}
+                    ${svgBox(160, 134, 240, 52, '夏緑樹林', true, '#DCFCE7', '#16A34A', '#166534', '山地帯（ブナ・ミズナラ）')}
+                    ${svgBox(160, 198, 240, 52, '丘陵帯（照葉樹林）', false, '#FEF3C7', '#D97706', '#92400E')}
+                </svg>`
+            }
+        ]
+    },
+    {
+        id: 'dg-23',
+        printNo: '4',
+        title: '森林の階層構造',
+        slots: [
+            {
+                answer: '亜高木層',
+                distractors: ['高木層', '低木層', '草本層'],
+                renderSvg: () => `<svg viewBox="0 0 560 276" role="img" aria-label="森林の階層構造図">
+                    ${svgBox(165, 10, 230, 48, '高木層（林冠）', false, '#166534', '#14532D', '#FFFFFF')}
+                    ${svgBox(165, 70, 230, 52, '亜高木層', true)}
+                    ${svgBox(165, 134, 230, 52, '低木層', false, '#DCFCE7', '#16A34A', '#166534')}
+                    ${svgBox(165, 198, 230, 52, '草本層（林床）', false, '#FEF9C3', '#CA8A04', '#854D0E')}
+                </svg>`
+            },
+            {
+                answer: '林冠',
+                distractors: ['林床', 'ギャップ', '極相'],
+                renderSvg: () => `<svg viewBox="0 0 560 276" role="img" aria-label="林冠と林床の図">
+                    ${svgBox(165, 14, 230, 56, '林冠', true, '#DCFCE7', '#16A34A', '#166534', '最上部の葉が茂る部分')}
+                    ${svgArrow(280, 74, 280, 102)}
+                    ${svgBox(165, 106, 230, 54, '亜高木層・低木層', false, '#E0F2FE', '#0284C7', '#0369A1')}
+                    ${svgArrow(280, 164, 280, 192)}
+                    ${svgBox(165, 196, 230, 54, '林床（地表付近）', false, '#FEF9C3', '#CA8A04', '#854D0E')}
+                </svg>`
+            }
+        ]
+    },
+    {
+        id: 'dg-24',
+        printNo: '4',
+        title: 'キーストーン種と間接効果',
+        slots: [
+            {
+                answer: 'ウニが増加',
+                distractors: ['ウニが減少', 'コンブが増加', '魚が全滅'],
+                renderSvg: () => `<svg viewBox="0 0 560 276" role="img" aria-label="ラッコ減少の間接効果図">
+                    ${svgBox(155, 16, 250, 56, 'ラッコ（キーストーン種）減少', false, '#FEE2E2', '#DC2626', '#991B1B')}
+                    ${svgArrow(280, 76, 280, 102)}
+                    ${svgBox(155, 106, 250, 58, 'ウニが増加', true)}
+                    ${svgArrow(280, 168, 280, 194)}
+                    ${svgBox(155, 198, 250, 56, '海藻（ケルプ）が激減', false, '#DCFCE7', '#16A34A', '#166534')}
+                </svg>`
+            },
+            {
+                answer: '間接効果',
+                distractors: ['直接効果', '環境形成作用', '富栄養化'],
+                renderSvg: () => `<svg viewBox="0 0 560 276" role="img" aria-label="間接効果の図">
+                    ${svgBox(155, 16, 250, 54, 'ラッコ減少 → ウニ増加', false, '#FEE2E2', '#DC2626', '#991B1B')}
+                    ${svgArrow(280, 74, 280, 100)}
+                    ${svgBox(155, 104, 250, 54, '海藻（直接食べない種）激減', false, '#DCFCE7', '#16A34A', '#166534')}
+                    ${svgArrow(280, 162, 280, 188)}
+                    ${svgBox(155, 192, 250, 58, '間接効果', true)}
+                </svg>`
+            }
+        ]
     }
 ];
 
@@ -797,7 +1061,12 @@ export const TRICKY_DECOYS                                              = {
     'ギャップ': ['林冠', '林床', '極相', '森林限界'],
     'キーストーン種': ['優占種', '特定外来生物', '生産者', '分解者'],
     '樹状細胞': ['マクロファージ', '好中球', 'ヘルパーT細胞', 'B細胞'],
-    '好中球': ['マクロファージ', '樹状細胞', 'B細胞', 'キラーT細胞']
+    '好中球': ['マクロファージ', '樹状細胞', 'B細胞', 'キラーT細胞'],
+    'カタラーゼ': ['アミラーゼ', 'ペプシン', 'ルシフェラーゼ', '酸化マンガン(IV)'],
+    'ルシフェラーゼ': ['カタラーゼ', 'アミラーゼ', 'ペプシン', 'リゾチーム'],
+    'チロキシン': ['アドレナリン', 'バソプレシン', 'パラトルモン', 'インスリン'],
+    '抗体医薬': ['血清療法', '予防接種', '抗生物質', 'ワクチン'],
+    '特定外来生物': ['キーストーン種', '優占種', '絶滅危惧種', '在来生物']
 };
 
 

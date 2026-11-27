@@ -233,6 +233,152 @@ export const DIAGRAM_ITEMS                                 = [
             <text x="445" y="134" text-anchor="middle" font-size="22" font-weight="900" fill="#B45309">？</text>
             <text x="280" y="45" text-anchor="middle" font-size="15" font-weight="800" fill="#475569">遺体・排出物を無機物に分解するのは？</text>
         </svg>`
+    },
+    {
+        id: 'dg-9',
+        printNo: '1',
+        title: '植物細胞と動物細胞の違い',
+        answer: '細胞壁',
+        distractors: ['細胞膜', '核', 'ミトコンドリア'],
+        svgHtml: `<svg viewBox="0 0 560 260" role="img" aria-label="植物細胞の構造図">
+            <rect x="130" y="55" width="300" height="175" rx="22" class="oni-svg-blank"/>
+            <rect x="148" y="73" width="264" height="139" rx="16" fill="#DCFCE7" stroke="#16A34A" stroke-width="2.5"/>
+            <circle cx="235" cy="142" r="34" fill="#FDE68A" stroke="#D97706" stroke-width="2.5"/>
+            <text x="235" y="148" text-anchor="middle" font-size="15" font-weight="800" fill="#92400E">核</text>
+            <ellipse cx="335" cy="142" rx="45" ry="28" fill="#BAE6FD" stroke="#0284C7" stroke-width="2.5"/>
+            <text x="335" y="148" text-anchor="middle" font-size="14" font-weight="800" fill="#0369A1">液胞</text>
+            <text x="280" y="34" text-anchor="middle" font-size="15" font-weight="800" fill="#475569">植物細胞の外側を囲む丈夫な構造（？）は？</text>
+            <text x="455" y="95" font-size="18" font-weight="900" fill="#B45309">← ？</text>
+        </svg>`
+    },
+    {
+        id: 'dg-10',
+        printNo: '1',
+        title: 'DNAの相補的塩基対',
+        answer: 'チミン(T)',
+        distractors: ['ウラシル(U)', 'グアニン(G)', 'シトシン(C)'],
+        svgHtml: `<svg viewBox="0 0 560 260" role="img" aria-label="DNA塩基対の図">
+            <rect x="85" y="75" width="145" height="62" rx="14" fill="#DBEAFE" stroke="#2563EB" stroke-width="2.5"/>
+            <text x="157" y="112" text-anchor="middle" font-size="18" font-weight="800" fill="#1E40AF">アデニン (A)</text>
+            <line x1="236" y1="106" x2="314" y2="106" stroke="#64748B" stroke-width="4" stroke-dasharray="6 4"/>
+            <rect x="320" y="75" width="155" height="62" rx="14" class="oni-svg-blank"/>
+            <text x="397" y="113" text-anchor="middle" font-size="22" font-weight="900" fill="#B45309">？</text>
+            <rect x="85" y="160" width="145" height="62" rx="14" fill="#FCE7F3" stroke="#DB2777" stroke-width="2.5"/>
+            <text x="157" y="197" text-anchor="middle" font-size="18" font-weight="800" fill="#9D174D">グアニン (G)</text>
+            <line x1="236" y1="191" x2="314" y2="191" stroke="#64748B" stroke-width="4" stroke-dasharray="6 4"/>
+            <rect x="320" y="160" width="155" height="62" rx="14" fill="#FCE7F3" stroke="#DB2777" stroke-width="2.5"/>
+            <text x="397" y="197" text-anchor="middle" font-size="18" font-weight="800" fill="#9D174D">シトシン (C)</text>
+            <text x="280" y="42" text-anchor="middle" font-size="15" font-weight="800" fill="#475569">DNAでアデニン(A)と対になる塩基は？</text>
+        </svg>`
+    },
+    {
+        id: 'dg-11',
+        printNo: '1',
+        title: '酵素反応と温度のグラフ',
+        answer: '最適温度',
+        distractors: ['失活温度', '光補償点', '光飽和点'],
+        svgHtml: `<svg viewBox="0 0 560 260" role="img" aria-label="酵素と温度のグラフ">
+            <line x1="80" y1="35" x2="80" y2="215" stroke="#334155" stroke-width="2.5"/>
+            <line x1="70" y1="215" x2="490" y2="215" stroke="#334155" stroke-width="2.5"/>
+            <path d="M90 210 Q230 35 280 75 Q330 115 365 212" fill="none" stroke="#0D9488" stroke-width="4"/>
+            <line x1="255" y1="68" x2="255" y2="215" stroke="#F59E0B" stroke-width="2.5" stroke-dasharray="5 4"/>
+            <circle cx="255" cy="68" r="8" fill="#F59E0B" stroke="#B45309" stroke-width="2"/>
+            <rect x="195" y="162" width="120" height="42" rx="10" class="oni-svg-blank"/>
+            <text x="255" y="190" text-anchor="middle" font-size="18" font-weight="900" fill="#B45309">？</text>
+            <text x="485" y="236" text-anchor="end" font-size="13" font-weight="700" fill="#475569">温度 (℃) →</text>
+            <text x="92" y="46" font-size="13" font-weight="700" fill="#475569">反応速度が最大になる温度</text>
+        </svg>`
+    },
+    {
+        id: 'dg-12',
+        printNo: '2',
+        title: '腎臓での水の再吸収',
+        answer: 'バソプレシン',
+        distractors: ['インスリン', 'グルカゴン', '鉱質コルチコイド'],
+        svgHtml: `<svg viewBox="0 0 560 260" role="img" aria-label="体液浸透圧調節の図">
+            <rect x="25" y="95" width="135" height="64" rx="14" fill="#E0E7FF" stroke="#4F46E5" stroke-width="2.5"/>
+            <text x="92" y="124" text-anchor="middle" font-size="14" font-weight="800" fill="#3730A3">脳下垂体後葉</text>
+            <text x="92" y="146" text-anchor="middle" font-size="12" font-weight="700" fill="#4338CA">浸透圧上昇を感知</text>
+            <path d="M168 127 L198 127" stroke="#64748B" stroke-width="3"/>
+            <rect x="205" y="95" width="150" height="64" rx="14" class="oni-svg-blank"/>
+            <text x="280" y="134" text-anchor="middle" font-size="22" font-weight="900" fill="#B45309">？</text>
+            <path d="M363 127 L393 127" stroke="#64748B" stroke-width="3"/>
+            <rect x="400" y="95" width="135" height="64" rx="14" fill="#CCFBF1" stroke="#0D9488" stroke-width="2.5"/>
+            <text x="467" y="124" text-anchor="middle" font-size="14" font-weight="800" fill="#115E59">腎臓（集合管）</text>
+            <text x="467" y="146" text-anchor="middle" font-size="12" font-weight="700" fill="#0F766E">水の再吸収促進</text>
+        </svg>`
+    },
+    {
+        id: 'dg-13',
+        printNo: '2',
+        title: '自律神経と心臓の働き',
+        answer: '交感神経',
+        distractors: ['副交感神経', '運動神経', '感覚神経'],
+        svgHtml: `<svg viewBox="0 0 560 260" role="img" aria-label="自律神経の図">
+            <rect x="30" y="95" width="135" height="64" rx="14" fill="#FEE2E2" stroke="#DC2626" stroke-width="2.5"/>
+            <text x="97" y="124" text-anchor="middle" font-size="14" font-weight="800" fill="#991B1B">緊張・運動時</text>
+            <text x="97" y="146" text-anchor="middle" font-size="12" font-weight="700" fill="#B91C1C">闘争と逃走</text>
+            <path d="M173 127 L203 127" stroke="#64748B" stroke-width="3"/>
+            <rect x="210" y="95" width="140" height="64" rx="14" class="oni-svg-blank"/>
+            <text x="280" y="134" text-anchor="middle" font-size="22" font-weight="900" fill="#B45309">？</text>
+            <path d="M358 127 L388 127" stroke="#64748B" stroke-width="3"/>
+            <rect x="395" y="95" width="135" height="64" rx="14" fill="#FFEDD5" stroke="#EA580C" stroke-width="2.5"/>
+            <text x="462" y="124" text-anchor="middle" font-size="14" font-weight="800" fill="#9A3412">心拍数増加</text>
+            <text x="462" y="146" text-anchor="middle" font-size="12" font-weight="700" fill="#C2410C">瞳孔拡大</text>
+        </svg>`
+    },
+    {
+        id: 'dg-14',
+        printNo: '3',
+        title: '二次応答の抗体産生グラフ',
+        answer: '記憶細胞',
+        distractors: ['形質細胞', 'キラーT細胞', '好中球'],
+        svgHtml: `<svg viewBox="0 0 560 260" role="img" aria-label="二次応答のグラフ">
+            <line x1="75" y1="35" x2="75" y2="215" stroke="#334155" stroke-width="2.5"/>
+            <line x1="65" y1="215" x2="495" y2="215" stroke="#334155" stroke-width="2.5"/>
+            <path d="M85 212 Q140 165 185 205 Q275 212 315 62 Q355 55 445 145" fill="none" stroke="#4F46E5" stroke-width="4"/>
+            <text x="145" y="160" text-anchor="middle" font-size="13" font-weight="800" fill="#4338CA">一次応答</text>
+            <text x="330" y="48" text-anchor="middle" font-size="14" font-weight="800" fill="#312E81">二次応答（速く大量）</text>
+            <rect x="260" y="128" width="145" height="44" rx="12" class="oni-svg-blank"/>
+            <text x="332" y="157" text-anchor="middle" font-size="18" font-weight="900" fill="#B45309">？</text>
+            <text x="332" y="188" text-anchor="middle" font-size="12" font-weight="700" fill="#475569">2回目を速く強くする細胞</text>
+        </svg>`
+    },
+    {
+        id: 'dg-15',
+        printNo: '3',
+        title: '細胞性免疫の主役',
+        answer: 'キラーT細胞',
+        distractors: ['B細胞', '形質細胞', 'ヘルパーT細胞'],
+        svgHtml: `<svg viewBox="0 0 560 260" role="img" aria-label="細胞性免疫の図">
+            <rect x="25" y="95" width="135" height="64" rx="14" fill="#FEF3C7" stroke="#D97706" stroke-width="2.5"/>
+            <text x="92" y="124" text-anchor="middle" font-size="14" font-weight="800" fill="#92400E">ウイルス感染細胞</text>
+            <text x="92" y="146" text-anchor="middle" font-size="12" font-weight="700" fill="#B45309">細胞ごと排除</text>
+            <path d="M168 127 L198 127" stroke="#64748B" stroke-width="3"/>
+            <rect x="205" y="95" width="150" height="64" rx="14" class="oni-svg-blank"/>
+            <text x="280" y="134" text-anchor="middle" font-size="22" font-weight="900" fill="#B45309">？</text>
+            <path d="M363 127 L393 127" stroke="#64748B" stroke-width="3"/>
+            <rect x="400" y="95" width="135" height="64" rx="14" fill="#FEE2E2" stroke="#DC2626" stroke-width="2.5"/>
+            <text x="467" y="124" text-anchor="middle" font-size="14" font-weight="800" fill="#991B1B">直接攻撃</text>
+            <text x="467" y="146" text-anchor="middle" font-size="12" font-weight="700" fill="#B91C1C">感染細胞を破壊</text>
+        </svg>`
+    },
+    {
+        id: 'dg-16',
+        printNo: '4',
+        title: '陽樹と陰樹の光合成曲線',
+        answer: '陰樹',
+        distractors: ['陽樹', '陽生植物', '草原植物'],
+        svgHtml: `<svg viewBox="0 0 560 260" role="img" aria-label="陽樹と陰樹のグラフ">
+            <line x1="75" y1="35" x2="75" y2="215" stroke="#334155" stroke-width="2.5"/>
+            <line x1="65" y1="165" x2="495" y2="165" stroke="#334155" stroke-width="2.5"/>
+            <path d="M75 205 Q160 85 300 55 L480 55" fill="none" stroke="#EA580C" stroke-width="3.5"/>
+            <path d="M75 182 Q130 120 210 112 L480 112" fill="none" stroke="#16A34A" stroke-width="3.5"/>
+            <text x="455" y="48" text-anchor="end" font-size="13" font-weight="800" fill="#C2410C">陽樹（光補償点が高い）</text>
+            <rect x="330" y="122" width="140" height="38" rx="10" class="oni-svg-blank"/>
+            <text x="400" y="147" text-anchor="middle" font-size="17" font-weight="900" fill="#B45309">？</text>
+            <text x="330" y="188" font-size="12" font-weight="700" fill="#15803D">弱い光でも育つのは？</text>
+        </svg>`
     }
 ];
 

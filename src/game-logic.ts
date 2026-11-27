@@ -65,6 +65,8 @@ export interface OniQuestion {
 const ONI_FORMATS: readonly OniQuestionFormat[] = [
     'diagram-slot',
     'diagram-slot',
+    'diagram-slot',
+    'diagram-slot',
     'blank',
     'pair-term',
     'error-fix',

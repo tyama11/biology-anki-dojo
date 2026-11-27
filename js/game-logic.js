@@ -65,6 +65,8 @@ export function buildStandardChoices(
 const ONI_FORMATS                               = [
     'diagram-slot',
     'diagram-slot',
+    'diagram-slot',
+    'diagram-slot',
     'blank',
     'pair-term',
     'error-fix',

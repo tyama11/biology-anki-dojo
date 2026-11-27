@@ -19,9 +19,10 @@ import {
 import { shuffled } from './random.ts';
 import { createSoundFx } from './sound.ts';
 import { createProgressStore, safeLocalStorage } from './storage.ts';
-import type { Category, Difficulty, DojoChoice, PrintScope } from './types.ts';
+import type { Category, Difficulty, DojoChoice, PrintScope, TabId } from './types.ts';
 
 interface DojoState {
+    tab: TabId;
     category: Category;
     difficulty: Difficulty;
     scope: PrintScope;
@@ -49,6 +50,7 @@ const progress = createProgressStore(storage);
 const SOUND_FX = createSoundFx(storage);
 
 const state: DojoState = {
+    tab: 'sheet',
     category: 'sheet',
     difficulty: 'easy',
     scope: '1',
@@ -77,8 +79,16 @@ const els = {
     mainArea: bySelector('.main'),
     homeDesc: byId('home-desc'),
     earnedTitleBanner: byId('earned-title-banner'),
+    oniBestRecord: byId('oni-best-record'),
+    scopePicker: byId('scope-picker'),
+    ruleEasyItem: byId('rule-easy-item'),
+    ruleNormalItem: byId('rule-normal-item'),
     ruleOniItem: byId('rule-oni-item'),
+    btnEasy: byId<HTMLButtonElement>('btn-easy'),
+    btnNormal: byId<HTMLButtonElement>('btn-normal'),
     btnOni: byId<HTMLButtonElement>('btn-oni'),
+    badgeEasy: byId('badge-easy'),
+    badgeNormal: byId('badge-normal'),
     homeMuteBtn: byId<HTMLButtonElement>('home-mute-btn'),
     gameMuteBtn: byId<HTMLButtonElement>('game-mute-btn'),
     oniProgressNote: byId('oni-progress-note'),
@@ -91,6 +101,7 @@ const els = {
     } as Record<PrintScope, HTMLElement>,
     tabScoreSheet: byId('tab-score-sheet'),
     tabScorePair: byId('tab-score-pair'),
+    tabScoreOni: byId('tab-score-oni'),
     categoryTabs: document.querySelectorAll<HTMLButtonElement>('.category-tab'),
     modeButtons: document.querySelectorAll<HTMLButtonElement>('.mode-btn'),
     homeBtn: byId<HTMLButtonElement>('home-btn'),
@@ -119,8 +130,8 @@ function init(): void {
     els.categoryTabs.forEach((tab) => {
         tab.addEventListener('click', () => {
             SOUND_FX.playTap();
-            const cat = tab.dataset['category'];
-            if (cat === 'sheet' || cat === 'pair') setCategory(cat);
+            const t = tab.dataset['tab'];
+            if (t === 'sheet' || t === 'pair' || t === 'oni') setTab(t);
         });
     });
 
@@ -166,7 +177,7 @@ function init(): void {
 
     document.addEventListener('keydown', handleGlobalKeydown);
 
-    setCategory('sheet');
+    setTab('sheet');
     updateTabScores();
 }
 
@@ -177,54 +188,104 @@ function syncMuteButtons(): void {
 }
 
 function updateTabScores(): void {
-    const entries: ReadonlyArray<{ cat: Category; el: HTMLElement }> = [
-        { cat: 'sheet', el: els.tabScoreSheet },
-        { cat: 'pair', el: els.tabScorePair }
-    ];
-    entries.forEach(({ cat, el }) => {
-        const saved = progress.getOniBest(cat);
-        if (saved !== null) {
-            el.textContent = `👹 ${saved}問`;
-            el.hidden = false;
+    const sheetCount = progress.getCategoryClearedCount('sheet');
+    els.tabScoreSheet.textContent = sheetCount === 8 ? '👑 8/8' : `✅ ${sheetCount}/8`;
+    els.tabScoreSheet.hidden = false;
+
+    const pairCount = progress.getCategoryClearedCount('pair');
+    els.tabScorePair.textContent = pairCount === 8 ? '👑 8/8' : `✅ ${pairCount}/8`;
+    els.tabScorePair.hidden = false;
+
+    const unlocked = progress.isOniUnlocked();
+    if (!unlocked) {
+        const total = progress.getTotalClearedCount();
+        els.tabScoreOni.textContent = `🔒 ${total}/16`;
+        els.tabScoreOni.classList.remove('rank-s');
+        els.tabScoreOni.hidden = false;
+    } else {
+        const best = progress.getOniBest();
+        if (best !== null) {
+            const rankInfo = getOniRankInfo(best);
+            els.tabScoreOni.textContent = `👹 ${best}問`;
+            els.tabScoreOni.classList.toggle('rank-s', rankInfo.rank === 'S');
+            els.tabScoreOni.hidden = false;
         } else {
-            el.hidden = true;
+            els.tabScoreOni.classList.remove('rank-s');
+            els.tabScoreOni.hidden = true;
         }
-    });
+    }
     updateCurrentTitle();
 }
 
 function updateCurrentTitle(): void {
-    const saved = progress.getOniBest(state.category);
+    if (state.tab !== 'oni' || !progress.isOniUnlocked()) {
+        els.earnedTitleBanner.hidden = true;
+        els.oniBestRecord.hidden = true;
+        return;
+    }
+    const saved = progress.getOniBest();
     if (saved === null) {
         els.earnedTitleBanner.hidden = true;
+        els.oniBestRecord.hidden = true;
         return;
     }
     const rankInfo = getOniRankInfo(saved);
     els.earnedTitleBanner.className = `earned-title-banner ${rankInfo.className}`;
     els.earnedTitleBanner.textContent = `称号：${rankInfo.icon} ${rankInfo.title}`;
     els.earnedTitleBanner.hidden = false;
+    els.oniBestRecord.textContent = `🏆 ベスト記録：${saved} 問`;
+    els.oniBestRecord.hidden = false;
 }
 
-function updateDifficultyVisibility(animate = false): void {
-    const unlocked = progress.isOniUnlocked(state.category);
-    els.ruleOniItem.hidden = !unlocked;
-    els.btnOni.hidden = !unlocked;
-    els.btnOni.classList.toggle('just-unlocked', unlocked && animate);
-    if (unlocked) {
-        els.oniProgressNote.hidden = true;
-    } else {
-        const cleared = progress.getClearedScopeCount(state.category);
-        els.oniProgressNote.textContent = `🔒 全4分野の「ふつう」クリアで全分野おに解放（${cleared} / ${PRINT_SCOPES.length} 分野クリア）`;
+function updateTabContentVisibility(animate = false): void {
+    const isOniTab = state.tab === 'oni';
+    const unlocked = progress.isOniUnlocked();
+
+    els.scopePicker.hidden = isOniTab;
+    els.ruleEasyItem.hidden = isOniTab;
+    els.ruleNormalItem.hidden = isOniTab;
+    els.ruleOniItem.hidden = !isOniTab || !unlocked;
+
+    els.btnEasy.hidden = isOniTab;
+    els.btnNormal.hidden = isOniTab;
+    els.btnOni.hidden = !isOniTab;
+    els.btnOni.disabled = !unlocked;
+    els.btnOni.classList.toggle('just-unlocked', isOniTab && unlocked && animate);
+
+    if (isOniTab && !unlocked) {
+        const cleared = progress.getTotalClearedCount();
+        els.oniProgressNote.textContent = `🔒 全16ステージ（赤シート・ペアの4分野×2難易度）クリアで解放（${cleared} / 16 ステージ）`;
         els.oniProgressNote.hidden = false;
+    } else {
+        els.oniProgressNote.hidden = true;
     }
+}
+
+function updateModeClearBadges(): void {
+    if (state.tab === 'oni') {
+        els.badgeEasy.hidden = true;
+        els.badgeNormal.hidden = true;
+        return;
+    }
+    els.badgeEasy.hidden = !progress.isStageCleared(state.category, state.scope, 'easy');
+    els.badgeNormal.hidden = !progress.isStageCleared(state.category, state.scope, 'normal');
 }
 
 function updateScopeBadges(): void {
     PRINT_SCOPES.forEach((scope) => {
         const badge = els.scopeBadges[scope];
-        const cleared = progress.isScopeCleared(state.category, scope);
-        badge.textContent = '✅ クリア';
-        badge.hidden = !cleared;
+        const easyCleared = progress.isStageCleared(state.category, scope, 'easy');
+        const normalCleared = progress.isStageCleared(state.category, scope, 'normal');
+        const count = (easyCleared ? 1 : 0) + (normalCleared ? 1 : 0);
+        if (count === 2) {
+            badge.textContent = '🌟 2/2済';
+            badge.hidden = false;
+        } else if (count === 1) {
+            badge.textContent = '✅ 1/2';
+            badge.hidden = false;
+        } else {
+            badge.hidden = true;
+        }
     });
 }
 
@@ -235,18 +296,25 @@ function setScope(scope: PrintScope): void {
         btn.classList.toggle('active', active);
         btn.setAttribute('aria-checked', String(active));
     });
+    updateModeClearBadges();
 }
 
-function setCategory(cat: Category): void {
-    state.category = cat;
-    els.categoryTabs.forEach((tab) => {
-        const active = tab.dataset['category'] === cat;
-        tab.classList.toggle('active', active);
-        tab.setAttribute('aria-selected', String(active));
+function setTab(tab: TabId): void {
+    state.tab = tab;
+    if (tab === 'sheet' || tab === 'pair') {
+        state.category = tab;
+    }
+    els.categoryTabs.forEach((t) => {
+        const active = t.dataset['tab'] === tab;
+        t.classList.toggle('active', active);
+        t.setAttribute('aria-selected', String(active));
     });
-    els.homeDesc.textContent = CATEGORY_CONFIG[cat].description;
+    els.homeDesc.textContent = tab === 'oni'
+        ? '全分野・5形式ランダム出題の60秒タイムアタック！'
+        : CATEGORY_CONFIG[state.category].description;
     updateScopeBadges();
-    updateDifficultyVisibility();
+    updateModeClearBadges();
+    updateTabContentVisibility();
     updateCurrentTitle();
 }
 
@@ -456,7 +524,7 @@ function renderTray(): void {
 }
 
 function setupNextOniQuestion(): void {
-    const q = buildOniQuestion(state.category, state.currentOniAnswer);
+    const q = buildOniQuestion(state.currentOniAnswer);
     state.currentOniAnswer = q.correctAnswer;
     state.choices = q.choices;
     els.boardArea.innerHTML = `<div class="dojo-oni-card">${q.questionHtml}</div>`;
@@ -579,23 +647,23 @@ function showToast(msg: string): void {
 function handleGameClear(): void {
     state.isPlaying = false;
     let unlockedNow = false;
-    let remainingScopes = 0;
-    if (state.difficulty === 'normal') {
-        const wasUnlocked = progress.isOniUnlocked(state.category);
-        progress.markScopeCleared(state.category, state.scope);
-        unlockedNow = !wasUnlocked && progress.isOniUnlocked(state.category);
+    let remainingStages = 0;
+    if (state.difficulty === 'easy' || state.difficulty === 'normal') {
+        const wasUnlocked = progress.isOniUnlocked();
+        progress.markStageCleared(state.category, state.scope, state.difficulty);
+        unlockedNow = !wasUnlocked && progress.isOniUnlocked();
         if (unlockedNow) {
             state.justUnlockedOni = true;
-        } else if (!progress.isOniUnlocked(state.category)) {
-            remainingScopes = PRINT_SCOPES.length - progress.getClearedScopeCount(state.category);
+        } else if (!progress.isOniUnlocked()) {
+            remainingStages = 16 - progress.getTotalClearedCount();
         }
     }
     SOUND_FX.playClear(unlockedNow);
     els.clearTitle.innerHTML = '🎊 素晴らしい！ 🎊';
     if (unlockedNow) {
-        els.clearSubtitle.innerHTML = 'すべてマスターしました！<div class="unlock-message">どこかでとびらがひらいたようだ…！（全分野おに解放！）</div>';
-    } else if (remainingScopes > 0) {
-        els.clearSubtitle.innerHTML = `すべてマスターしました！<div class="record-badge">あと ${remainingScopes} 分野の「ふつう」クリアで 👹 全分野おに解放！</div>`;
+        els.clearSubtitle.innerHTML = 'すべてマスターしました！<div class="unlock-message">どこかでとびらがひらいたようだ…！（👹 鬼モードタブが解放されました！）</div>';
+    } else if (remainingStages > 0) {
+        els.clearSubtitle.innerHTML = `すべてマスターしました！<div class="record-badge">あと ${remainingStages} ステージクリアで 👹 鬼モード解放！</div>`;
     } else {
         els.clearSubtitle.innerHTML = 'すべてマスターしました！';
     }
@@ -605,12 +673,18 @@ function handleGameClear(): void {
     state.returnTimeout = setTimeout(resetToHome, unlockedNow ? 4500 : 3000);
 }
 
+function getNextRankHint(score: number): string {
+    if (score >= 14) return '👑 最高ランク達成！';
+    if (score >= 10) return `あと ${14 - score}問でランクS！`;
+    if (score >= 6) return `あと ${10 - score}問でランクA！`;
+    return `あと ${6 - score}問でランクB！`;
+}
+
 function handleOniTimeUp(): void {
     state.isPlaying = false;
-    const key = state.category;
-    const prev = progress.getOniBest(key) ?? -1;
+    const prev = progress.getOniBest() ?? -1;
     const best = Math.max(prev, state.score);
-    if (state.score > prev) progress.setOniBest(key, best);
+    if (state.score > prev) progress.setOniBest(best);
     updateTabScores();
     const rankInfo = getOniRankInfo(state.score);
     SOUND_FX.playTimeUp(rankInfo.rank === 'S' || rankInfo.rank === 'A');
@@ -619,6 +693,7 @@ function handleOniTimeUp(): void {
         <div class="rank-showcase ${rankInfo.className}"><span class="rank-letter">${rankInfo.rank}</span><span class="rank-title-text">${rankInfo.icon} ${rankInfo.title}</span></div>
         <div style="font-size: 42px; font-weight: 900; color: var(--primary);">${state.score}問正解！</div>
         <div>ベスト記録：<b>${best} 問</b></div>
+        <div class="next-rank-hint">${getNextRankHint(state.score)}</div>
     `;
     els.clearActions.hidden = false;
     els.autoReturnText.hidden = true;
@@ -639,7 +714,8 @@ function resetToHome(): void {
     els.gameScreen.classList.remove('active');
     els.homeScreen.classList.add('active');
     updateScopeBadges();
-    updateDifficultyVisibility(state.justUnlockedOni);
+    updateModeClearBadges();
+    updateTabContentVisibility(state.justUnlockedOni);
     updateTabScores();
     state.justUnlockedOni = false;
 }

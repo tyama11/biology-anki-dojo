@@ -4,20 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>生物基礎 暗記プリント完全道場</title>
-    <link rel="stylesheet" href="css/style.css?v=20261127-1">
+    <link rel="stylesheet" href="css/style.css?v=20261127-2">
 </head>
 <body>
 
 <div id="home-screen" class="screen active">
     <header class="home-top-bar">
         <div class="category-switcher" role="tablist" aria-label="学習モード選択">
-            <button type="button" id="tab-sheet" class="category-tab active" role="tab" aria-selected="true" data-category="sheet">
-                <span>🔴 デジタル赤シート ＆ 穴埋め</span>
+            <button type="button" id="tab-sheet" class="category-tab active" role="tab" aria-selected="true" data-tab="sheet">
+                <span>🔴 赤シート ＆ 穴埋め</span>
                 <span class="tab-score" id="tab-score-sheet" hidden></span>
             </button>
-            <button type="button" id="tab-pair" class="category-tab" role="tab" aria-selected="false" data-category="pair">
+            <button type="button" id="tab-pair" class="category-tab" role="tab" aria-selected="false" data-tab="pair">
                 <span>⚖️ 対（ペア）で覚える！</span>
                 <span class="tab-score" id="tab-score-pair" hidden></span>
+            </button>
+            <button type="button" id="tab-oni" class="category-tab" role="tab" aria-selected="false" data-tab="oni">
+                <span>👹 鬼モード（総合TA）</span>
+                <span class="tab-score" id="tab-score-oni" hidden></span>
             </button>
         </div>
         <button type="button" class="mute-btn" id="home-mute-btn" aria-label="効果音のオン・オフ">🔊 音ON</button>
@@ -27,10 +31,11 @@
         <section class="home-info">
             <h1>生物基礎 暗記プリント完全道場 📱</h1>
             <div class="earned-title-banner" id="earned-title-banner" hidden></div>
+            <div class="oni-best-record" id="oni-best-record" hidden></div>
             <p class="desc" id="home-desc">プリントの重要文を赤シートで隠して確認！</p>
 
-            <div class="scope-picker">
-                <div class="scope-picker-label">プリント分野を選択（通常モード）：</div>
+            <div class="scope-picker" id="scope-picker">
+                <div class="scope-picker-label">プリント分野を選択：</div>
                 <div class="scope-grid" id="scope-grid" role="radiogroup" aria-label="分野選択">
                     <button type="button" class="scope-btn active" role="radio" aria-checked="true" data-scope="1">
                         <span>🧬 No.1 細胞・酵素・DNA</span>
@@ -52,22 +57,28 @@
             </div>
 
             <ul class="rules" id="home-rules">
-                <li class="rule-item"><span class="rule-icon">🔰</span><div><b>かんたん</b>：赤シートめくり／ヒントつき</div></li>
-                <li class="rule-item"><span class="rule-icon">🧪</span><div><b>ふつう</b>：空欄に用語カードを当てはめてテスト（全4分野クリアで👹おに解放！）</div></li>
-                <li class="rule-item" id="rule-oni-item" hidden><span class="rule-icon">👹</span><div><b>おに</b>：全分野ミックス・60秒TA・3択（ミス-5秒／5連続正解で+3秒）</div></li>
+                <li class="rule-item" id="rule-easy-item"><span class="rule-icon">🔰</span><div><b>かんたん</b>：赤シートめくり／ヒントつき</div></li>
+                <li class="rule-item" id="rule-normal-item"><span class="rule-icon">🧪</span><div><b>ふつう</b>：空欄に用語カードを当てはめてテスト</div></li>
+                <li class="rule-item" id="rule-oni-item" hidden><span class="rule-icon">👹</span><div><b>鬼モード（60秒TA）</b>：全分野ミックス・5形式ランダム出題（穴埋め／ペア判別／正誤／用語→意味／仲間はずれ）。ミス-3秒・5連続正解で+3秒！</div></li>
             </ul>
         </section>
 
         <section class="home-actions" aria-label="難易度を選んでスタート">
             <div class="mode-buttons">
-                <button type="button" class="mode-btn btn-easy" data-difficulty="easy">🔰 かんたんでスタート</button>
-                <button type="button" class="mode-btn btn-normal" data-difficulty="normal">🧪 ふつうでスタート</button>
-                <button type="button" class="mode-btn btn-oni" id="btn-oni" data-difficulty="oni" hidden>👹 全分野おにでスタート（60秒TA）</button>
+                <button type="button" class="mode-btn btn-easy" id="btn-easy" data-difficulty="easy">
+                    <span>🔰 かんたんでスタート</span>
+                    <span class="mode-clear-badge" id="badge-easy" hidden>✅ クリア済</span>
+                </button>
+                <button type="button" class="mode-btn btn-normal" id="btn-normal" data-difficulty="normal">
+                    <span>🧪 ふつうでスタート</span>
+                    <span class="mode-clear-badge" id="badge-normal" hidden>✅ クリア済</span>
+                </button>
+                <button type="button" class="mode-btn btn-oni" id="btn-oni" data-difficulty="oni" hidden>👹 鬼モードでスタート（60秒TA）</button>
             </div>
-            <div class="oni-progress-note" id="oni-progress-note"></div>
+            <div class="oni-progress-note" id="oni-progress-note" hidden></div>
             <p class="kbd-help">
                 <span class="kbd-line">⌨️ <kbd>Tab</kbd> 移動　<kbd>Enter</kbd> 決定　<kbd>Esc</kbd> 選択解除</span>
-                <span class="kbd-line">👹 おには <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> キーでそのまま回答</span>
+                <span class="kbd-line">👹 鬼モードは <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> キーでそのまま回答</span>
             </p>
         </section>
     </main>
@@ -114,6 +125,6 @@
     </div>
 </div>
 
-<script type="module" src="js/app.js?v=20261127-1"></script>
+<script type="module" src="js/app.js?v=20261127-2"></script>
 </body>
 </html>

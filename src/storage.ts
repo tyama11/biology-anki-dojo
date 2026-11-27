@@ -1,5 +1,5 @@
 import { PRINT_SCOPES } from './data.ts';
-import type { Category, PrintScope } from './types.ts';
+import type { Category, PrintScope, StageDifficulty } from './types.ts';
 
 /** localStorage と同じ最小インターフェース（テストではメモリ実装を使う） */
 export interface KeyValueStore {
@@ -8,13 +8,17 @@ export interface KeyValueStore {
 }
 
 export const MUTE_STORAGE_KEY = 'biology-anki-dojo-muted';
+export const ONI_BEST_KEY = 'biology-anki-dojo-oni-best';
 
-export function oniBestKey(category: Category): string {
-    return `biology-anki-dojo-oni-best-${category}`;
-}
+export const STAGE_DIFFICULTIES: readonly StageDifficulty[] = ['easy', 'normal'];
+export const STAGE_CATEGORIES: readonly Category[] = ['sheet', 'pair'];
 
-export function scopeClearedKey(category: Category, scope: PrintScope): string {
-    return `biology-anki-dojo-cleared-${category}-${scope}`;
+export function stageClearedKey(
+    category: Category,
+    scope: PrintScope,
+    difficulty: StageDifficulty
+): string {
+    return `biology-anki-dojo-stage-cleared-${category}-${scope}-${difficulty}`;
 }
 
 export function createMemoryStore(initial: Record<string, string> = {}): KeyValueStore {
@@ -40,36 +44,51 @@ export function safeLocalStorage(): KeyValueStore {
 }
 
 export interface ProgressStore {
-    getOniBest(category: Category): number | null;
-    setOniBest(category: Category, score: number): void;
-    isScopeCleared(category: Category, scope: PrintScope): boolean;
-    markScopeCleared(category: Category, scope: PrintScope): void;
-    getClearedScopeCount(category: Category): number;
-    isOniUnlocked(category: Category): boolean;
+    getOniBest(): number | null;
+    setOniBest(score: number): void;
+    isStageCleared(category: Category, scope: PrintScope, difficulty: StageDifficulty): boolean;
+    markStageCleared(category: Category, scope: PrintScope, difficulty: StageDifficulty): void;
+    getCategoryClearedCount(category: Category): number;
+    getTotalClearedCount(): number;
+    isOniUnlocked(): boolean;
 }
 
 export function createProgressStore(store: KeyValueStore): ProgressStore {
     return {
-        getOniBest(category) {
-            const raw = store.getItem(oniBestKey(category));
+        getOniBest() {
+            const raw = store.getItem(ONI_BEST_KEY);
             if (raw === null) return null;
             const value = Number(raw);
             return Number.isFinite(value) && value >= 0 ? Math.floor(value) : null;
         },
-        setOniBest(category, score) {
-            store.setItem(oniBestKey(category), String(score));
+        setOniBest(score) {
+            store.setItem(ONI_BEST_KEY, String(score));
         },
-        isScopeCleared(category, scope) {
-            return store.getItem(scopeClearedKey(category, scope)) === 'true';
+        isStageCleared(category, scope, difficulty) {
+            return store.getItem(stageClearedKey(category, scope, difficulty)) === 'true';
         },
-        markScopeCleared(category, scope) {
-            store.setItem(scopeClearedKey(category, scope), 'true');
+        markStageCleared(category, scope, difficulty) {
+            store.setItem(stageClearedKey(category, scope, difficulty), 'true');
         },
-        getClearedScopeCount(category) {
-            return PRINT_SCOPES.filter((scope) => store.getItem(scopeClearedKey(category, scope)) === 'true').length;
+        getCategoryClearedCount(category) {
+            let count = 0;
+            for (const scope of PRINT_SCOPES) {
+                for (const difficulty of STAGE_DIFFICULTIES) {
+                    if (store.getItem(stageClearedKey(category, scope, difficulty)) === 'true') {
+                        count += 1;
+                    }
+                }
+            }
+            return count;
         },
-        isOniUnlocked(category) {
-            return PRINT_SCOPES.every((scope) => store.getItem(scopeClearedKey(category, scope)) === 'true');
+        getTotalClearedCount() {
+            return STAGE_CATEGORIES.reduce(
+                (sum, category) => sum + this.getCategoryClearedCount(category),
+                0
+            );
+        },
+        isOniUnlocked() {
+            return this.getTotalClearedCount() === PRINT_SCOPES.length * STAGE_DIFFICULTIES.length * STAGE_CATEGORIES.length;
         }
     };
 }

@@ -1,6 +1,9 @@
 export type Category = 'sheet' | 'pair';
+export type TabId = 'sheet' | 'pair' | 'oni';
 export type Difficulty = 'easy' | 'normal' | 'oni';
+export type StageDifficulty = 'easy' | 'normal';
 export type PrintScope = '1' | '2' | '3' | '4';
+export type OniQuestionFormat = 'blank' | 'pair-term' | 'true-false' | 'reverse-desc' | 'odd-one-out';
 
 export interface SheetItem {
     readonly id: string;
@@ -18,8 +21,25 @@ export interface PairItem {
     readonly pairTitle: string;
     readonly termA: string;
     readonly descA: string;
+    readonly shortDescA: string;
     readonly termB: string;
     readonly descB: string;
+    readonly shortDescB: string;
+}
+
+export interface TrueFalseItem {
+    readonly id: string;
+    readonly printNo: PrintScope;
+    readonly statement: string;
+    readonly isTrue: boolean;
+}
+
+export interface OddOneOutItem {
+    readonly id: string;
+    readonly printNo: PrintScope;
+    readonly prompt: string;
+    readonly oddOne: string;
+    readonly mates: readonly [string, string];
 }
 
 export interface DojoChoice {

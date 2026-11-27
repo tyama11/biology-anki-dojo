@@ -1,9 +1,9 @@
-import { PAIR_ITEMS, SHEET_ITEMS } from './data.ts';
+import { ODD_ONE_OUT_ITEMS, PAIR_ITEMS, SHEET_ITEMS, TRUE_FALSE_ITEMS } from './data.ts';
 import { pickRandom, shuffled, type Rng } from './random.ts';
-import type { Category, DojoChoice, PairItem, PrintScope, SheetItem } from './types.ts';
+import type { DojoChoice, OniQuestionFormat, PairItem, PrintScope, SheetItem } from './types.ts';
 
 export const ONI_TIME_LIMIT = 60;
-export const ONI_PENALTY_SECONDS = 5;
+export const ONI_PENALTY_SECONDS = 3;
 export const ONI_COMBO_STEP = 5;
 export const ONI_BONUS_SECONDS = 3;
 export const ONI_TRAY_SIZE = 3;
@@ -17,24 +17,33 @@ export function filterPairItems(scope: PrintScope): readonly PairItem[] {
 }
 
 export interface OniQuestion {
+    readonly format: OniQuestionFormat;
     readonly questionHtml: string;
     readonly correctAnswer: string;
     readonly choices: DojoChoice[];
 }
 
+const ONI_FORMATS: readonly OniQuestionFormat[] = [
+    'blank',
+    'pair-term',
+    'true-false',
+    'reverse-desc',
+    'odd-one-out'
+];
+
 export function buildOniQuestion(
-    category: Category,
     prevAnswer: string | null,
     rng: Rng = Math.random
 ): OniQuestion {
-    if (category === 'pair') {
-        const pool = PAIR_ITEMS;
-        const candidates = pool.filter((p) => p.termA !== prevAnswer && p.termB !== prevAnswer);
-        const targetPair = pickRandom(candidates.length > 0 ? candidates : pool, rng);
+    const format = pickRandom(ONI_FORMATS, rng);
+
+    if (format === 'pair-term') {
+        const candidates = PAIR_ITEMS.filter((p) => p.termA !== prevAnswer && p.termB !== prevAnswer);
+        const targetPair = pickRandom(candidates.length > 0 ? candidates : PAIR_ITEMS, rng);
         const askA = rng() < 0.5;
         const correctTerm = askA ? targetPair.termA : targetPair.termB;
         const otherTerm = askA ? targetPair.termB : targetPair.termA;
-        const promptDesc = askA ? targetPair.descA : targetPair.descB;
+        const promptDesc = askA ? targetPair.shortDescA : targetPair.shortDescB;
 
         const extraTerms = shuffled(
             PAIR_ITEMS.filter((p) => p.id !== targetPair.id).flatMap((p) => [p.termA, p.termB]),
@@ -43,24 +52,99 @@ export function buildOniQuestion(
         const thirdTerm = extraTerms.find((t) => t !== correctTerm && t !== otherTerm) ?? '恒常性';
 
         const choices: DojoChoice[] = shuffled(
-            [
-                { id: 'c0', answer: correctTerm, label: correctTerm, hint: '' },
-                { id: 'c1', answer: otherTerm, label: otherTerm, hint: '' },
-                { id: 'c2', answer: thirdTerm, label: thirdTerm, hint: '' }
-            ],
+            [correctTerm, otherTerm, thirdTerm].map((term, idx) => ({
+                id: `c${idx}`,
+                answer: term,
+                label: term,
+                hint: ''
+            })),
             rng
         );
 
         return {
-            questionHtml: `<div class="dojo-q-badge">⚖️ ${targetPair.pairTitle}</div><div class="dojo-q-text">${promptDesc}</div>`,
+            format,
+            questionHtml: `<div class="dojo-q-badge">⚖️ ペア判別</div><div class="dojo-q-text">${promptDesc}</div>`,
             correctAnswer: correctTerm,
             choices
         };
     }
 
-    const pool = SHEET_ITEMS;
-    const candidates = pool.filter((s) => s.answer !== prevAnswer);
-    const target = pickRandom(candidates.length > 0 ? candidates : pool, rng);
+    if (format === 'true-false') {
+        const candidates = TRUE_FALSE_ITEMS.filter((item) => {
+            const ans = item.isTrue ? '⭕ 正しい' : '❌ 誤り';
+            return ans !== prevAnswer;
+        });
+        const target = pickRandom(candidates.length > 0 ? candidates : TRUE_FALSE_ITEMS, rng);
+        const correctAnswer = target.isTrue ? '⭕ 正しい' : '❌ 誤り';
+
+        return {
+            format,
+            questionHtml: `<div class="dojo-q-badge">⭕❌ 正誤クイズ</div><div class="dojo-q-text">${target.statement}</div>`,
+            correctAnswer,
+            choices: [
+                { id: 'c0', answer: '⭕ 正しい', label: '⭕ 正しい', hint: '' },
+                { id: 'c1', answer: '❌ 誤り', label: '❌ 誤り', hint: '' }
+            ]
+        };
+    }
+
+    if (format === 'reverse-desc') {
+        const candidates = PAIR_ITEMS.filter((p) => p.shortDescA !== prevAnswer && p.shortDescB !== prevAnswer);
+        const targetPair = pickRandom(candidates.length > 0 ? candidates : PAIR_ITEMS, rng);
+        const askA = rng() < 0.5;
+        const promptTerm = askA ? targetPair.termA : targetPair.termB;
+        const correctDesc = askA ? targetPair.shortDescA : targetPair.shortDescB;
+        const otherDesc = askA ? targetPair.shortDescB : targetPair.shortDescA;
+
+        const extraDescs = shuffled(
+            PAIR_ITEMS.filter((p) => p.id !== targetPair.id).flatMap((p) => [p.shortDescA, p.shortDescB]),
+            rng
+        );
+        const thirdDesc = extraDescs.find((d) => d !== correctDesc && d !== otherDesc) ?? '生体の恒常性を保つ働き';
+
+        const choices: DojoChoice[] = shuffled(
+            [correctDesc, otherDesc, thirdDesc].map((desc, idx) => ({
+                id: `c${idx}`,
+                answer: desc,
+                label: desc,
+                hint: ''
+            })),
+            rng
+        );
+
+        return {
+            format,
+            questionHtml: `<div class="dojo-q-badge">🔄 用語→意味</div><div class="dojo-q-text">「${promptTerm}」の説明は？</div>`,
+            correctAnswer: correctDesc,
+            choices
+        };
+    }
+
+    if (format === 'odd-one-out') {
+        const candidates = ODD_ONE_OUT_ITEMS.filter((item) => item.oddOne !== prevAnswer);
+        const target = pickRandom(candidates.length > 0 ? candidates : ODD_ONE_OUT_ITEMS, rng);
+
+        const choices: DojoChoice[] = shuffled(
+            [target.oddOne, ...target.mates].map((label, idx) => ({
+                id: `c${idx}`,
+                answer: label,
+                label,
+                hint: ''
+            })),
+            rng
+        );
+
+        return {
+            format,
+            questionHtml: `<div class="dojo-q-badge">🚫 仲間はずれ</div><div class="dojo-q-text">${target.prompt}</div>`,
+            correctAnswer: target.oddOne,
+            choices
+        };
+    }
+
+    // format === 'blank'
+    const candidates = SHEET_ITEMS.filter((s) => s.answer !== prevAnswer);
+    const target = pickRandom(candidates.length > 0 ? candidates : SHEET_ITEMS, rng);
 
     const distractors = shuffled(
         SHEET_ITEMS.filter((s) => s.answer !== target.answer).map((s) => s.answer),
@@ -78,7 +162,8 @@ export function buildOniQuestion(
     );
 
     return {
-        questionHtml: `<div class="dojo-q-badge">No.${target.printNo} ${target.section}</div><div class="dojo-q-text">${target.before}<span class="oni-blank-pill">？</span>${target.after}</div>`,
+        format: 'blank',
+        questionHtml: `<div class="dojo-q-badge">📝 穴埋め</div><div class="dojo-q-text">${target.before}<span class="oni-blank-pill">？</span>${target.after}</div>`,
         correctAnswer: target.answer,
         choices
     };

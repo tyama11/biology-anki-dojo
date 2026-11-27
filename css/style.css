@@ -1595,3 +1595,52 @@ button:focus-visible,
         grid-template-columns: 1fr;
     }
 }
+
+.mode-clear-badge {
+    display: inline-flex;
+    align-items: center;
+    font-size: 12px;
+    font-weight: 800;
+    padding: 3px 9px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.92);
+    color: #065F46;
+    margin-left: 8px;
+}
+
+.mode-clear-badge[hidden],
+.oni-best-record[hidden] {
+    display: none !important;
+}
+
+.oni-best-record {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--primary);
+    background: #EFF6FF;
+    border: 1.5px solid #BFDBFE;
+    padding: 6px 14px;
+    border-radius: 999px;
+    margin-bottom: 10px;
+}
+
+.mode-btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+.next-rank-hint {
+    margin-top: 8px;
+    font-size: 15px;
+    font-weight: 800;
+    color: #B45309;
+    background: #FEF3C7;
+    padding: 6px 14px;
+    border-radius: 999px;
+    display: inline-block;
+}

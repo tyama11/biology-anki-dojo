@@ -146,7 +146,8 @@ export function buildOniQuestion(
     }
 
     if (format === 'error-fix') {
-        const target = pickRandom(ERROR_FIX_ITEMS, rng);
+        const candidates = ERROR_FIX_ITEMS.filter((item) => item.correctTerm !== prevAnswer);
+        const target = pickRandom(candidates.length > 0 ? candidates : ERROR_FIX_ITEMS, rng);
         const keepCorrect = rng() < 0.45 && prevAnswer !== '⭕ このまま正しい';
         const shownTerm = keepCorrect ? target.correctTerm : pickRandom(target.distractors, rng);
         const correctAnswer = keepCorrect ? '⭕ このまま正しい' : target.correctTerm;

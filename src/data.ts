@@ -32,6 +32,8 @@ export const SHEET_ITEMS: readonly SheetItem[] = [
     { id: 's3-3', printNo: '3', section: '免疫不全', before: 'HIVは獲得免疫の司令塔である（', answer: 'ヘルパーT細胞', after: '）を破壊する。', hint: 'エイズ（後天性免疫不全症候群）の原因' },
     { id: 's3-4', printNo: '3', section: '二次応答', before: '同じ病原体の再侵入時、（', answer: '記憶細胞', after: '）により急速で強い反応が起こる。', hint: '2度目のニューゲームは強くて早い' },
     { id: 's3-5', printNo: '3', section: '免疫異常', before: '免疫寛容の異常で自分の体を攻撃する疾患を（', answer: '自己免疫疾患', after: '）という。', hint: '関節リウマチや1型糖尿病など' },
+    { id: 's3-6', printNo: '3', section: '免疫細胞', before: '食作用で取り込んだ病原体の情報をT細胞に伝える働きを主に担うのは（', answer: '樹状細胞', after: '）。', hint: '抗原提示のスペシャリスト' },
+    { id: 's3-7', printNo: '3', section: '免疫細胞', before: '白血球の中で最も数が多く、すばやく食作用を行うのは（', answer: '好中球', after: '）。', hint: '自然免疫で最初に駆けつける食細胞' },
     // No.4
     { id: 's4-1', printNo: '4', section: '光合成', before: '見かけの光合成速度が0になる光の強さを（', answer: '光補償点', after: '）という。', hint: '光合成量＝呼吸量（光合成速度が0ではない！）' },
     { id: 's4-2', printNo: '4', section: '遷移', before: '森林が成立しなくなる上限を（', answer: '森林限界', after: '）という。', hint: '亜高山帯と高山帯の境' },
@@ -264,28 +266,39 @@ export const DIAGRAM_ITEMS: readonly DiagramQuestionItem[] = [
     {
         id: 'dg-5',
         printNo: '3',
-        title: '体液性免疫の司令塔',
+        title: '免疫の経路（獲得免疫）',
         slots: [
             {
                 answer: 'ヘルパーT細胞',
                 distractors: ['キラーT細胞', '記憶細胞', 'マクロファージ'],
-                renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="体液性免疫フロー図">
-                    ${svgBox(25, 95, 125, 64, '樹状細胞', false, '#E0E7FF', '#4F46E5', '#3730A3', '抗原提示')}
-                    ${svgArrow(158, 127, 192, 127)}
-                    ${svgBox(200, 95, 155, 64, 'ヘルパーT細胞', true)}
-                    ${svgArrow(363, 127, 397, 127)}
-                    ${svgBox(405, 95, 130, 64, 'B細胞活性化', false, '#DBEAFE', '#2563EB', '#1E40AF', '抗体産生へ')}
+                renderSvg: () => `<svg viewBox="0 0 560 276" role="img" aria-label="体液性免疫の縦フロー図">
+                    ${svgBox(165, 16, 230, 58, '樹状細胞（抗原提示）', false, '#E0E7FF', '#4F46E5', '#3730A3')}
+                    ${svgArrow(280, 78, 280, 104)}
+                    ${svgBox(165, 108, 230, 58, 'ヘルパーT細胞', true)}
+                    ${svgArrow(280, 170, 280, 196)}
+                    ${svgBox(165, 200, 230, 58, 'B細胞活性化（抗体産生へ）', false, '#DBEAFE', '#2563EB', '#1E40AF')}
                 </svg>`
             },
             {
                 answer: '形質細胞',
                 distractors: ['キラーT細胞', '記憶細胞', '好中球'],
-                renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="抗体産生細胞の図">
-                    ${svgBox(25, 95, 125, 64, 'ヘルパーT細胞', false, '#E0E7FF', '#4F46E5', '#3730A3', 'B細胞を刺激')}
-                    ${svgArrow(158, 127, 192, 127)}
-                    ${svgBox(200, 95, 155, 64, '形質細胞', true, '#DBEAFE', '#2563EB', '#1E40AF', 'B細胞が分化')}
-                    ${svgArrow(363, 127, 397, 127)}
-                    ${svgBox(405, 95, 130, 64, '抗体産生', false, '#DCFCE7', '#16A34A', '#166534', '体液性免疫')}
+                renderSvg: () => `<svg viewBox="0 0 560 276" role="img" aria-label="抗体産生細胞の縦フロー図">
+                    ${svgBox(165, 16, 230, 58, 'ヘルパーT細胞（B細胞を刺激）', false, '#E0E7FF', '#4F46E5', '#3730A3')}
+                    ${svgArrow(280, 78, 280, 104)}
+                    ${svgBox(165, 108, 230, 58, '形質細胞', true, '#DBEAFE', '#2563EB', '#1E40AF', 'B細胞が分化')}
+                    ${svgArrow(280, 170, 280, 196)}
+                    ${svgBox(165, 200, 230, 58, '抗体産生（体液性免疫）', false, '#DCFCE7', '#16A34A', '#166534')}
+                </svg>`
+            },
+            {
+                answer: 'キラーT細胞',
+                distractors: ['B細胞', '形質細胞', 'ヘルパーT細胞'],
+                renderSvg: () => `<svg viewBox="0 0 560 276" role="img" aria-label="細胞性免疫の縦フロー図">
+                    ${svgBox(165, 16, 230, 58, '樹状細胞（抗原提示）', false, '#E0E7FF', '#4F46E5', '#3730A3')}
+                    ${svgArrow(280, 78, 280, 104)}
+                    ${svgBox(165, 108, 230, 58, 'ヘルパーT細胞（活性化）', false, '#DBEAFE', '#2563EB', '#1E40AF')}
+                    ${svgArrow(280, 170, 280, 196)}
+                    ${svgBox(165, 200, 230, 58, 'キラーT細胞', true, '#FEE2E2', '#DC2626', '#991B1B', '感染細胞を直接攻撃')}
                 </svg>`
             }
         ]
@@ -610,6 +623,57 @@ export const DIAGRAM_ITEMS: readonly DiagramQuestionItem[] = [
                 </svg>`
             }
         ]
+    },
+    {
+        id: 'dg-15',
+        printNo: '3',
+        title: '免疫細胞の種類と役割',
+        slots: [
+            {
+                answer: '樹状細胞',
+                distractors: ['好中球', 'マクロファージ', 'B細胞'],
+                renderSvg: () => `<svg viewBox="0 0 560 276" role="img" aria-label="免疫細胞の種類の図">
+                    ${svgBox(155, 16, 250, 52, '食細胞（自然免疫・食作用）', false, '#FEF3C7', '#D97706', '#92400E')}
+                    ${svgArrow(280, 72, 280, 98)}
+                    ${svgBox(155, 102, 250, 60, '樹状細胞', true, '#E0E7FF', '#4F46E5', '#3730A3', '最も強く抗原提示')}
+                    ${svgArrow(280, 166, 280, 192)}
+                    ${svgBox(155, 196, 250, 58, 'リンパ節でT細胞を活性化', false, '#DBEAFE', '#2563EB', '#1E40AF')}
+                </svg>`
+            },
+            {
+                answer: '好中球',
+                distractors: ['樹状細胞', 'マクロファージ', 'キラーT細胞'],
+                renderSvg: () => `<svg viewBox="0 0 560 276" role="img" aria-label="好中球の役割図">
+                    ${svgBox(155, 16, 250, 52, '病原体が体内に侵入', false, '#FEE2E2', '#DC2626', '#991B1B')}
+                    ${svgArrow(280, 72, 280, 98)}
+                    ${svgBox(155, 102, 250, 60, '好中球', true, '#FEF3C7', '#D97706', '#92400E', '白血球で最多')}
+                    ${svgArrow(280, 166, 280, 192)}
+                    ${svgBox(155, 196, 250, 58, 'すばやく駆けつけ食作用', false, '#DCFCE7', '#16A34A', '#166534')}
+                </svg>`
+            },
+            {
+                answer: 'マクロファージ',
+                distractors: ['好中球', 'B細胞', '形質細胞'],
+                renderSvg: () => `<svg viewBox="0 0 560 276" role="img" aria-label="マクロファージの役割図">
+                    ${svgBox(155, 16, 250, 52, '大型の食細胞（自然免疫）', false, '#FEF3C7', '#D97706', '#92400E')}
+                    ${svgArrow(280, 72, 280, 98)}
+                    ${svgBox(155, 102, 250, 60, 'マクロファージ', true, '#E0F2FE', '#0284C7', '#0369A1', '食作用＋抗原提示')}
+                    ${svgArrow(280, 166, 280, 192)}
+                    ${svgBox(155, 196, 250, 58, '死骸や細菌を大量に捕食', false, '#DCFCE7', '#16A34A', '#166534')}
+                </svg>`
+            },
+            {
+                answer: 'B細胞',
+                distractors: ['キラーT細胞', '好中球', 'マクロファージ'],
+                renderSvg: () => `<svg viewBox="0 0 560 276" role="img" aria-label="B細胞の役割図">
+                    ${svgBox(155, 16, 250, 52, 'リンパ球（体液性免疫）', false, '#E0E7FF', '#4F46E5', '#3730A3')}
+                    ${svgArrow(280, 72, 280, 98)}
+                    ${svgBox(155, 102, 250, 60, 'B細胞', true, '#DBEAFE', '#2563EB', '#1E40AF', 'ヘルパーT細胞が刺激')}
+                    ${svgArrow(280, 166, 280, 192)}
+                    ${svgBox(155, 196, 250, 58, '形質細胞に分化し抗体産生', false, '#DCFCE7', '#16A34A', '#166534')}
+                </svg>`
+            }
+        ]
     }
 ];
 
@@ -731,5 +795,7 @@ export const TRICKY_DECOYS: Readonly<Record<string, readonly string[]>> = {
     '受容体': ['標的器官', '標的細胞', '酵素', '抗体'],
     '自己免疫疾患': ['免疫不全', '拒絶反応', 'アレルギー', '日和見感染症'],
     'ギャップ': ['林冠', '林床', '極相', '森林限界'],
-    'キーストーン種': ['優占種', '特定外来生物', '生産者', '分解者']
+    'キーストーン種': ['優占種', '特定外来生物', '生産者', '分解者'],
+    '樹状細胞': ['マクロファージ', '好中球', 'ヘルパーT細胞', 'B細胞'],
+    '好中球': ['マクロファージ', '樹状細胞', 'B細胞', 'キラーT細胞']
 };

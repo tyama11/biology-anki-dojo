@@ -142,14 +142,20 @@ export function buildOniQuestion(
     }
 
     if (format === 'error-fix') {
-        const candidates = ERROR_FIX_ITEMS.filter((item) => item.correctAnswer !== prevAnswer);
-        const target = pickRandom(candidates.length > 0 ? candidates : ERROR_FIX_ITEMS, rng);
+        const target = pickRandom(ERROR_FIX_ITEMS, rng);
+        const keepCorrect = rng() < 0.45 && prevAnswer !== '⭕ このまま正しい';
+        const shownTerm = keepCorrect ? target.correctTerm : pickRandom(target.distractors, rng);
+        const correctAnswer = keepCorrect ? '⭕ このまま正しい' : target.correctTerm;
+        const extraDistractor = target.distractors.find((d) => d !== shownTerm) ?? target.distractors[0];
+        const rawChoices = keepCorrect
+            ? ['⭕ このまま正しい', target.distractors[0], target.distractors[1]]
+            : ['⭕ このまま正しい', target.correctTerm, extraDistractor];
 
         return {
             format,
-            questionHtml: `<div class="dojo-q-badge">❌ 誤文訂正 / 正文判定</div><div class="dojo-q-text">${target.statementHtml}</div>`,
-            correctAnswer: target.correctAnswer,
-            choices: target.choices.map((label, idx) => ({
+            questionHtml: `<div class="dojo-q-badge">❌ 誤文訂正 / 正文判定</div><div class="dojo-q-text">${target.before}<span class="error-highlight">${shownTerm}</span>${target.after}</div>`,
+            correctAnswer,
+            choices: shuffled(rawChoices, rng).map((label, idx) => ({
                 id: `c${idx}`,
                 answer: label,
                 label,

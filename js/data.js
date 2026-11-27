@@ -237,18 +237,18 @@ export const DIAGRAM_ITEMS                                 = [
 ];
 
 export const ERROR_FIX_ITEMS                          = [
-    { id: 'ef-1', printNo: '1', statementHtml: '光学顕微鏡の限界は <span class="error-highlight">0.1μm</span> である。', correctAnswer: '⭕ このまま正しい', choices: ['⭕ このまま正しい', '0.1mm', '0.1nm'] },
-    { id: 'ef-2', printNo: '1', statementHtml: '酵母菌やカビは <span class="error-highlight">原核生物</span> に分類される。', correctAnswer: '真核生物', choices: ['⭕ このまま正しい', '真核生物', '細菌類'] },
-    { id: 'ef-3', printNo: '1', statementHtml: 'DNA量が2倍に増える時期は <span class="error-highlight">G1期</span> である。', correctAnswer: 'S期', choices: ['⭕ このまま正しい', 'S期', 'M期'] },
-    { id: 'ef-4', printNo: '2', statementHtml: '血糖値を下げる唯一のホルモンは <span class="error-highlight">インスリン</span> である。', correctAnswer: '⭕ このまま正しい', choices: ['⭕ このまま正しい', 'グルカゴン', 'アドレナリン'] },
-    { id: 'ef-5', printNo: '2', statementHtml: 'すい臓のA細胞から分泌されるのは <span class="error-highlight">インスリン</span> である。', correctAnswer: 'グルカゴン', choices: ['⭕ このまま正しい', 'グルカゴン', 'バソプレシン'] },
-    { id: 'ef-6', printNo: '2', statementHtml: '腎臓での水の再吸収を促進するのは <span class="error-highlight">バソプレシン</span> である。', correctAnswer: '⭕ このまま正しい', choices: ['⭕ このまま正しい', '糖質コルチコイド', 'インスリン'] },
-    { id: 'ef-7', printNo: '3', statementHtml: '涙に含まれ細菌の細胞壁を壊す酵素は <span class="error-highlight">ディフェンシン</span> である。', correctAnswer: 'リゾチーム', choices: ['⭕ このまま正しい', 'リゾチーム', 'リソソーム'] },
-    { id: 'ef-8', printNo: '3', statementHtml: 'HIVが破壊する免疫の司令塔は <span class="error-highlight">ヘルパーT細胞</span> である。', correctAnswer: '⭕ このまま正しい', choices: ['⭕ このまま正しい', 'キラーT細胞', 'B細胞'] },
-    { id: 'ef-9', printNo: '3', statementHtml: '動物に作らせた抗体を直接注射するのは <span class="error-highlight">予防接種</span> である。', correctAnswer: '血清療法', choices: ['⭕ このまま正しい', '血清療法', '二次応答'] },
-    { id: 'ef-10', printNo: '4', statementHtml: '見かけの光合成速度が0になるのは <span class="error-highlight">光飽和点</span> である。', correctAnswer: '光補償点', choices: ['⭕ このまま正しい', '光補償点', '森林限界'] },
-    { id: 'ef-11', printNo: '4', statementHtml: '山火事の跡地から始まる遷移は <span class="error-highlight">二次遷移</span> である。', correctAnswer: '⭕ このまま正しい', choices: ['⭕ このまま正しい', '一次遷移', '極相'] },
-    { id: 'ef-12', printNo: '4', statementHtml: '湖沼で水面が緑色になる現象は <span class="error-highlight">赤潮</span> である。', correctAnswer: 'アオコ', choices: ['⭕ このまま正しい', 'アオコ', '青潮'] }
+    { id: 'ef-1', printNo: '1', before: '光学顕微鏡の限界は ', correctTerm: '0.1μm', after: ' である。', distractors: ['0.1mm', '0.1nm', '0.01μm'] },
+    { id: 'ef-2', printNo: '1', before: '酵母菌やカビは ', correctTerm: '真核生物', after: ' に分類される。', distractors: ['原核生物', '細菌類'] },
+    { id: 'ef-3', printNo: '1', before: 'DNA量が2倍に増える時期は ', correctTerm: 'S期', after: ' である。', distractors: ['G1期', 'G2期', 'M期'] },
+    { id: 'ef-4', printNo: '2', before: '血糖値を下げる唯一のホルモンは ', correctTerm: 'インスリン', after: ' である。', distractors: ['グルカゴン', 'アドレナリン', '糖質コルチコイド'] },
+    { id: 'ef-5', printNo: '2', before: 'すい臓のA細胞から分泌されるのは ', correctTerm: 'グルカゴン', after: ' である。', distractors: ['インスリン', 'バソプレシン', 'アドレナリン'] },
+    { id: 'ef-6', printNo: '2', before: '腎臓での水の再吸収を促進するのは ', correctTerm: 'バソプレシン', after: ' である。', distractors: ['糖質コルチコイド', 'インスリン', 'グルカゴン'] },
+    { id: 'ef-7', printNo: '3', before: '涙に含まれ細菌の細胞壁を壊す酵素は ', correctTerm: 'リゾチーム', after: ' である。', distractors: ['ディフェンシン', 'リソソーム'] },
+    { id: 'ef-8', printNo: '3', before: 'HIVが破壊する免疫の司令塔は ', correctTerm: 'ヘルパーT細胞', after: ' である。', distractors: ['キラーT細胞', 'B細胞', '記憶細胞'] },
+    { id: 'ef-9', printNo: '3', before: '動物に作らせた抗体を直接注射するのは ', correctTerm: '血清療法', after: ' である。', distractors: ['予防接種', '二次応答'] },
+    { id: 'ef-10', printNo: '4', before: '見かけの光合成速度が0になるのは ', correctTerm: '光補償点', after: ' である。', distractors: ['光飽和点', '森林限界'] },
+    { id: 'ef-11', printNo: '4', before: '山火事の跡地から始まる遷移は ', correctTerm: '二次遷移', after: ' である。', distractors: ['一次遷移', '極相'] },
+    { id: 'ef-12', printNo: '4', before: '湖沼で水面が緑色になる現象は ', correctTerm: 'アオコ', after: ' である。', distractors: ['赤潮', '青潮'] }
 ];
 
 export const CATEGORY_CONFIG                                                                                        = {

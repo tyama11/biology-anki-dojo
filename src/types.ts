@@ -54,9 +54,10 @@ export interface DiagramQuestionItem {
 export interface ErrorFixItem {
     readonly id: string;
     readonly printNo: PrintScope;
-    readonly statementHtml: string;
-    readonly correctAnswer: string;
-    readonly choices: readonly [string, string, string];
+    readonly before: string;
+    readonly correctTerm: string;
+    readonly after: string;
+    readonly distractors: readonly [string, string, ...string[]];
 }
 
 export interface DojoChoice {

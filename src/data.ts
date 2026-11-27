@@ -17,22 +17,27 @@ export const SHEET_ITEMS: readonly SheetItem[] = [
     { id: 's1-4', printNo: '1', section: '原核・真核', before: '〇〇菌は菌類ではなく（', answer: '細菌類', after: '）なので原核生物。', hint: '大腸菌・乳酸菌など' },
     { id: 's1-5', printNo: '1', section: '酵素の特徴', before: '酵素は特定の物質にのみ働く（', answer: '基質特異性', after: '）をもつ。', hint: '鍵と鍵穴の関係' },
     { id: 's1-6', printNo: '1', section: 'DNAとゲノム', before: 'DNA量がSすごく増えるのは（', answer: 'S期', after: '）である。', hint: 'DNAの複製（合成）が行われる時期' },
+    { id: 's1-7', printNo: '1', section: 'DNAとゲノム', before: 'ゲノムは遺伝子と不要部分の（', answer: 'ジャンク', after: '）からなる。', hint: '遺伝情報全体＝遺伝子＋〇〇' },
     // No.2
     { id: 's2-1', printNo: '2', section: '恒常性', before: '神経系は電気信号と（', answer: '神経伝達物質', after: '）で情報を伝える。', hint: 'ニューロンを通る速い伝達' },
     { id: 's2-2', printNo: '2', section: '血糖調節', before: 'すい臓ランゲルハンス島A細胞から分泌されるのは（', answer: 'グルカゴン', after: '）。', hint: 'グリコーゲンを分解して血糖値を上げる' },
     { id: 's2-3', printNo: '2', section: '血糖調節', before: '血糖値を下げる唯一のホルモンは（', answer: 'インスリン', after: '）。', hint: 'すい臓ランゲルハンス島B細胞から分泌' },
     { id: 's2-4', printNo: '2', section: '血糖調節', before: '副腎皮質から分泌され糖新生を促すのは（', answer: '糖質コルチコイド', after: '）。', hint: 'タンパク質からグルコースを作る' },
     { id: 's2-5', printNo: '2', section: '体液調節', before: '腎臓での水の再吸収を促進するのは（', answer: 'バソプレシン', after: '）。', hint: '脳下垂体後葉から分泌' },
+    { id: 's2-6', printNo: '2', section: 'ホルモン', before: '標的細胞の（', answer: '受容体', after: '）にホルモンが鍵と鍵穴のように結合する。', hint: 'ホルモンを受け取るタンパク質' },
     // No.3
     { id: 's3-1', printNo: '3', section: '化学的防御', before: '涙やだ液に含まれ細菌の細胞壁を分解する酵素は（', answer: 'リゾチーム', after: '）。', hint: '細菌の細胞壁を壊す' },
     { id: 's3-2', printNo: '3', section: '化学的防御', before: '皮膚や粘膜上皮に含まれ細菌の細胞膜を破壊するのは（', answer: 'ディフェンシン', after: '）。', hint: 'タンパク質の一種' },
     { id: 's3-3', printNo: '3', section: '免疫不全', before: 'HIVは獲得免疫の司令塔である（', answer: 'ヘルパーT細胞', after: '）を破壊する。', hint: 'エイズ（後天性免疫不全症候群）の原因' },
     { id: 's3-4', printNo: '3', section: '二次応答', before: '同じ病原体の再侵入時、（', answer: '記憶細胞', after: '）により急速で強い反応が起こる。', hint: '2度目のニューゲームは強くて早い' },
+    { id: 's3-5', printNo: '3', section: '免疫異常', before: '免疫寛容の異常で自分の体を攻撃する疾患を（', answer: '自己免疫疾患', after: '）という。', hint: '関節リウマチや1型糖尿病など' },
     // No.4
     { id: 's4-1', printNo: '4', section: '光合成', before: '見かけの光合成速度が0になる光の強さを（', answer: '光補償点', after: '）という。', hint: '光合成量＝呼吸量（光合成速度が0ではない！）' },
     { id: 's4-2', printNo: '4', section: '遷移', before: '森林が成立しなくなる上限を（', answer: '森林限界', after: '）という。', hint: '亜高山帯と高山帯の境' },
     { id: 's4-3', printNo: '4', section: '水界の汚れ', before: '湖沼でプランクトンが大発生し水面が緑色になる現象を（', answer: 'アオコ', after: '）という。', hint: '青い湖で覚える' },
-    { id: 's4-4', printNo: '4', section: '地球環境', before: 'フロンが成層圏のオゾン層を破壊すると（', answer: '紫外線', after: '）が地表に多く届く。', hint: '皮膚がんや白内障が増える' }
+    { id: 's4-4', printNo: '4', section: '地球環境', before: 'フロンが成層圏のオゾン層を破壊すると（', answer: '紫外線', after: '）が地表に多く届く。', hint: '皮膚がんや白内障が増える' },
+    { id: 's4-5', printNo: '4', section: '遷移', before: '台風などの倒木で林床まで光が届く場所を（', answer: 'ギャップ', after: '）という。', hint: 'ここで陽樹も生育できる（ギャップ更新）' },
+    { id: 's4-6', printNo: '4', section: '生態系', before: '食物網の上位で生態系に大きな影響を与える種を（', answer: 'キーストーン種', after: '）という。', hint: 'ヒトデやラッコなど' }
 ];
 
 export const PAIR_ITEMS: readonly PairItem[] = [
@@ -441,6 +446,127 @@ export const DIAGRAM_ITEMS: readonly DiagramQuestionItem[] = [
                 </svg>`
             }
         ]
+    },
+    {
+        id: 'dg-11',
+        printNo: '4',
+        title: 'ギャップ更新のしくみ',
+        slots: [
+            {
+                answer: 'ギャップ',
+                distractors: ['林冠', '極相', '森林限界'],
+                renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="ギャップ更新の図">
+                    ${svgBox(25, 95, 135, 62, '台風・倒木', false, '#F1F5F9', '#64748B', '#334155', '林冠が開く')}
+                    ${svgArrow(168, 126, 202, 126)}
+                    ${svgBox(210, 95, 140, 62, 'ギャップ', true, '#FEF3C7', '#D97706', '#B45309', '林床に光が届く')}
+                    ${svgArrow(358, 126, 392, 126)}
+                    ${svgBox(400, 95, 135, 62, '陽樹の芽生え', false, '#DCFCE7', '#16A34A', '#166534', '成長・更新')}
+                </svg>`
+            },
+            {
+                answer: '陽樹',
+                distractors: ['陰樹', '地衣類', 'コケ植物'],
+                renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="ギャップでの陽樹生育の図">
+                    ${svgBox(25, 95, 135, 62, 'ギャップ形成', false, '#FEF3C7', '#D97706', '#92400E', '林床が明るくなる')}
+                    ${svgArrow(168, 126, 202, 126)}
+                    ${svgBox(210, 95, 140, 62, '陽樹', true, '#DCFCE7', '#16A34A', '#166534', '再び生育できる')}
+                    ${svgArrow(358, 126, 392, 126)}
+                    ${svgBox(400, 95, 135, 62, '多様性維持', false, '#DBEAFE', '#2563EB', '#1E40AF', 'ギャップ更新')}
+                </svg>`
+            }
+        ]
+    },
+    {
+        id: 'dg-12',
+        printNo: '4',
+        title: 'オゾン層破壊と地球温暖化の区別',
+        slots: [
+            {
+                answer: '紫外線',
+                distractors: ['赤外線', '可視光線', 'オゾン'],
+                renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="オゾン層破壊の図">
+                    ${svgBox(25, 95, 135, 62, 'フロン', false, '#E0E7FF', '#4F46E5', '#3730A3', '成層圏へ')}
+                    ${svgArrow(168, 126, 202, 126)}
+                    ${svgBox(210, 95, 140, 62, 'オゾン層破壊', false, '#FEE2E2', '#DC2626', '#991B1B')}
+                    ${svgArrow(358, 126, 392, 126)}
+                    ${svgBox(400, 95, 135, 62, '紫外線', true, '#FEF3C7', '#D97706', '#B45309', '地表に多く届く')}
+                </svg>`
+            },
+            {
+                answer: '赤外線',
+                distractors: ['紫外線', '可視光線', 'フロン'],
+                renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="地球温暖化の図">
+                    ${svgBox(25, 95, 145, 62, '温室効果ガス', false, '#FEE2E2', '#DC2626', '#991B1B', 'CO₂・メタン')}
+                    ${svgArrow(178, 126, 212, 126)}
+                    ${svgBox(220, 95, 135, 62, '赤外線', true, '#FFEDD5', '#EA580C', '#9A3412', '熱を吸収')}
+                    ${svgArrow(363, 126, 397, 126)}
+                    ${svgBox(405, 95, 130, 62, '地球温暖化', false, '#FEF9C3', '#CA8A04', '#854D0E')}
+                </svg>`
+            }
+        ]
+    },
+    {
+        id: 'dg-13',
+        printNo: '4',
+        title: '川の自然浄化（生物の順番）',
+        slots: [
+            {
+                answer: '細菌',
+                distractors: ['ゾウリムシ', '藻類', '清水性動物'],
+                renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="川の自然浄化の順番図">
+                    ${svgBox(18, 95, 115, 62, '細菌', true)}
+                    ${svgArrow(137, 126, 159, 126)}
+                    ${svgBox(163, 95, 115, 62, 'ゾウリムシ', false, '#E0F2FE', '#0284C7', '#0369A1')}
+                    ${svgArrow(282, 126, 304, 126)}
+                    ${svgBox(308, 95, 110, 62, '藻類', false, '#DCFCE7', '#16A34A', '#166534')}
+                    ${svgArrow(422, 126, 444, 126)}
+                    ${svgBox(448, 95, 96, 62, '清水性動物', false, '#DBEAFE', '#2563EB', '#1E40AF')}
+                    <text x="280" y="45" text-anchor="middle" font-size="15" font-weight="800" fill="#475569">汚水流入後、最初に増えて有機物を分解するのは？</text>
+                </svg>`
+            },
+            {
+                answer: 'ゾウリムシ',
+                distractors: ['細菌', '藻類', '清水性動物'],
+                renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="川の自然浄化の順番図">
+                    ${svgBox(18, 95, 115, 62, '細菌', false, '#FEF3C7', '#D97706', '#92400E')}
+                    ${svgArrow(137, 126, 159, 126)}
+                    ${svgBox(163, 95, 115, 62, 'ゾウリムシ', true)}
+                    ${svgArrow(282, 126, 304, 126)}
+                    ${svgBox(308, 95, 110, 62, '藻類', false, '#DCFCE7', '#16A34A', '#166534')}
+                    ${svgArrow(422, 126, 444, 126)}
+                    ${svgBox(448, 95, 96, 62, '清水性動物', false, '#DBEAFE', '#2563EB', '#1E40AF')}
+                    <text x="280" y="45" text-anchor="middle" font-size="15" font-weight="800" fill="#475569">細菌を食べて増える原生生物は？</text>
+                </svg>`
+            },
+            {
+                answer: '藻類',
+                distractors: ['細菌', 'ゾウリムシ', '清水性動物'],
+                renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="川の自然浄化の順番図">
+                    ${svgBox(18, 95, 115, 62, '細菌', false, '#FEF3C7', '#D97706', '#92400E')}
+                    ${svgArrow(137, 126, 159, 126)}
+                    ${svgBox(163, 95, 115, 62, 'ゾウリムシ', false, '#E0F2FE', '#0284C7', '#0369A1')}
+                    ${svgArrow(282, 126, 304, 126)}
+                    ${svgBox(308, 95, 110, 62, '藻類', true)}
+                    ${svgArrow(422, 126, 444, 126)}
+                    ${svgBox(448, 95, 96, 62, '清水性動物', false, '#DBEAFE', '#2563EB', '#1E40AF')}
+                    <text x="280" y="45" text-anchor="middle" font-size="15" font-weight="800" fill="#475569">栄養塩類を吸収して増えるのは？</text>
+                </svg>`
+            },
+            {
+                answer: '清水性動物',
+                distractors: ['細菌', 'ゾウリムシ', '藻類'],
+                renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="川の自然浄化の順番図">
+                    ${svgBox(18, 95, 115, 62, '細菌', false, '#FEF3C7', '#D97706', '#92400E')}
+                    ${svgArrow(137, 126, 159, 126)}
+                    ${svgBox(163, 95, 115, 62, 'ゾウリムシ', false, '#E0F2FE', '#0284C7', '#0369A1')}
+                    ${svgArrow(282, 126, 304, 126)}
+                    ${svgBox(308, 95, 110, 62, '藻類', false, '#DCFCE7', '#16A34A', '#166534')}
+                    ${svgArrow(422, 126, 444, 126)}
+                    ${svgBox(448, 95, 96, 62, '清水性動物', true)}
+                    <text x="280" y="45" text-anchor="middle" font-size="15" font-weight="800" fill="#475569">水がきれいになって最後に増えるのは？</text>
+                </svg>`
+            }
+        ]
     }
 ];
 
@@ -555,5 +681,10 @@ export const TRICKY_DECOYS: Readonly<Record<string, readonly string[]>> = {
     '二次遷移': ['一次遷移', '湿性遷移', '乾性遷移', '極相'],
     '作用': ['環境形成作用', '反作用', '競争', '共生'],
     '環境形成作用': ['作用', '光合成', '遷移', '物質循環'],
-    '赤潮': ['アオコ', '青潮', '富栄養化', '生物濃縮']
+    '赤潮': ['アオコ', '青潮', '富栄養化', '生物濃縮'],
+    'ジャンク': ['遺伝子', 'ゲノム', 'イントロン', 'エキソン'],
+    '受容体': ['標的器官', '標的細胞', '酵素', '抗体'],
+    '自己免疫疾患': ['免疫不全', '拒絶反応', 'アレルギー', '日和見感染症'],
+    'ギャップ': ['林冠', '林床', '極相', '森林限界'],
+    'キーストーン種': ['優占種', '特定外来生物', '生産者', '分解者']
 };

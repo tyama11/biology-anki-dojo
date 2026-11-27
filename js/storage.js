@@ -9,6 +9,7 @@ import { PRINT_SCOPES } from './data.js';
 
 export const MUTE_STORAGE_KEY = 'biology-anki-dojo-muted';
 export const ONI_BEST_KEY = 'biology-anki-dojo-oni-best';
+export const ONI_SECRET_UNLOCK_KEY = 'biology-anki-dojo-oni-secret-unlocked';
 
 export const STAGE_DIFFICULTIES                             = ['easy', 'normal'];
 export const STAGE_CATEGORIES                      = ['sheet', 'pair'];
@@ -51,6 +52,7 @@ export function safeLocalStorage()                {
                                                         
                                    
                              
+                            
  
 
 export function createProgressStore(store               )                {
@@ -88,7 +90,11 @@ export function createProgressStore(store               )                {
             );
         },
         isOniUnlocked() {
+            if (store.getItem(ONI_SECRET_UNLOCK_KEY) === 'true') return true;
             return this.getTotalClearedCount() === PRINT_SCOPES.length * STAGE_DIFFICULTIES.length * STAGE_CATEGORIES.length;
+        },
+        unlockOniSecret() {
+            store.setItem(ONI_SECRET_UNLOCK_KEY, 'true');
         }
     };
 }

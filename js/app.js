@@ -170,9 +170,26 @@ function init()       {
         startGame(state.difficulty);
     });
 
+    let muteClickTimes           = [];
     const handleMute = ()       => {
         SOUND_FX.toggleMute();
         syncMuteButtons();
+
+        const now = Date.now();
+        muteClickTimes = muteClickTimes.filter((t) => now - t <= 3000);
+        muteClickTimes.push(now);
+        if (muteClickTimes.length >= 6) {
+            muteClickTimes = [];
+            if (!progress.isOniUnlocked()) {
+                progress.unlockOniSecret();
+                els.tabOni.classList.add('just-unlocked');
+                updateTabScores();
+                setTab('oni');
+                updateTabContentVisibility(true);
+                SOUND_FX.playClear(true);
+                showToast('👹 どこかでとびらがひらいたようだ…！');
+            }
+        }
     };
     els.homeMuteBtn.addEventListener('click', handleMute);
     els.gameMuteBtn.addEventListener('click', handleMute);

@@ -84,6 +84,12 @@ describe('biology-anki-dojo data & logic', () => {
         assert.equal(progress.getOniBest(), null);
         progress.setOniBest(12);
         assert.equal(progress.getOniBest(), 12);
+
+        const secretProgress = createProgressStore(createMemoryStore());
+        assert.equal(secretProgress.isOniUnlocked(), false);
+        secretProgress.unlockOniSecret();
+        assert.equal(secretProgress.getTotalClearedCount(), 0);
+        assert.equal(secretProgress.isOniUnlocked(), true);
     });
 
     it('buildStandardChoices includes decoy panels without duplicate labels', () => {

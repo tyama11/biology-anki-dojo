@@ -83,6 +83,17 @@ export const ODD_ONE_OUT_ITEMS                           = [
     { id: 'ooo-9', printNo: '4', prompt: '非生物的環境でないのは？', oddOne: '植物プランクトン', mates: ['光・温度', '水・土壌', '大気・風'] }
 ];
 
+function svgArrow(x1        , y1        , x2        , y2        , color = '#475569')         {
+    const angle = Math.atan2(y2 - y1, x2 - x1);
+    const len = 10;
+    const ax1 = x2 - len * Math.cos(angle - Math.PI / 6);
+    const ay1 = y2 - len * Math.sin(angle - Math.PI / 6);
+    const ax2 = x2 - len * Math.cos(angle + Math.PI / 6);
+    const ay2 = y2 - len * Math.sin(angle + Math.PI / 6);
+    return `<line x1="${x1}" y1="${y1}" x2="${x2 - 4 * Math.cos(angle)}" y2="${y2 - 4 * Math.sin(angle)}" stroke="${color}" stroke-width="3" stroke-linecap="round"/>
+        <polygon points="${x2},${y2} ${ax1.toFixed(1)},${ay1.toFixed(1)} ${ax2.toFixed(1)},${ay2.toFixed(1)}" fill="${color}"/>`;
+}
+
 function svgBox(
     x        ,
     y        ,
@@ -116,11 +127,11 @@ export const DIAGRAM_ITEMS                                 = [
                 distractors: ['G1期', 'G2期', 'M期'],
                 renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="細胞周期の図">
                     ${svgBox(20, 95, 105, 62, 'G1期', false)}
-                    <path d="M132 126 L154 126" stroke="#64748B" stroke-width="3"/>
+                    ${svgArrow(129, 126, 156, 126)}
                     ${svgBox(160, 95, 105, 62, 'S期', true, '#E0F2FE', '#0284C7', '#0369A1', 'DNA複製')}
-                    <path d="M272 126 L294 126" stroke="#64748B" stroke-width="3"/>
+                    ${svgArrow(269, 126, 296, 126)}
                     ${svgBox(300, 95, 105, 62, 'G2期', false)}
-                    <path d="M412 126 L434 126" stroke="#64748B" stroke-width="3"/>
+                    ${svgArrow(409, 126, 436, 126)}
                     ${svgBox(440, 95, 100, 62, 'M期', false, '#FCE7F3', '#DB2777', '#9D174D')}
                     <text x="280" y="46" text-anchor="middle" font-size="15" font-weight="800" fill="#475569">DNA量が2倍に増える時期は？</text>
                 </svg>`
@@ -130,11 +141,11 @@ export const DIAGRAM_ITEMS                                 = [
                 distractors: ['S期', 'G1期', 'G2期'],
                 renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="細胞周期の図">
                     ${svgBox(20, 95, 105, 62, 'G1期', false)}
-                    <path d="M132 126 L154 126" stroke="#64748B" stroke-width="3"/>
+                    ${svgArrow(129, 126, 156, 126)}
                     ${svgBox(160, 95, 105, 62, 'S期', false, '#DCFCE7', '#16A34A', '#166534')}
-                    <path d="M272 126 L294 126" stroke="#64748B" stroke-width="3"/>
+                    ${svgArrow(269, 126, 296, 126)}
                     ${svgBox(300, 95, 105, 62, 'G2期', false)}
-                    <path d="M412 126 L434 126" stroke="#64748B" stroke-width="3"/>
+                    ${svgArrow(409, 126, 436, 126)}
                     ${svgBox(440, 95, 100, 62, 'M期', true, '#FCE7F3', '#DB2777', '#9D174D', '細胞分裂')}
                     <text x="280" y="46" text-anchor="middle" font-size="15" font-weight="800" fill="#475569">染色体が分配され細胞分裂する時期は？</text>
                 </svg>`
@@ -144,11 +155,11 @@ export const DIAGRAM_ITEMS                                 = [
                 distractors: ['S期', 'G2期', 'M期'],
                 renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="細胞周期の図">
                     ${svgBox(20, 95, 105, 62, 'G1期', true, '#E0F2FE', '#0284C7', '#0369A1', '複製準備')}
-                    <path d="M132 126 L154 126" stroke="#64748B" stroke-width="3"/>
+                    ${svgArrow(129, 126, 156, 126)}
                     ${svgBox(160, 95, 105, 62, 'S期', false, '#DCFCE7', '#16A34A', '#166534')}
-                    <path d="M272 126 L294 126" stroke="#64748B" stroke-width="3"/>
+                    ${svgArrow(269, 126, 296, 126)}
                     ${svgBox(300, 95, 105, 62, 'G2期', false)}
-                    <path d="M412 126 L434 126" stroke="#64748B" stroke-width="3"/>
+                    ${svgArrow(409, 126, 436, 126)}
                     ${svgBox(440, 95, 100, 62, 'M期', false, '#FCE7F3', '#DB2777', '#9D174D')}
                     <text x="280" y="46" text-anchor="middle" font-size="15" font-weight="800" fill="#475569">DNA複製の準備をする時期は？</text>
                 </svg>`
@@ -167,6 +178,7 @@ export const DIAGRAM_ITEMS                                 = [
                     <path d="M70 80 L230 80 L230 115 L185 115 L185 155 L230 155 L230 190 L70 190 Z" fill="#CCFBF1" stroke="#0D9488" stroke-width="3"/>
                     <text x="125" y="140" text-anchor="middle" font-size="18" font-weight="800" fill="#115E59">酵素</text>
                     ${svgBox(195, 112, 80, 44, '活性部位', true)}
+                    ${svgArrow(330, 134, 282, 134, '#4F46E5')}
                     ${svgBox(335, 112, 140, 44, '基質（鍵）', false, '#E0E7FF', '#4F46E5', '#3730A3')}
                     <text x="280" y="45" text-anchor="middle" font-size="15" font-weight="800" fill="#475569">基質が結合する酵素のくぼみの名称は？</text>
                 </svg>`
@@ -177,6 +189,7 @@ export const DIAGRAM_ITEMS                                 = [
                 renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="酵素と基質の図">
                     <path d="M70 80 L230 80 L230 115 L185 115 L185 155 L230 155 L230 190 L70 190 Z" fill="#CCFBF1" stroke="#0D9488" stroke-width="3"/>
                     <text x="125" y="140" text-anchor="middle" font-size="18" font-weight="800" fill="#115E59">酵素</text>
+                    ${svgArrow(330, 134, 240, 134, '#4F46E5')}
                     ${svgBox(335, 112, 140, 44, '基質', true, '#E0E7FF', '#4F46E5', '#3730A3', '鍵')}
                     <text x="280" y="45" text-anchor="middle" font-size="15" font-weight="800" fill="#475569">酵素が働く相手の物質を何という？</text>
                 </svg>`
@@ -193,9 +206,9 @@ export const DIAGRAM_ITEMS                                 = [
                 distractors: ['グルカゴン', 'アドレナリン', '糖質コルチコイド'],
                 renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="血糖値低下の経路図">
                     ${svgBox(30, 95, 130, 64, '高血糖', false, '#FEE2E2', '#DC2626', '#991B1B', 'B細胞が感知')}
-                    <path d="M168 127 L202 127" stroke="#64748B" stroke-width="3"/>
+                    ${svgArrow(168, 127, 202, 127)}
                     ${svgBox(210, 95, 140, 64, 'インスリン', true)}
-                    <path d="M358 127 L392 127" stroke="#64748B" stroke-width="3"/>
+                    ${svgArrow(358, 127, 392, 127)}
                     ${svgBox(400, 95, 130, 64, '血糖値低下', false, '#DCFCE7', '#16A34A', '#166534', 'グリコーゲン合成')}
                 </svg>`
             },
@@ -204,9 +217,9 @@ export const DIAGRAM_ITEMS                                 = [
                 distractors: ['グルコース', 'デンプン', 'セルロース'],
                 renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="グリコーゲン合成の経路図">
                     ${svgBox(30, 95, 130, 64, '高血糖', false, '#FEE2E2', '#DC2626', '#991B1B', 'B細胞が感知')}
-                    <path d="M168 127 L202 127" stroke="#64748B" stroke-width="3"/>
+                    ${svgArrow(168, 127, 202, 127)}
                     ${svgBox(210, 95, 140, 64, 'インスリン', false, '#DCFCE7', '#16A34A', '#166534', '肝臓・筋肉へ')}
-                    <path d="M358 127 L392 127" stroke="#64748B" stroke-width="3"/>
+                    ${svgArrow(358, 127, 392, 127)}
                     ${svgBox(400, 95, 130, 64, 'グリコーゲン', true, '#DCFCE7', '#16A34A', '#166534', '合成して貯蔵')}
                 </svg>`
             }
@@ -222,9 +235,9 @@ export const DIAGRAM_ITEMS                                 = [
                 distractors: ['鉱質コルチコイド', 'バソプレシン', 'アドレナリン'],
                 renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="副腎皮質ホルモンの経路図">
                     ${svgBox(25, 95, 135, 64, '副腎皮質', false, '#FFEDD5', '#EA580C', '#9A3412', '低血糖時に分泌')}
-                    <path d="M168 127 L198 127" stroke="#64748B" stroke-width="3"/>
+                    ${svgArrow(168, 127, 198, 127)}
                     ${svgBox(205, 95, 155, 64, '糖質コルチコイド', true)}
-                    <path d="M368 127 L398 127" stroke="#64748B" stroke-width="3"/>
+                    ${svgArrow(368, 127, 398, 127)}
                     ${svgBox(405, 95, 130, 64, '糖新生', false, '#FEF9C3', '#CA8A04', '#854D0E', '血糖値上昇')}
                 </svg>`
             },
@@ -233,9 +246,9 @@ export const DIAGRAM_ITEMS                                 = [
                 distractors: ['副腎髄質', 'すい臓A細胞', '脳下垂体後葉'],
                 renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="副腎皮質の図">
                     ${svgBox(25, 95, 135, 64, '副腎皮質', true)}
-                    <path d="M168 127 L198 127" stroke="#64748B" stroke-width="3"/>
+                    ${svgArrow(168, 127, 198, 127)}
                     ${svgBox(205, 95, 155, 64, '糖質コルチコイド', false, '#FFEDD5', '#EA580C', '#9A3412')}
-                    <path d="M368 127 L398 127" stroke="#64748B" stroke-width="3"/>
+                    ${svgArrow(368, 127, 398, 127)}
                     ${svgBox(405, 95, 130, 64, '糖新生', false, '#FEF9C3', '#CA8A04', '#854D0E', '血糖値上昇')}
                 </svg>`
             }
@@ -251,9 +264,9 @@ export const DIAGRAM_ITEMS                                 = [
                 distractors: ['キラーT細胞', '記憶細胞', 'マクロファージ'],
                 renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="体液性免疫フロー図">
                     ${svgBox(25, 95, 125, 64, '樹状細胞', false, '#E0E7FF', '#4F46E5', '#3730A3', '抗原提示')}
-                    <path d="M158 127 L192 127" stroke="#64748B" stroke-width="3"/>
+                    ${svgArrow(158, 127, 192, 127)}
                     ${svgBox(200, 95, 155, 64, 'ヘルパーT細胞', true)}
-                    <path d="M363 127 L397 127" stroke="#64748B" stroke-width="3"/>
+                    ${svgArrow(363, 127, 397, 127)}
                     ${svgBox(405, 95, 130, 64, 'B細胞活性化', false, '#DBEAFE', '#2563EB', '#1E40AF', '抗体産生へ')}
                 </svg>`
             },
@@ -262,9 +275,9 @@ export const DIAGRAM_ITEMS                                 = [
                 distractors: ['キラーT細胞', '記憶細胞', '好中球'],
                 renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="抗体産生細胞の図">
                     ${svgBox(25, 95, 125, 64, 'ヘルパーT細胞', false, '#E0E7FF', '#4F46E5', '#3730A3', 'B細胞を刺激')}
-                    <path d="M158 127 L192 127" stroke="#64748B" stroke-width="3"/>
+                    ${svgArrow(158, 127, 192, 127)}
                     ${svgBox(200, 95, 155, 64, '形質細胞', true, '#DBEAFE', '#2563EB', '#1E40AF', 'B細胞が分化')}
-                    <path d="M363 127 L397 127" stroke="#64748B" stroke-width="3"/>
+                    ${svgArrow(363, 127, 397, 127)}
                     ${svgBox(405, 95, 130, 64, '抗体産生', false, '#DCFCE7', '#16A34A', '#166534', '体液性免疫')}
                 </svg>`
             }
@@ -313,11 +326,11 @@ export const DIAGRAM_ITEMS                                 = [
                 distractors: ['陰樹林', '低木林', '草原'],
                 renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="植生の遷移フロー図">
                     ${svgBox(20, 98, 95, 58, '草原・低木', false, '#F1F5F9', '#64748B', '#334155')}
-                    <path d="M122 127 L148 127" stroke="#64748B" stroke-width="3"/>
+                    ${svgArrow(122, 127, 148, 127)}
                     ${svgBox(155, 95, 120, 64, '陽樹林', true)}
-                    <path d="M283 127 L309 127" stroke="#64748B" stroke-width="3"/>
+                    ${svgArrow(283, 127, 309, 127)}
                     ${svgBox(316, 98, 100, 58, '混交林', false, '#DCFCE7', '#16A34A', '#166534')}
-                    <path d="M423 127 L449 127" stroke="#64748B" stroke-width="3"/>
+                    ${svgArrow(423, 127, 449, 127)}
                     ${svgBox(456, 98, 85, 58, '陰樹林', false, '#BBF7D0', '#15803D', '#14532D')}
                 </svg>`
             },
@@ -326,11 +339,11 @@ export const DIAGRAM_ITEMS                                 = [
                 distractors: ['陽樹林', '混交林', '草原'],
                 renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="植生の遷移フロー図">
                     ${svgBox(20, 98, 95, 58, '草原・低木', false, '#F1F5F9', '#64748B', '#334155')}
-                    <path d="M122 127 L148 127" stroke="#64748B" stroke-width="3"/>
+                    ${svgArrow(122, 127, 148, 127)}
                     ${svgBox(155, 98, 100, 58, '陽樹林', false, '#FEF3C7', '#D97706', '#92400E')}
-                    <path d="M262 127 L288 127" stroke="#64748B" stroke-width="3"/>
+                    ${svgArrow(262, 127, 288, 127)}
                     ${svgBox(295, 98, 100, 58, '混交林', false, '#DCFCE7', '#16A34A', '#166534')}
-                    <path d="M402 127 L428 127" stroke="#64748B" stroke-width="3"/>
+                    ${svgArrow(402, 127, 428, 127)}
                     ${svgBox(435, 95, 105, 64, '陰樹林', true, '#BBF7D0', '#15803D', '#14532D', '極相')}
                 </svg>`
             }
@@ -346,9 +359,9 @@ export const DIAGRAM_ITEMS                                 = [
                 distractors: ['生産者', '一次消費者', '二次消費者'],
                 renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="生態系の物質循環図">
                     ${svgBox(30, 95, 120, 62, '生産者', false, '#DCFCE7', '#16A34A', '#166534')}
-                    <path d="M158 126 L192 126" stroke="#64748B" stroke-width="3"/>
+                    ${svgArrow(158, 126, 192, 126)}
                     ${svgBox(200, 95, 120, 62, '消費者', false, '#FEF9C3', '#CA8A04', '#854D0E')}
-                    <path d="M328 126 L362 126" stroke="#64748B" stroke-width="3"/>
+                    ${svgArrow(328, 126, 362, 126)}
                     ${svgBox(370, 95, 150, 62, '分解者', true)}
                     <text x="280" y="45" text-anchor="middle" font-size="15" font-weight="800" fill="#475569">遺体・排出物を無機物に分解するのは？</text>
                 </svg>`
@@ -358,9 +371,9 @@ export const DIAGRAM_ITEMS                                 = [
                 distractors: ['分解者', '一次消費者', '二次消費者'],
                 renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="生態系の物質循環図">
                     ${svgBox(30, 95, 130, 62, '生産者', true)}
-                    <path d="M168 126 L202 126" stroke="#64748B" stroke-width="3"/>
+                    ${svgArrow(168, 126, 202, 126)}
                     ${svgBox(210, 95, 120, 62, '消費者', false, '#FEF9C3', '#CA8A04', '#854D0E')}
-                    <path d="M338 126 L372 126" stroke="#64748B" stroke-width="3"/>
+                    ${svgArrow(338, 126, 372, 126)}
                     ${svgBox(380, 95, 140, 62, '分解者', false, '#E0E7FF', '#4F46E5', '#3730A3')}
                     <text x="280" y="45" text-anchor="middle" font-size="15" font-weight="800" fill="#475569">光合成で有機物を合成するのは？</text>
                 </svg>`
@@ -410,9 +423,9 @@ export const DIAGRAM_ITEMS                                 = [
                 distractors: ['インスリン', 'グルカゴン', '鉱質コルチコイド'],
                 renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="体液浸透圧調節の図">
                     ${svgBox(25, 95, 135, 64, '脳下垂体後葉', false, '#E0E7FF', '#4F46E5', '#3730A3', '浸透圧上昇を感知')}
-                    <path d="M168 127 L198 127" stroke="#64748B" stroke-width="3"/>
+                    ${svgArrow(168, 127, 198, 127)}
                     ${svgBox(205, 95, 150, 64, 'バソプレシン', true)}
-                    <path d="M363 127 L393 127" stroke="#64748B" stroke-width="3"/>
+                    ${svgArrow(363, 127, 393, 127)}
                     ${svgBox(400, 95, 135, 64, '腎臓（集合管）', false, '#CCFBF1', '#0D9488', '#115E59', '水の再吸収促進')}
                 </svg>`
             },
@@ -421,9 +434,9 @@ export const DIAGRAM_ITEMS                                 = [
                 distractors: ['脳下垂体前葉', '副腎皮質', '副腎髄質'],
                 renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="バソプレシン分泌器官の図">
                     ${svgBox(25, 95, 135, 64, '脳下垂体後葉', true)}
-                    <path d="M168 127 L198 127" stroke="#64748B" stroke-width="3"/>
+                    ${svgArrow(168, 127, 198, 127)}
                     ${svgBox(205, 95, 150, 64, 'バソプレシン', false, '#E0E7FF', '#4F46E5', '#3730A3')}
-                    <path d="M363 127 L393 127" stroke="#64748B" stroke-width="3"/>
+                    ${svgArrow(363, 127, 393, 127)}
                     ${svgBox(400, 95, 135, 64, '腎臓（集合管）', false, '#CCFBF1', '#0D9488', '#115E59', '水の再吸収促進')}
                 </svg>`
             }

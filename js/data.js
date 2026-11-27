@@ -18,6 +18,7 @@ export const SHEET_ITEMS                       = [
     { id: 's1-5', printNo: '1', section: '酵素の特徴', before: '酵素は特定の物質にのみ働く（', answer: '基質特異性', after: '）をもつ。', hint: '鍵と鍵穴の関係' },
     { id: 's1-6', printNo: '1', section: 'DNAとゲノム', before: 'DNA量がSすごく増えるのは（', answer: 'S期', after: '）である。', hint: 'DNAの複製（合成）が行われる時期' },
     { id: 's1-7', printNo: '1', section: 'DNAとゲノム', before: 'ゲノムは遺伝子と不要部分の（', answer: 'ジャンク', after: '）からなる。', hint: '遺伝情報全体＝遺伝子＋〇〇' },
+    { id: 's1-8', printNo: '1', section: 'DNAとゲノム', before: '遺伝情報（ゲノム）を記録する遺伝物質の本体は（', answer: 'DNA', after: '）である。', hint: '物質そのものを指す名称' },
     // No.2
     { id: 's2-1', printNo: '2', section: '恒常性', before: '神経系は電気信号と（', answer: '神経伝達物質', after: '）で情報を伝える。', hint: 'ニューロンを通る速い伝達' },
     { id: 's2-2', printNo: '2', section: '血糖調節', before: 'すい臓ランゲルハンス島A細胞から分泌されるのは（', answer: 'グルカゴン', after: '）。', hint: 'グリコーゲンを分解して血糖値を上げる' },
@@ -45,6 +46,7 @@ export const PAIR_ITEMS                      = [
     { id: 'p1b', printNo: '1', pairTitle: '代謝の区分', termA: '同化', descA: '簡単な物質から複雑な物質を合成する反応（光合成など）', shortDescA: '単純→複雑な物質を合成', termB: '異化', descB: '複雑な物質を簡単な物質に分解しエネルギーを取り出す反応（呼吸など）', shortDescB: '複雑→単純に分解しATP生成' },
     { id: 'p1c', printNo: '1', pairTitle: 'エネルギー変換小器官', termA: 'ミトコンドリア', descA: '呼吸の場としてATPを合成する（動物・植物ともに存在）', shortDescA: '呼吸の場・動植物に存在', termB: '葉緑体', descB: '光合成の場として有機物を合成する（植物・藻類に存在）', shortDescB: '光合成の場・植物などに存在' },
     { id: 'p1d', printNo: '1', pairTitle: '核酸の種類', termA: 'DNA', descA: '二本鎖らせん構造で遺伝情報の本体（糖はデオキシリボース）', shortDescA: '二本鎖で糖はデオキシリボース', termB: 'RNA', descB: '一本鎖でタンパク質合成に働く（糖はリボース）', shortDescB: '一本鎖で糖はリボース' },
+    { id: 'p1e', printNo: '1', pairTitle: 'ゲノム vs 遺伝子', termA: 'ゲノム', descA: '遺伝子とジャンク（不要部分）を合わせた遺伝情報1セット全体', shortDescA: '遺伝子＋ジャンクの遺伝情報全体', termB: '遺伝子', descB: 'DNAのうちタンパク質設計図など必要なはたらきをもつ部分', shortDescB: 'DNAのうち設計図など必要な部分' },
     { id: 'p2', printNo: '2', pairTitle: '血糖調節ホルモン', termA: 'グルカゴン（A細胞）', descA: 'グリコーゲンを分解し血糖値を上げる', shortDescA: 'グリコーゲン分解で血糖上昇', termB: 'インスリン（B細胞）', descB: 'グルコースをグリコーゲンに変え血糖値を下げる', shortDescB: '血糖値を下げる唯一のホルモン' },
     { id: 'p2b', printNo: '2', pairTitle: '自律神経', termA: '交感神経', descA: '闘争と逃走（心拍数増加・瞳孔拡大）', shortDescA: '心拍数増加・瞳孔拡大', termB: '副交感神経', descB: 'リラックス（消化管の働き促進・心拍数減少）', shortDescB: '消化促進・心拍数減少' },
     { id: 'p2c', printNo: '2', pairTitle: '分泌腺の種類', termA: '内分泌腺', descA: '排出管をもたずホルモンを血液中に直接分泌する', shortDescA: '排出管なく血液中へ直接分泌', termB: '外分泌腺', descB: '排出管を通じて消化液や汗などを体外・管腔へ分泌する', shortDescB: '排出管から体外・管腔へ分泌' },
@@ -567,6 +569,47 @@ export const DIAGRAM_ITEMS                                 = [
                 </svg>`
             }
         ]
+    },
+    {
+        id: 'dg-14',
+        printNo: '1',
+        title: 'ゲノム・遺伝子・DNAの違い',
+        slots: [
+            {
+                answer: 'ゲノム',
+                distractors: ['遺伝子', 'DNA', '染色体'],
+                renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="ゲノム・遺伝子・DNAの関係図">
+                    ${svgBox(30, 88, 145, 70, 'ゲノム', true, '#E0E7FF', '#4F46E5', '#3730A3', '遺伝情報の全体')}
+                    <text x="195" y="130" text-anchor="middle" font-size="24" font-weight="900" fill="#475569">＝</text>
+                    ${svgBox(215, 88, 140, 70, '遺伝子', false, '#DCFCE7', '#16A34A', '#166534', '必要な部分')}
+                    <text x="375" y="130" text-anchor="middle" font-size="24" font-weight="900" fill="#475569">＋</text>
+                    ${svgBox(395, 88, 135, 70, 'ジャンク', false, '#F1F5F9', '#64748B', '#334155', '不要な部分')}
+                    <text x="280" y="45" text-anchor="middle" font-size="15" font-weight="800" fill="#475569">遺伝子＋ジャンクを合わせた「遺伝情報1セット」は？</text>
+                </svg>`
+            },
+            {
+                answer: '遺伝子',
+                distractors: ['ゲノム', 'DNA', 'ジャンク'],
+                renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="ゲノム・遺伝子・DNAの関係図">
+                    ${svgBox(30, 88, 145, 70, 'ゲノム', false, '#E0E7FF', '#4F46E5', '#3730A3', '遺伝情報の全体')}
+                    <text x="195" y="130" text-anchor="middle" font-size="24" font-weight="900" fill="#475569">＝</text>
+                    ${svgBox(215, 88, 140, 70, '遺伝子', true, '#DCFCE7', '#16A34A', '#166534', '必要な部分')}
+                    <text x="375" y="130" text-anchor="middle" font-size="24" font-weight="900" fill="#475569">＋</text>
+                    ${svgBox(395, 88, 135, 70, 'ジャンク', false, '#F1F5F9', '#64748B', '#334155', '不要な部分')}
+                    <text x="280" y="45" text-anchor="middle" font-size="15" font-weight="800" fill="#475569">ゲノムのうち設計図など「必要な部分」は？</text>
+                </svg>`
+            },
+            {
+                answer: 'DNA',
+                distractors: ['ゲノム', '遺伝子', 'RNA'],
+                renderSvg: () => `<svg viewBox="0 0 560 260" role="img" aria-label="DNAとゲノムの関係図">
+                    ${svgBox(55, 92, 185, 68, 'DNA', true, '#DBEAFE', '#2563EB', '#1E40AF', '物質そのもの')}
+                    ${svgArrow(248, 126, 302, 126)}
+                    ${svgBox(310, 92, 195, 68, 'ゲノム（遺伝情報）', false, '#E0E7FF', '#4F46E5', '#3730A3', 'そこに書かれた情報')}
+                    <text x="280" y="45" text-anchor="middle" font-size="15" font-weight="800" fill="#475569">遺伝情報を記録している「遺伝物質」の名称は？</text>
+                </svg>`
+            }
+        ]
     }
 ];
 
@@ -682,7 +725,9 @@ export const TRICKY_DECOYS                                              = {
     '作用': ['環境形成作用', '反作用', '競争', '共生'],
     '環境形成作用': ['作用', '光合成', '遷移', '物質循環'],
     '赤潮': ['アオコ', '青潮', '富栄養化', '生物濃縮'],
-    'ジャンク': ['遺伝子', 'ゲノム', 'イントロン', 'エキソン'],
+    'ジャンク': ['遺伝子', 'ゲノム', 'DNA', 'RNA'],
+    'ゲノム': ['遺伝子', 'DNA', 'ジャンク', '染色体'],
+    '遺伝子': ['ゲノム', 'DNA', 'ジャンク', 'RNA'],
     '受容体': ['標的器官', '標的細胞', '酵素', '抗体'],
     '自己免疫疾患': ['免疫不全', '拒絶反応', 'アレルギー', '日和見感染症'],
     'ギャップ': ['林冠', '林床', '極相', '森林限界'],
